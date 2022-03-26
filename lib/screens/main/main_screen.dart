@@ -74,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
                           Text("Báo cáo"),
                           Text("Quản lý tài khoản"),
                           Text("Quản lý năng lượng"),
-                          Text("Thiết lập"),
+                          Text("Thiết lập"), 
                         ],
                       )
                     ),

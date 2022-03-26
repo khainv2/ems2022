@@ -31,8 +31,8 @@ class _DeviceListState extends State<DeviceList> {
             style: Theme.of(context).textTheme.subtitle1,
           ),
           Expanded(
-            child: Scrollbar(
-              isAlwaysShown: true,
+            // child: Scrollbar(
+            //   isAlwaysShown: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
@@ -60,7 +60,7 @@ class _DeviceListState extends State<DeviceList> {
                   ),
                 ),
                 )
-              )
+              // )
             )
             
           ),
