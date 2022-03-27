@@ -441,3 +441,99 @@ final listMsbSample = [
     ]
   ),
 ];
+
+enum EventType {
+  Info, Warning, Error, Critical
+}
+class Event {
+  int num = 0;
+  EventType type;
+  String message;
+  DateTime time;
+  bool readed;
+
+  Event({required this.num, required this.type, required this.message, required this.time, required this.readed});
+}
+
+final sampleEventList = [
+  Event(
+    num: 0,
+    type: EventType.Info,
+    message: "Người dùng 'user1' mới đăng nhập",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: true
+  ),
+  
+  Event(
+    num: 1,
+    type: EventType.Error,
+    message: "Thiết bị Multimeter 12 (192.168.1.55) mất dữ liệu",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: true
+  ),
+  
+  Event(
+    num: 2,
+    type: EventType.Error,
+    message: "Thiết bị Multimeter 13 (192.168.1.55) mất dữ liệu",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 3,
+    type: EventType.Error,
+    message: "Thiết bị Multimeter 14 (192.168.1.55) mất dữ liệu",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 4,
+    type: EventType.Critical,
+    message: "Hệ thống mạng không ổn định",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 5,
+    type: EventType.Info,
+    message: "Người dùng 'user3' mới đăng nhập",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 6,
+    type: EventType.Warning,
+    message: "Thiết bị ACB 01 không ổn định",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 7,
+    type: EventType.Info,
+    message: "Người dùng 'user2' mới đăng nhập",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 8,
+    type: EventType.Info,
+    message: "Người dùng 'user4' mới đăng nhập",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+  Event(
+    num: 9,
+    type: EventType.Info,
+    message: "Người dùng 'user5' mới đăng nhập",
+    time: DateTime(2022, 03, 27, 14, 22, 25),
+    readed: false
+  ),
+  
+];

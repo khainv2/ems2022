@@ -5,6 +5,54 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
+final multimeterSampleValue = {
+  "U12": "23.289V",
+  "U23": "29.282V",
+  "U31": "1.389V",
+  "U1": "2.823V",
+  "U2": "4.832V",
+  "U3": "9.483V",
+  "I1": "1.2A",
+  "I2": "3.2A",
+  "I3": "4.2A",
+  "In": "2A",
+  "F": "50Hz",
+  "P": "29W",
+  "Q": "3VAR",
+  "S": "40VA",
+  "Pf": "44",
+  "THD-U12": "70%",
+  "THD-U23": "80%",
+  "THD-U31": "75%",
+  "THD-U1": "70%",
+  "THD-U2": "80%",
+  "THD-U3": "75%",
+  "THD-I1": "70%",
+  "THD-I2": "80%",
+  "THD-I3": "75%",
+  "THD-In": "40%",
+};
+
+final acbSampleValue = {
+  "I1": "1.2A",
+  "I2": "3.2A",
+  "I3": "4.2A",
+  "U1": "2.823V",
+  "U2": "4.832V",
+  "U3": "9.483V",
+  "P": "29W",
+  "Q": "3VAR",
+  "S": "40VA",
+  "Pf": "44",
+  "F": "40Hz",
+  "Temperature": "°C",
+  "Operation count": "12",
+  "Trip count": "22",
+  "Time last operation": "23s",
+  "Time max temperature": "22s",
+  "Operation time": "44s",
+  "Trip": "ON"
+};
 
 class ParamInfoCart extends StatelessWidget {
   const ParamInfoCart({
@@ -19,34 +67,33 @@ class ParamInfoCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // margin: EdgeInsets.only(top: defaultPadding),
-      padding: EdgeInsets.all(defaultHalfPadding),
+      padding: EdgeInsets.only(
+        left: defaultPadding,
+        right: defaultPadding,
+        top: defaultHalfPadding,
+        bottom: defaultHalfPadding,
+      ),
       decoration: BoxDecoration(
         border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
         borderRadius: const BorderRadius.all(
           Radius.circular(defaultHalfPadding),
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                ],
-              ),
-            ),
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.subtitle2,
           ),
           Text(
             value,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: TextStyle(
+              fontSize: 16,
+              color: accentColor
+            )
           )
         ],
       ),
@@ -70,15 +117,13 @@ class DeviceDetail extends StatelessWidget {
       actions: [
         IconButton(
             icon: Icon(Icons.update),
-            onPressed: () => {
-              
-            },
+            onPressed: () => {},
           ),
       ],
     );
   }
 
-  Widget paramRow(String key1, String value1, String key2, String value2){
+  Widget paramRow(String key1, String value1, String key2, String value2, String key3, String value3){
     return Row(
       children: [
         Expanded(
@@ -99,13 +144,38 @@ class DeviceDetail extends StatelessWidget {
               value: value2,
             ),
           )
-        
+        ,
+        SizedBox(width: defaultHalfPadding),
+        if (key3.isEmpty)
+          Expanded(
+            child: Container(),
+          )
+        else 
+          Expanded(
+            child: ParamInfoCart(
+              title: key3,
+              value: value3,
+            ),
+          )
         ,
       ],
     );
   }
 
   Widget listParam(BuildContext context){
+    final sampleValue = device.name.contains("ACB") ? acbSampleValue : multimeterSampleValue;
+    final keys = sampleValue.keys.toList();
+    List<Widget> paramRows = [];
+    for (int i = 0; i < keys.length; i+=3){
+      final k1 = keys[i];
+      final v1 = sampleValue[k1]!;
+      final k2 = i + 1 >= keys.length ? "" : keys[i + 1];
+      final v2 = i + 1 >= keys.length ? "" : sampleValue[k2]!;
+      final k3 = i + 2 >= keys.length ? "" : keys[i + 2];
+      final v3 = i + 2 >= keys.length ? "" :sampleValue[k3]!;
+      paramRows.add(paramRow(k1, v1, k2, v2, k3, v3));
+      paramRows.add(SizedBox(height: defaultHalfPadding));
+    }
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -123,31 +193,7 @@ class DeviceDetail extends StatelessWidget {
           SizedBox(height: defaultPadding),
           Expanded(
             child: Column(
-              children: [
-                paramRow("Ua", "1.234V", "Ia", "2.8A"),
-                SizedBox(height: defaultHalfPadding),
-                paramRow("Ub", "3.282V", "Ib", "3.2A"),
-                SizedBox(height: defaultHalfPadding),
-                paramRow("Uc", "2.234V", "Ic", "2.2A"),
-                SizedBox(height: defaultHalfPadding),
-                paramRow("f", "50Hz", "P", "42W"),
-                SizedBox(height: defaultHalfPadding),
-                paramRow("Q", "22VAR", "S", "12VA"),
-                SizedBox(height: defaultHalfPadding),
-                if (device.name.contains("ACB"))
-                  paramRow("Pf", "22", "Temperature", "12°C")
-                else 
-                  paramRow("Pf", "22", "Harmonic", "12"),
-                SizedBox(height: defaultHalfPadding),
-                if (device.name.contains("ACB"))
-                  paramRow("Operation count", "12", "Trip count", "3"),
-                SizedBox(height: defaultHalfPadding),
-                if (device.name.contains("ACB"))
-                  paramRow("Time operation", "23s", "Time max temp", "25s"),
-                SizedBox(height: defaultHalfPadding),
-                if (device.name.contains("ACB"))
-                  paramRow("Operation Time", "12s", "Trip", "ON"), 
-              ],
+              children: paramRows
             )
           ),
           // SizedBox(height: defaultPadding),
@@ -299,12 +345,12 @@ class DeviceDetail extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    flex: 1, 
+                    flex: 3, 
                     child: listParam(context)
                   ),
                   SizedBox(width: defaultPadding),
                   Expanded(
-                    flex: 2, 
+                    flex: 5, 
                     child: moreInfoWidget(context)
                   ),
                 ],

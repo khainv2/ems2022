@@ -1,6 +1,6 @@
 import 'package:admin/screens/dashboard/components/device_alarm.dart';
 import 'package:admin/screens/dashboard/components/device_status.dart';
-import 'package:admin/screens/dashboard/components/event_list.dart';
+import 'package:admin/screens/dashboard/components/overview_event_list.dart';
 import 'package:admin/screens/dashboard/components/overviewdevice.dart';
 import 'package:admin/screens/dashboard/components/statistic.dart';
 import 'package:flutter/material.dart';

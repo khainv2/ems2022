@@ -4,6 +4,7 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/components/header.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:admin/screens/devicelist/devicelist_screen.dart';
+import 'package:admin/screens/eventlist/eventlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           DashboardScreen(),
                           DeviceListScreen(),
-                          Text("Sự kiện"),
+                          EventListScreen(),
                           Text("Nhật ký hoạt động"),
                           Text("Báo cáo"),
                           Text("Quản lý tài khoản"),
