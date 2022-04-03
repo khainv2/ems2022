@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 
-class EventListScreen extends StatefulWidget {
-  const EventListScreen({ Key? key }) : super(key: key);
+class LogListScreen extends StatefulWidget {
+  const LogListScreen({ Key? key }) : super(key: key);
 
   @override
-  State<EventListScreen> createState() => _EventListScreenState();
+  State<LogListScreen> createState() => _LogListScreenState();
 }
 
 
-class _EventListScreenState extends State<EventListScreen> {
+class _LogListScreenState extends State<LogListScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,16 +56,16 @@ class _EventListScreenState extends State<EventListScreen> {
                     ),
                   ],
                   rows: List.generate(
-                    sampleEventList.length,
+                    sampleLogList.length,
                     (index){
-                      final event = sampleEventList[index];
+                      final log = sampleLogList[index];
                       return DataRow(
                         cells: [
-                          DataCell(Text(event.num.toString())),
-                          DataCell(Text(event.type.toString().split('.').last)),
-                          DataCell(Text(event.message)),
-                          DataCell(Text(event.time.toString())),
-                          DataCell(Text(event.readed ? 'Đã đọc' : 'Chưa đọc'))
+                          DataCell(Text(log.num.toString())),
+                          DataCell(Text(log.type.toString().split('.').last)),
+                          DataCell(Text(log.message)),
+                          DataCell(Text(log.time.toString())),
+                          DataCell(Text(log.readed ? 'Đã đọc' : 'Chưa đọc'))
                         ],
                       );
                     },

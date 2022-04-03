@@ -1,3 +1,4 @@
+import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/screens/devicelist/components/devicedetail.dart';
 import 'package:data_table_2/data_table_2.dart';

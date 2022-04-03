@@ -1,58 +1,12 @@
+import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
+import 'package:admin/models/sampleVal.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
-final multimeterSampleValue = {
-  "U12": "23.289V",
-  "U23": "29.282V",
-  "U31": "1.389V",
-  "U1": "2.823V",
-  "U2": "4.832V",
-  "U3": "9.483V",
-  "I1": "1.2A",
-  "I2": "3.2A",
-  "I3": "4.2A",
-  "In": "2A",
-  "F": "50Hz",
-  "P": "29W",
-  "Q": "3VAR",
-  "S": "40VA",
-  "Pf": "44",
-  "THD-U12": "70%",
-  "THD-U23": "80%",
-  "THD-U31": "75%",
-  "THD-U1": "70%",
-  "THD-U2": "80%",
-  "THD-U3": "75%",
-  "THD-I1": "70%",
-  "THD-I2": "80%",
-  "THD-I3": "75%",
-  "THD-In": "40%",
-};
-
-final acbSampleValue = {
-  "I1": "1.2A",
-  "I2": "3.2A",
-  "I3": "4.2A",
-  "U1": "2.823V",
-  "U2": "4.832V",
-  "U3": "9.483V",
-  "P": "29W",
-  "Q": "3VAR",
-  "S": "40VA",
-  "Pf": "44",
-  "F": "40Hz",
-  "Temperature": "°C",
-  "Operation count": "12",
-  "Trip count": "22",
-  "Time last operation": "23s",
-  "Time max temperature": "22s",
-  "Operation time": "44s",
-  "Trip": "ON"
-};
 
 class ParamInfoCart extends StatelessWidget {
   const ParamInfoCart({

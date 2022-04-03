@@ -4,7 +4,11 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/components/header.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:admin/screens/devicelist/devicelist_screen.dart';
+import 'package:admin/screens/energy_management/energy_managerment_screen.dart';
 import 'package:admin/screens/eventlist/eventlist_screen.dart';
+import 'package:admin/screens/loglist/loglist_screen.dart';
+import 'package:admin/screens/report/report_screen.dart';
+import 'package:admin/screens/setting/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +62,6 @@ class _MainScreenState extends State<MainScreen> {
                       "Sự kiện",
                       "Nhật ký hoạt động",
                       "Báo cáo",
-                      "Quản lý tài khoản",
                       "Quản lý năng lượng",
                       "Thiết lập",
                     ][_stackIndex]),
@@ -71,11 +74,10 @@ class _MainScreenState extends State<MainScreen> {
                           DashboardScreen(),
                           DeviceListScreen(),
                           EventListScreen(),
-                          Text("Nhật ký hoạt động"),
-                          Text("Báo cáo"),
-                          Text("Quản lý tài khoản"),
-                          Text("Quản lý năng lượng"),
-                          Text("Thiết lập"), 
+                          LogListScreen(),
+                          ReportScreen(),
+                          EnergyManagementScreen(),
+                          SettingScreen(), 
                         ],
                       )
                     ),
