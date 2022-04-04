@@ -11,7 +11,10 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Hello"),
+      child: ElevatedButton(
+        child: SelectableText("Tải về"),
+        onPressed: (){}
+      )
     );
   }
 }

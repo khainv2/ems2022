@@ -80,9 +80,7 @@ class _ImageStackState extends State<ImageStack> {
             }),
           );
         }
-        print("Detail pos ${details.localPosition.dx}, ${details.localPosition.dy}");
-        print(size);
-        
+        print("Detail pos ${details.localPosition.dx}, ${details.localPosition.dy}");        
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
@@ -94,7 +92,7 @@ class _ImageStackState extends State<ImageStack> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(widget.imagePath),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 child:  new Center(
@@ -103,7 +101,7 @@ class _ImageStackState extends State<ImageStack> {
               ),
             
             CustomPaint(
-              size: Size.infinite, //2
+              size: Size.infinite,
               painter: LightPlotter(
                 points: [],
                 imageWidth: widget.imageWidth,

@@ -115,7 +115,7 @@ final listMsbSample = [
         id: 7,
         name: "Multimeter 3",
         model: "EEM-MA 770",
-        address: "192.168.1.52",
+        address: "192.168.1.53",
         online: true,
         note: "Cáp nguồn cho tủ điện TĐ-PAL (Kho Pallet)"
       ),
@@ -123,9 +123,25 @@ final listMsbSample = [
         id: 8,
         name: "Multimeter 4",
         model: "EEM-MA 770",
-        address: "192.168.1.53",
+        address: "192.168.1.54",
         online: true,
         note: "Cấp nguồn cho tủ điện TĐ-DM (Phòng rửa dung môi)"
+      ),
+      Device(
+        id: 8,
+        name: "Multimeter 5",
+        model: "EEM-MA 770",
+        address: "192.168.1.55",
+        online: true,
+        note: "MFM đo lường cho tủ TĐ-CHILLER 4"
+      ),
+      Device(
+        id: 8,
+        name: "Multimeter 6",
+        model: "EEM-MA 770",
+        address: "192.168.1.56",
+        online: true,
+        note: "MFM đo lường cho tủ TĐ-ĐL4"
       ),
     ]
   ),
@@ -414,14 +430,6 @@ final listMsbSample = [
       ),
       Device(
         id: 1,
-        name: "Multimeter 6",
-        model: "EEM-MA 770",
-        address: "192.168.1.206",
-        online: true,
-        note: "MFM đo lường cho tủ TĐ-CHILLER 4"
-      ),
-      Device(
-        id: 1,
         name: "Multimeter 7",
         model: "EEM-MA 770",
         address: "192.168.1.207",
@@ -435,14 +443,6 @@ final listMsbSample = [
         address: "192.168.1.208",
         online: true,
         note: "MFM đo lường cho tủ HVAC-VP"
-      ),
-      Device(
-        id: 1,
-        name: "Multimeter 9",
-        model: "EEM-MA 770",
-        address: "192.168.1.209",
-        online: true,
-        note: "MFM đo lường cho tủ TĐ-ĐL4"
       ),
     ]
   ),
