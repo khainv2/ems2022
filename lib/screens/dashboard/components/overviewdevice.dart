@@ -1,12 +1,16 @@
 import 'package:admin/models/device.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import '../../../constants.dart';
-import '../../../models/msb.dart';
 import '../../devicelist/components/devicedetail.dart';
 
-class Point { int x, y; Point(this.x, this.y); }
+class Point { int x, y; Point(this.x, this.y); Offset toOffset(){ return Offset(x.toDouble(), y.toDouble()); } }
+class Line { 
+  Point p1, p2; 
+  Line(this.p1, this.p2); 
+}
+final int plotmin = 0, plotmax = 10000;
+
+
 class LightPlotter extends CustomPainter {
   final Color color = Colors.yellow;
   final List<Point> points;
@@ -24,7 +28,7 @@ class LightPlotter extends CustomPainter {
     }
   }
   @override
-  bool shouldRepaint(LightPlotter oldDelegate) {
+  bool shouldRepaint(LightPlotter oldDelegate){
     return color != oldDelegate.color;
   }
 }
@@ -43,20 +47,19 @@ class _ImageStackState extends State<ImageStack> {
 
   // This function is trggered somehow after build() called
   Size? _getSize() {
-      final size = _key.currentContext!.size;
-      if (size != null) {
-        final width = size.width;
-        final height = size.height;
-        return Size(width, height);
-      } else {
-        return null;
-      }
+    final size = _key.currentContext!.size;
+    if (size != null) {
+      final width = size.width;
+      final height = size.height;
+      return Size(width, height);
+    } else {
+      return null;
+    }
   }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (details){
-        print(details.localPosition);
         final size = _getSize();
         if (size == null)
           return;
@@ -97,7 +100,7 @@ class _ImageStackState extends State<ImageStack> {
                 ),
                 child:  new Center(
                   child: Container()
-                ) 
+                )
               ),
             
             CustomPaint(
@@ -115,7 +118,68 @@ class _ImageStackState extends State<ImageStack> {
   }
 }
 
+
+class MsbOverview extends CustomPainter {
+
+  List<Line> lines = [
+    Line(Point(0, 5000), Point(10000, 5000)),
+    Line(Point(1000, 1000), Point(1000, 5000)),
+    Line(Point(2000, 1000), Point(2000, 5000)),
+    Line(Point(3000, 1000), Point(3000, 5000)),
+    Line(Point(4000, 1000), Point(4000, 5000)),
+    
+    Line(Point(6000, 1000), Point(6000, 5000)),
+    Line(Point(6500, 1000), Point(6500, 5000)),
+    Line(Point(6500, 1000), Point(6500, 5000)),
+    Line(Point(8500, 1000), Point(8500, 5000)), 
+
+    Line(Point(5000, 5000), Point(5000, 8500)), 
+    Line(Point(7000, 5000), Point(7000, 8500)), 
+
+  ];
+  
+  MsbOverview();
+
+  Point _plotToScreen(Point plot, Size size){
+    return Point(plot.x * size.width ~/ plotmax, plot.y * size.height ~/ plotmax);
+  }
+
+  Point _screenToPlot(Point screen, Size size){
+    return Point(screen.x * plotmax ~/ size.width, screen.y * plotmax ~/ size.height);
+  }
+
+  void _fillBackground(Canvas canvas, Size size){
+    final paint = Paint()..color = bgColor;
+    canvas.drawRect(Offset(0, 0) & size, paint);
+  }
+
+  void _drawLines(Canvas canvas, Size size){
+    final paint = Paint()..color = accentColor ..strokeWidth = 2;
+    for (final line in lines){
+      final p1 = _plotToScreen(line.p1, size);
+      final p2 = _plotToScreen(line.p2, size);
+      canvas.drawLine(p1.toOffset(), p2.toOffset(), paint);
+    }
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    _fillBackground(canvas, size);
+    _drawLines(canvas, size);
+
+
+  }
+  @override
+  bool shouldRepaint(LightPlotter oldDelegate){
+    return false;
+  }
+}
+
 final msbImageList = [
+  CustomPaint(
+    size: Size.infinite,
+    painter: MsbOverview(), //3
+  ),
   ImageStack(imagePath: "assets/images/msb12.png", imageWidth: 4122, imageHeight: 1968),
   ImageStack(imagePath: "assets/images/msb3.png", imageWidth: 4640, imageHeight: 2266),
   ImageStack(imagePath: "assets/images/msb4.png", imageWidth: 4443, imageHeight: 1727),
@@ -145,17 +209,6 @@ class _OverviewDeviceState extends State<OverviewDevice> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(child: Container()),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current--;
-                  if (_current < 0){
-                    _current = msbImageList.length - 1;
-                  }
-                });
-              },
-              child: Text('←'),
-            ),
             SizedBox(width: defaultPadding),
             ElevatedButton(
               onPressed: (){
@@ -184,17 +237,6 @@ class _OverviewDeviceState extends State<OverviewDevice> {
               child: Text('MSB4', style: TextStyle(color: _current == 2 ? accentColor : Colors.white),),
             ),
             SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current++;
-                  if (_current >= msbImageList.length){
-                    _current = 0;
-                  }
-                });
-              },
-              child: Text('→'),
-            ),
             Expanded(child: Container()),
           ],
         )

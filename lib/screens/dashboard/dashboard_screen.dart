@@ -18,28 +18,28 @@ class DashboardScreen extends StatelessWidget {
             child: OverviewDevice()
           ),
           SizedBox(height: defaultPadding),
-          Expanded(
-            flex: 3, 
-            child: Row(
-              children: [
-                Expanded(
-                  child: DeviceStatus(),
-                ), 
-                SizedBox(width: defaultPadding),
-                Expanded(
-                  child: OverviewEventList(),
-                ),  
-                SizedBox(width: defaultPadding),
-                Expanded(
-                  child: Statistic(),
-                ),  
-                SizedBox(width: defaultPadding),
-                Expanded(
-                  child: DeviceAlarm(),
-                ), 
-              ],
-            )
-          )
+          // Expanded(
+          //   flex: 3, 
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         child: DeviceStatus(),
+          //       ), 
+          //       SizedBox(width: defaultPadding),
+          //       Expanded(
+          //         child: OverviewEventList(),
+          //       ),  
+          //       SizedBox(width: defaultPadding),
+          //       Expanded(
+          //         child: Statistic(),
+          //       ),  
+          //       SizedBox(width: defaultPadding),
+          //       Expanded(
+          //         child: DeviceAlarm(),
+          //       ), 
+          //     ],
+          //   )
+          // )
         ],
       )
     );

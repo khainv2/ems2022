@@ -43,8 +43,6 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             if (Responsive.isDesktop(context))
               Expanded(
-                // default flex = 1
-                // and it takes 1/6 part of the screen
                 child: SideMenu(
                   requestChangeStackIndex: setStackIndex,
                   currentStackIndex: _stackIndex,
