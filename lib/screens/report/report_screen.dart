@@ -14,7 +14,7 @@ void downloadFile(String url) {
 }
 
 Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/text/file.txt');
+  return await rootBundle.loadString('text/file.txt');
 }
 
 class ReportScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class ReportScreen extends StatefulWidget {
 // https://firebasestorage.googleapis.com/v0/b/ewew-bc020.appspot.com/o/DIEN%20NANG%20TIEU%20THU%20TRAM%20BOM%20XXX_01102018.xlsx?alt=media&token=7c168405-7f5f-45fd-b9ae-8d3813b2dddc
 class _ReportScreenState extends State<ReportScreen> {
   String link = "https://firebasestorage.googleapis.com/v0/b/ewew-bc020.appspot.com/o/DIEN%20NANG%20TIEU%20THU%20TRAM%20BOM%20XXX_01102018.xlsx?alt=media&token=7c168405-7f5f-45fd-b9ae-8d3813b2dddc";
-  final column = "Ngày	HP1	HP2	TĐ	PT001	PT002	PT003	MCP 001A	MCP 001B	MCP 001C	MCP 001D	MCP 001S	PT004	PT005	NĂNG LƯỢNG ĐẦU VAO	NĂNG LƯỢNG TIÊU THỤ	NĂNG LƯỢNG TỔN HAO".split('\t');
+  final column = "Ngày	HP1	HP2	NĂNG LƯỢNG ĐẦU VAO	NĂNG LƯỢNG TIÊU THỤ	NĂNG LƯỢNG TỔN HAO".split('\t');
   String? textData;
   
   @override 
@@ -35,13 +35,25 @@ class _ReportScreenState extends State<ReportScreen> {
     loadAsset().then((value){
       setState(() {
         textData = value;
-        print("Text data ${value.length}");
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Column length ${column.length}");
+    List<List<String>> rows = [];
+    if (textData != null){
+      final lines = textData!.split('\n');
+      for (final line in lines){
+        final words = line.split('\t');
+        print("Row length ${words.length}");
+        if (words.length == column.length)
+          rows.add(words);
+      }
+    }
+
+
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -52,8 +64,28 @@ class _ReportScreenState extends State<ReportScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Danh sách thiết bị",
+            "Báo cáo",
             style: Theme.of(context).textTheme.subtitle1,
+          ),
+          SizedBox(height: defaultPadding),
+          
+          Container(
+            width: 300,
+            child: OutlinedButton(
+                
+              child: Row(
+                children: [
+                  Icon(Icons.calendar_month),
+                  Text("20/03/2022")
+                ],
+              ),
+              onPressed: (){
+                showDatePicker(context: context, 
+                              initialDate: DateTime.now(), 
+                              firstDate: DateTime(2015, 8), 
+                              lastDate: DateTime(2101));
+              },
+            ),
           ),
           SizedBox(height: defaultPadding),
           ElevatedButton(
@@ -63,11 +95,14 @@ class _ReportScreenState extends State<ReportScreen> {
             child: Text('Tải về')
           ),
           SizedBox(height: defaultPadding),
+
+
           Expanded(
             // child: Scrollbar(
             //   isAlwaysShown: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
+                
                 child: Container(
                   width: double.infinity,
                   child: DataTable(
@@ -75,18 +110,12 @@ class _ReportScreenState extends State<ReportScreen> {
                   showCheckboxColumn: false,
                   columns: column.map((e) => DataColumn(label: Text(e))).toList(),
                   rows: List.generate(
-                    sampleEventList.length,
+                    rows.length,
                     (index){
-                      final event = sampleEventList[index];
-                      // return DataRow(
-                      //   cells: [
-                      //     DataCell(Text(event.num.toString())),
-                      //     DataCell(Text(event.type.toString().split('.').last)),
-                      //     DataCell(Text(event.message)),
-                      //     DataCell(Text(event.time.toString())),
-                      //     DataCell(Text(event.readed ? 'Đã đọc' : 'Chưa đọc'))
-                      //   ],
-                      // );
+                      final row = rows[index];
+                      return DataRow(
+                        cells: row.map((e) => DataCell(Text(e))).toList()
+                      );
                     },
                   ),
                 ),
