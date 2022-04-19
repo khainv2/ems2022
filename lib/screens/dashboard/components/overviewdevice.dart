@@ -1,14 +1,21 @@
+import 'dart:typed_data';
+
 import 'package:admin/models/device.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../devicelist/components/devicedetail.dart';
+import 'dart:ui' as ui;
+import 'package:image/image.dart' as image;
+
+import 'package:flutter/services.dart';
+
+import 'package:flutter/services.dart';
 
 class Point { int x, y; Point(this.x, this.y); Offset toOffset(){ return Offset(x.toDouble(), y.toDouble()); } }
 class Line { 
   Point p1, p2; 
   Line(this.p1, this.p2); 
 }
-final int plotmin = 0, plotmax = 10000;
 
 
 class LightPlotter extends CustomPainter {
@@ -118,34 +125,45 @@ class _ImageStackState extends State<ImageStack> {
   }
 }
 
+Future<ui.Image> getUiImage(String imageAssetPath, int height, int width) async {
+  final ByteData assetImageByteData = await rootBundle.load(imageAssetPath);
+  image.Image baseSizeImage = image.decodeImage(assetImageByteData.buffer.asUint8List())!;
+  image.Image resizeImage = image.copyResize(baseSizeImage, height: height, width: width);
+  ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(image.encodePng(resizeImage)));
+  ui.FrameInfo frameInfo = await codec.getNextFrame();
+  return frameInfo.image;
+}
 
 class MsbOverview extends CustomPainter {
-
+  final Size plotSize = Size(12000, 10000);
   List<Line> lines = [
-    Line(Point(0, 5000), Point(10000, 5000)),
+    Line(Point(0, 5000), Point(12000, 5000)),
     Line(Point(1000, 1000), Point(1000, 5000)),
     Line(Point(2000, 1000), Point(2000, 5000)),
     Line(Point(3000, 1000), Point(3000, 5000)),
     Line(Point(4000, 1000), Point(4000, 5000)),
     
-    Line(Point(6000, 1000), Point(6000, 5000)),
-    Line(Point(6500, 1000), Point(6500, 5000)),
-    Line(Point(6500, 1000), Point(6500, 5000)),
-    Line(Point(8500, 1000), Point(8500, 5000)), 
-
     Line(Point(5000, 5000), Point(5000, 8500)), 
+    Line(Point(6000, 1000), Point(6000, 5000)),
     Line(Point(7000, 5000), Point(7000, 8500)), 
-
+    Line(Point(8000, 5000), Point(8000, 8500)), 
+    Line(Point(9000, 1000), Point(9000, 5000)),
+    Line(Point(10000, 5000), Point(10000, 8500)), 
   ];
+
+  ui.Image? iconMultimeter;
   
-  MsbOverview();
+  MsbOverview(){
+    
+    getUiImage("assets/images/ic_multimeter.png", 64, 64).then((value) => iconMultimeter = value);
+  }
 
   Point _plotToScreen(Point plot, Size size){
-    return Point(plot.x * size.width ~/ plotmax, plot.y * size.height ~/ plotmax);
+    return Point(plot.x * size.width ~/ plotSize.width, plot.y * size.height ~/ plotSize.height);
   }
 
   Point _screenToPlot(Point screen, Size size){
-    return Point(screen.x * plotmax ~/ size.width, screen.y * plotmax ~/ size.height);
+    return Point(screen.x * plotSize.width ~/ size.width, screen.y * plotSize.height ~/ size.height);
   }
 
   void _fillBackground(Canvas canvas, Size size){
@@ -166,20 +184,21 @@ class MsbOverview extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     _fillBackground(canvas, size);
     _drawLines(canvas, size);
-
+    if (iconMultimeter != null)
+      canvas.drawImage(iconMultimeter!, Offset(0, 0), Paint());
 
   }
   @override
   bool shouldRepaint(LightPlotter oldDelegate){
-    return false;
+    return iconMultimeter != null;
   }
 }
 
 final msbImageList = [
-  CustomPaint(
-    size: Size.infinite,
-    painter: MsbOverview(), //3
-  ),
+  // CustomPaint(
+  //   size: Size.infinite,
+  //   painter: MsbOverview(), //3
+  // ),
   ImageStack(imagePath: "assets/images/msb12.png", imageWidth: 4122, imageHeight: 1968),
   ImageStack(imagePath: "assets/images/msb3.png", imageWidth: 4640, imageHeight: 2266),
   ImageStack(imagePath: "assets/images/msb4.png", imageWidth: 4443, imageHeight: 1727),
