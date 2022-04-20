@@ -39,6 +39,23 @@ class _ReportScreenState extends State<ReportScreen> {
     });
   }
 
+  DataRow getDataRow(String name, int index){
+    return DataRow(
+      cells: [
+        DataCell(Text(name, style: TextStyle(color: primaryColor),)),
+        DataCell(Text("              4.2 MB                 ")),
+        DataCell(ElevatedButton(
+          child: Text("Tải về"),
+          onPressed: (){
+            html.AnchorElement anchorElement =  new html.AnchorElement(href: link);
+            anchorElement.download = link;
+            anchorElement.click();
+          },
+        )),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<List<String>> rows = [];
@@ -51,6 +68,112 @@ class _ReportScreenState extends State<ReportScreen> {
       }
     }
 
+    Widget makeDailyFolder(){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Theo ngày'),
+            DataTable(
+              columnSpacing: 0,
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  label: Text("Tên"),
+                ),
+                DataColumn(
+                  label: Text("Kích thước"),
+                ),
+                DataColumn(
+                  label: Text("Hoạt động"),
+                ),
+              ],
+              rows: List.generate(
+                10,
+                (index) => getDataRow("Tệp ngày ${index + 1}", index),
+              ),
+            )
+          ]
+        )
+      );
+    }
+
+
+    Widget makeMonthlyFolder(){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Theo tháng'),
+            DataTable(
+              columnSpacing: 0,
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  label: Text("Tên"),
+                ),
+                DataColumn(
+                  label: Text("Kích thước"),
+                ),
+                DataColumn(
+                  label: Text("Hoạt động"),
+                ),
+              ],
+              rows: List.generate(
+                3,
+                (index) => getDataRow("Tệp tháng ${index + 1}", index),
+              ),
+            )
+          ]
+        )
+      );
+    }
+
+
+    Widget makeYearlyFolder(){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Theo năm'),
+            DataTable(
+              columnSpacing: 0,
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  label: Text("Tên"),
+                ),
+                DataColumn(
+                  label: Text("Kích thước"),
+                ),
+                DataColumn(
+                  label: Text("Hoạt động"),
+                ),
+              ],
+              rows: List.generate(
+                2,
+                (index) => getDataRow("Tệp năm ${2020 + index}", index),
+              ),
+            )
+          ]
+        )
+      );
+    }
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -61,37 +184,10 @@ class _ReportScreenState extends State<ReportScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: EdgeInsets.all(defaultPadding),
-            decoration: BoxDecoration(
-              color: secondaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // DataTable(
-                //   columnSpacing: 0,
-                //   showCheckboxColumn: false,
-                //   columns: [
-                //     DataColumn(
-                //       label: Text("Tên"),
-                //     ),
-                //     DataColumn(
-                //       label: Text("Ngày"),
-                //     ),
-                //     DataColumn(
-                //       label: Text("Kích thước"),
-                //     ),
-                //   ],
-                  // rows: List.generate(
-                  //   deviceList.length,
-                  //   (index) => getDataRow(deviceList[index], index),
-                  // ),
-                // ),
-              ]
-            )
-          )
+          makeDailyFolder(),
+          makeMonthlyFolder(),
+          makeYearlyFolder(),
+        
         ],
       ),
     );
