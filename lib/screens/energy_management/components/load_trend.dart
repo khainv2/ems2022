@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 
 class LoadTrendChart extends StatefulWidget {
-  const LoadTrendChart({ Key? key }) : super(key: key);
+  final bool isDaily;
+  const LoadTrendChart({ Key? key, required this.isDaily}) : super(key: key);
 
   @override
   State<LoadTrendChart> createState() => _LoadTrendChartState();
@@ -25,7 +26,19 @@ class _LoadTrendChartState extends State<LoadTrendChart> {
           )
         ),
         groupsSpace: 6,
-        barGroups: sampleMonthlyEnergy.map((e) => BarChartGroupData(
+        barGroups: 
+        widget.isDaily ?
+        sampleDailyEnergy.map((e) => BarChartGroupData(
+          x: e.hour, 
+          barRods: [
+            BarChartRodData(
+              toY: e.val, 
+              width: 10, 
+              colors: [primaryColor]
+            ),
+          ]
+        )).toList() : 
+        sampleMonthlyEnergy.map((e) => BarChartGroupData(
           x: e.day, 
           barRods: [
             BarChartRodData(
@@ -48,6 +61,8 @@ class LoadTrend extends StatefulWidget {
 }
 
 class _LoadTrendState extends State<LoadTrend> {
+  bool _isDaily = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,24 +81,26 @@ class _LoadTrendState extends State<LoadTrend> {
           SizedBox(height: defaultPadding),
           Row(children: [
             Expanded(child: Container()),
-            OutlinedButton(
-              onPressed: (){}, 
+            _isDaily ? ElevatedButton(
+              onPressed: (){ setState(() { _isDaily = false; }); }, 
+              child: Text("Ngày")
+            ) : OutlinedButton(
+              onPressed: (){ setState(() { _isDaily = true; }); }, 
               child: Text("Ngày")
             ),
             SizedBox(width: defaultHalfPadding),
-            ElevatedButton(
-              onPressed: (){}, 
-              child: Text("Tháng")
-            ),
-            SizedBox(width: defaultHalfPadding),
+            _isDaily ?
             OutlinedButton(
-              onPressed: (){}, 
-              child: Text("Năm")
+              onPressed: (){ setState(() { _isDaily = false; }); }, 
+              child: Text("Tháng")
+            ) : ElevatedButton(
+              onPressed: (){ setState(() { _isDaily = true; }); }, 
+              child: Text("Tháng")
             ),
           ],),
           SizedBox(height: defaultPadding),
           Expanded(
-            child: LoadTrendChart()
+            child: LoadTrendChart(isDaily: _isDaily,)
           )
         ],
       ),

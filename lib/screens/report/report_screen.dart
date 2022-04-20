@@ -41,13 +41,11 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("Column length ${column.length}");
     List<List<String>> rows = [];
     if (textData != null){
       final lines = textData!.split('\n');
       for (final line in lines){
         final words = line.split('\t');
-        print("Row length ${words.length}");
         if (words.length == column.length)
           rows.add(words);
       }
@@ -60,70 +58,40 @@ class _ReportScreenState extends State<ReportScreen> {
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Báo cáo",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          SizedBox(height: defaultPadding),
-          
           Container(
-            width: 300,
-            child: OutlinedButton(
-                
-              child: Row(
-                children: [
-                  Icon(Icons.calendar_month),
-                  Text("20/03/2022")
-                ],
-              ),
-              onPressed: (){
-                showDatePicker(context: context, 
-                              initialDate: DateTime.now(), 
-                              firstDate: DateTime(2015, 8), 
-                              lastDate: DateTime(2101));
-              },
+            padding: EdgeInsets.all(defaultPadding),
+            decoration: BoxDecoration(
+              color: secondaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-          ),
-          SizedBox(height: defaultPadding),
-          ElevatedButton(
-            onPressed: (){
-              downloadFile(link);
-            }, 
-            child: Text('Tải về')
-          ),
-          SizedBox(height: defaultPadding),
-
-
-          Expanded(
-            // child: Scrollbar(
-            //   isAlwaysShown: true,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                
-                child: Container(
-                  width: double.infinity,
-                  child: DataTable(
-                  columnSpacing: 0,
-                  showCheckboxColumn: false,
-                  columns: column.map((e) => DataColumn(label: Text(e))).toList(),
-                  rows: List.generate(
-                    rows.length,
-                    (index){
-                      final row = rows[index];
-                      return DataRow(
-                        cells: row.map((e) => DataCell(Text(e))).toList()
-                      );
-                    },
-                  ),
-                ),
-                )
-              // )
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // DataTable(
+                //   columnSpacing: 0,
+                //   showCheckboxColumn: false,
+                //   columns: [
+                //     DataColumn(
+                //       label: Text("Tên"),
+                //     ),
+                //     DataColumn(
+                //       label: Text("Ngày"),
+                //     ),
+                //     DataColumn(
+                //       label: Text("Kích thước"),
+                //     ),
+                //   ],
+                  // rows: List.generate(
+                  //   deviceList.length,
+                  //   (index) => getDataRow(deviceList[index], index),
+                  // ),
+                // ),
+              ]
             )
-            
-          ),
+          )
         ],
       ),
     );

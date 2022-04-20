@@ -18,6 +18,42 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
     return SafeArea(
       child: Column(
         children: [
+          Container(
+            padding: EdgeInsets.all(defaultPadding),
+            decoration: BoxDecoration(
+              color: secondaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Row (
+              children: [
+                Text('Chọn thiết bị'),
+                SizedBox(width: defaultPadding,),
+                DropdownButton<String>(
+                  value: "1",
+                  items: [
+                    DropdownMenuItem(
+                      value: "1",
+                      child: Text("Multimeter 1"),
+                    ),
+                    DropdownMenuItem(
+                      value: "2",
+                      child: Text("Multimeter 2"),
+                    ),
+                    DropdownMenuItem(
+                      value: "3",
+                      child: Text("Multimeter 3"),
+                    ),
+                    DropdownMenuItem(
+                      value: "4",
+                      child: Text("Multimeter 4"),
+                    ),
+                  ],
+                  onChanged: (val){},
+                ),
+              ],
+            )
+          ),
+          SizedBox(height: defaultPadding),
           Expanded(
             flex: 3,
             child: Row(
