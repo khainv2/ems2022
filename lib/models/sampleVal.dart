@@ -35,6 +35,14 @@ final multimeterSampleValue = {
   "THD-In": "40%",
 };
 
+String getMultimeterUnit(String name){
+  if (multimeterSampleValue.containsKey(name)){
+    var value = multimeterSampleValue[name];
+    // value.replaceAll('1', replace)
+  }
+  return "";
+}
+
 final acbSampleValue = {
   "I1": "1.2A",
   "I2": "3.2A",

@@ -4,19 +4,12 @@ import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 
 void main() {
   print('App started');
-  IO.Socket socket = IO.io(socketAddress);
-  socket.on('connect', (_) {
-    print('connect');
-    socket.emit('msg', 'test');
-  });
-  socket.on('disconnect', (_) => print('disconnect'));
-  socket.on('MSB1_Multimetter1', (val) => print(val));
+  
   runApp(MyApp());
 
 }

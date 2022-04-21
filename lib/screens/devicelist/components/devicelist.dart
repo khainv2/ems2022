@@ -35,9 +35,7 @@ class _DeviceListState extends State<DeviceList> {
           setState(() {
             _isConnected = isConnected;
           });
-
         }
-        // Map<String, dynamic> data = state['isConnected']
       }
 
     });
@@ -45,8 +43,6 @@ class _DeviceListState extends State<DeviceList> {
   @override
   void initState(){
     super.initState();
-    const oneSec = Duration(seconds: 3);
-    Timer.periodic(oneSec, (Timer t) => getConnection());
     
 
   }
