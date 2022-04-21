@@ -8,3 +8,5 @@ const diffColor = Color(0xffc2c2c2);
 
 const defaultPadding = 16.0;
 const defaultHalfPadding = 8.0;
+
+const socketAddress = 'http://test.thanhnt.com:8080';

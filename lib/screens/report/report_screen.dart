@@ -39,20 +39,141 @@ class _ReportScreenState extends State<ReportScreen> {
     });
   }
 
+  DataRow getDataRow(String name, int index){
+    return DataRow(
+      cells: [
+        DataCell(Text(name, style: TextStyle(color: primaryColor),)),
+        DataCell(Text("              4.2 MB                 ")),
+        DataCell(ElevatedButton(
+          child: Text("Tải về"),
+          onPressed: (){
+            html.AnchorElement anchorElement =  new html.AnchorElement(href: link);
+            anchorElement.download = link;
+            anchorElement.click();
+          },
+        )),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("Column length ${column.length}");
     List<List<String>> rows = [];
     if (textData != null){
       final lines = textData!.split('\n');
       for (final line in lines){
         final words = line.split('\t');
-        print("Row length ${words.length}");
         if (words.length == column.length)
           rows.add(words);
       }
     }
 
+    Widget makeDailyFolder(){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Theo ngày'),
+            DataTable(
+              columnSpacing: 0,
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  label: Text("Tên"),
+                ),
+                DataColumn(
+                  label: Text("Kích thước"),
+                ),
+                DataColumn(
+                  label: Text("Hoạt động"),
+                ),
+              ],
+              rows: List.generate(
+                10,
+                (index) => getDataRow("Tệp ngày ${index + 1}", index),
+              ),
+            )
+          ]
+        )
+      );
+    }
+
+
+    Widget makeMonthlyFolder(){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Theo tháng'),
+            DataTable(
+              columnSpacing: 0,
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  label: Text("Tên"),
+                ),
+                DataColumn(
+                  label: Text("Kích thước"),
+                ),
+                DataColumn(
+                  label: Text("Hoạt động"),
+                ),
+              ],
+              rows: List.generate(
+                3,
+                (index) => getDataRow("Tệp tháng ${index + 1}", index),
+              ),
+            )
+          ]
+        )
+      );
+    }
+
+
+    Widget makeYearlyFolder(){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Theo năm'),
+            DataTable(
+              columnSpacing: 0,
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(
+                  label: Text("Tên"),
+                ),
+                DataColumn(
+                  label: Text("Kích thước"),
+                ),
+                DataColumn(
+                  label: Text("Hoạt động"),
+                ),
+              ],
+              rows: List.generate(
+                2,
+                (index) => getDataRow("Tệp năm ${2020 + index}", index),
+              ),
+            )
+          ]
+        )
+      );
+    }
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -60,70 +181,13 @@ class _ReportScreenState extends State<ReportScreen> {
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Báo cáo",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          SizedBox(height: defaultPadding),
-          
-          Container(
-            width: 300,
-            child: OutlinedButton(
-                
-              child: Row(
-                children: [
-                  Icon(Icons.calendar_month),
-                  Text("20/03/2022")
-                ],
-              ),
-              onPressed: (){
-                showDatePicker(context: context, 
-                              initialDate: DateTime.now(), 
-                              firstDate: DateTime(2015, 8), 
-                              lastDate: DateTime(2101));
-              },
-            ),
-          ),
-          SizedBox(height: defaultPadding),
-          ElevatedButton(
-            onPressed: (){
-              downloadFile(link);
-            }, 
-            child: Text('Tải về')
-          ),
-          SizedBox(height: defaultPadding),
-
-
-          Expanded(
-            // child: Scrollbar(
-            //   isAlwaysShown: true,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                
-                child: Container(
-                  width: double.infinity,
-                  child: DataTable(
-                  columnSpacing: 0,
-                  showCheckboxColumn: false,
-                  columns: column.map((e) => DataColumn(label: Text(e))).toList(),
-                  rows: List.generate(
-                    rows.length,
-                    (index){
-                      final row = rows[index];
-                      return DataRow(
-                        cells: row.map((e) => DataCell(Text(e))).toList()
-                      );
-                    },
-                  ),
-                ),
-                )
-              // )
-            )
-            
-          ),
+          makeDailyFolder(),
+          makeMonthlyFolder(),
+          makeYearlyFolder(),
+        
         ],
       ),
     );

@@ -575,8 +575,4 @@ final sampleMonthlyEnergy = [
   MonthlyEnergyInfo(9, 794),
   MonthlyEnergyInfo(10, 235),
   MonthlyEnergyInfo(12, 890),
-  MonthlyEnergyInfo(13, 224),
-  MonthlyEnergyInfo(14, 765),
-  MonthlyEnergyInfo(15, 125),
-  MonthlyEnergyInfo(16, 646),
 ];
