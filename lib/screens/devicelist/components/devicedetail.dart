@@ -174,7 +174,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
     if (!widget.device.name.contains("ACB")){
       
       for (final name in paramRealtime.keys){
-        sampleValue[name] = '${paramRealtime[name]!}';
+        sampleValue[name] = '${paramRealtime[name]!}${getMultimeterUnit(name)}';
         
       }
       // print("sample multi ${paramRealtime.length} ${sampleValue.length}");

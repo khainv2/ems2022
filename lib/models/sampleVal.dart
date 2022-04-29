@@ -37,8 +37,9 @@ final multimeterSampleValue = {
 
 String getMultimeterUnit(String name){
   if (multimeterSampleValue.containsKey(name)){
-    var value = multimeterSampleValue[name];
-    // value.replaceAll('1', replace)
+    var value = multimeterSampleValue[name]!;
+    final ret = value.replaceAll(RegExp(r'[(\d).]'), '');
+    return ret;
   }
   return "";
 }

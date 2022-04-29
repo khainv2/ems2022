@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:admin/models/device.dart';
+import 'package:admin/models/msb.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../devicelist/components/devicedetail.dart';
@@ -11,11 +12,18 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter/services.dart';
 
-class Point { int x, y; Point(this.x, this.y); Offset toOffset(){ return Offset(x.toDouble(), y.toDouble()); } }
-class Line { 
-  Point p1, p2; 
-  Line(this.p1, this.p2); 
+class Point { 
+  double x, y; 
+  Point(this.x, this.y); 
+  Offset toOffset(){ return Offset(x, y); } 
 }
+
+class Line { 
+  Point p1, p2;
+  double width; 
+  Line(this.p1, this.p2, { this.width = 2 }); 
+}
+
 
 
 class LightPlotter extends CustomPainter {
@@ -135,9 +143,11 @@ Future<ui.Image> getUiImage(String imageAssetPath, int height, int width) async 
 }
 
 class MsbOverview extends CustomPainter {
-  final Size plotSize = Size(12000, 10000);
+  final diagram = msb12Diagram;
+
+  Size plotSize = Size(12000, 10000);
   List<Line> lines = [
-    Line(Point(0, 5000), Point(12000, 5000)),
+    Line(Point(0, 5000), Point(12000, 5000), width: 4),
     Line(Point(1000, 1000), Point(1000, 5000)),
     Line(Point(2000, 1000), Point(2000, 5000)),
     Line(Point(3000, 1000), Point(3000, 5000)),
@@ -170,12 +180,20 @@ class MsbOverview extends CustomPainter {
     final paint = Paint()..color = bgColor;
     canvas.drawRect(Offset(0, 0) & size, paint);
   }
+  
+  List<Line> createWireListFromDiagram(){
+    // Horizontal wire
+    final numPos = diagram.numPos.toDouble();
+    return Line()
+  }
 
   void _drawLines(Canvas canvas, Size size){
     final paint = Paint()..color = accentColor ..strokeWidth = 2;
-    for (final line in lines){
+    final lineList = createWireListFromDiagram();
+    for (final line in lineList){
       final p1 = _plotToScreen(line.p1, size);
       final p2 = _plotToScreen(line.p2, size);
+      paint.strokeWidth = line.width;
       canvas.drawLine(p1.toOffset(), p2.toOffset(), paint);
     }
   }
@@ -183,22 +201,25 @@ class MsbOverview extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     _fillBackground(canvas, size);
+    plotSize = Size(diagram.numPos.toDouble(), 1000);
     _drawLines(canvas, size);
-    if (iconMultimeter != null)
-      canvas.drawImage(iconMultimeter!, Offset(0, 0), Paint());
+
 
   }
   @override
-  bool shouldRepaint(LightPlotter oldDelegate){
+  bool shouldRepaint(MsbOverview oldDelegate){
     return iconMultimeter != null;
   }
 }
 
 final msbImageList = [
-  // CustomPaint(
-  //   size: Size.infinite,
-  //   painter: MsbOverview(), //3
-  // ),
+  Container(
+    padding: EdgeInsets.all(defaultPadding),
+    child: CustomPaint(
+      size: Size.infinite,
+      painter: MsbOverview(), //3
+    ),
+  ),
   ImageStack(imagePath: "assets/images/msb12.png", imageWidth: 4122, imageHeight: 1968),
   ImageStack(imagePath: "assets/images/msb3.png", imageWidth: 4640, imageHeight: 2266),
   ImageStack(imagePath: "assets/images/msb4.png", imageWidth: 4443, imageHeight: 1727),

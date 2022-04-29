@@ -11,7 +11,6 @@ void main() {
   print('App started');
   
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
