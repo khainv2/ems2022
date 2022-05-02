@@ -10,9 +10,36 @@ import 'package:admin/screens/loglist/loglist_screen.dart';
 import 'package:admin/screens/report/report_screen.dart';
 import 'package:admin/screens/setting/setting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'components/side_menu.dart';
+
+
+class MainApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'EMS',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: bgColor,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+            .apply(bodyColor: Colors.white),
+        canvasColor: secondaryColor,
+      ),
+      home: MultiProvider(   
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => MenuController(),
+          ),
+        ],
+        child: MainScreen(),
+      ),
+    );
+  }
+}
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({ Key? key }) : super(key: key);

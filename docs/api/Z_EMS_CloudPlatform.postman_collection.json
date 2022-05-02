@@ -1,0 +1,1470 @@
+{
+	"info": {
+		"_postman_id": "2fd87d09-8507-49ba-895f-000fe14584bb",
+		"name": "Z_EMS_CloudPlatform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin\",\n\t\"req_page\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/auth/logout",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "UserManager",
+			"item": [
+				{
+					"name": "Get Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/roles",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user list with pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/users/p/1/s/20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"users",
+								"p",
+								"1",
+								"s",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"username\": \"test\",\r\n    \"password\": \"testtest\",\r\n    \"role\": 2,\r\n    \"fullname\": \"test name\",\r\n    \"phone\": \"test phone\",\r\n    \"email\": \"test@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"password\": \"\",\r\n    \"fullname\": \"test name update\",\r\n    \"phone\": \"test phone update\",\r\n    \"email\": \"test email update\",\r\n    \"role\": 1,\r\n    \"active\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/users/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"users",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/users/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"users",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/usermanagement/match/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"usermanagement",
+								"match",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "UserProfile",
+			"item": [
+				{
+					"name": "Get user info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/profile",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user info",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullname\": \"admin name\",\r\n    \"phone\": \"admin phone\",\r\n    \"email\": \"admin@datalogger.io\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/profile",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"oldpasswd\": \"admin\",\n    \"newpasswd\": \"admin1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/profile/passwd",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GatewayManagement",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/list",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list with paginition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/list/p/2/s/20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"list",
+								"p",
+								"2",
+								"s",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create gateway",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"gwserial\": \"GW20220105\",\r\n    \"gwname\": \"GW Name\",\r\n    \"gwinfo\": \"GW Description\",\r\n    \"gwloc_lat\": \"\",\r\n    \"gwloc_long\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/act",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"act"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/act/GW20220105",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"act",
+								"GW20220105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update gateway",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gwname\": \"MBS_NuocNgam_Update\",\r\n    \"gwinfo\": \"MBS HN, Nha may hoa chat Nuoc Ngam_Update\",\r\n    \"gwloc_lat\": \"25.23564897\",\r\n    \"gwloc_long\": \"107.123456\",\r\n    \"active\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/act/GW20220105",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"act",
+								"GW20220105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete gateway",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/act/GW20220105",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"act",
+								"GW20220105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete multi items",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"gwsns\": [\n\t\t\"GW20220105\",\n\t\t\"GW20220106\",\n\t\t\"GW20220107\"\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get match",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/gateway/match/GW202201",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"gateway",
+								"match",
+								"GW202201"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "MeterModelManagement",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/metermodel/list",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"metermodel",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create model",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"EEM_MA_770\",\r\n    \"info\": \"EEM_MA_770 Modbus TCP\",\r\n    \"params\": [\r\n    \t{\r\n\t\t    \"pname\": \"U12\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U23\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U31\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"In\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"F\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"P\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Q\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"S\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Pf\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U12\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U23\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U31\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-In\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/metermodel/act",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"metermodel",
+								"act"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get model",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/metermodel/act/EEM_MA_770",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"metermodel",
+								"act",
+								"EEM_MA_770"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update model",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"info\": \"EEM_MA_770 Modbus TCP\",\r\n    \"params\": [\r\n    \t{\r\n\t\t    \"pname\": \"U12\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U23\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U31\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U1\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U2\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U3\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I1\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I2\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I3\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"In\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"F\",\r\n\t\t    \"punit\": \"Hz\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"P\",\r\n\t\t    \"punit\": \"W\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Q\",\r\n\t\t    \"punit\": \"VAR\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"S\",\r\n\t\t    \"punit\": \"VA\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Pf\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U12\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U23\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U31\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-In\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/metermodel/act/EEM_MA_770",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"metermodel",
+								"act",
+								"EEM_MA_770"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete model",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/metermodel/act/EEM_MA_770",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"metermodel",
+								"act",
+								"EEM_MA_770"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get match",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/metermodel/match/EEM_MA_",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"metermodel",
+								"match",
+								"EEM_MA_"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "MeterManagement",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/meter/list",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list with paginition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/meter/list/p/2/s/20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"list",
+								"p",
+								"2",
+								"s",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list by gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/meter/gw/GW20220105",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"gw",
+								"GW20220105"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create meter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM02\",\n\t\"mtname\": \"Multimeter 2\",\n\t\"mtinfo\": \"Nguồn cấp từ lộ G1 tủ máy phát\",\n\t\"mtloc_lat\": \"25.64589\",\n\t\"mtloc_long\": \"107.2356\",\n\t\"mtcfg_addr\": \"192.168.1.52\",\n\t\"mtcfg_model\": \"EEM_MA_770\",\n\t\"mtcfg_datainterval\": 5,\n\t\"mtalarm_active\": false,\n\t\"gwserial\": \"GW20220105\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/meter/act",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"act"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/meter/act/MM01",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"act",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update meter",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtname\": \"Multimeter1\",\n\t\"mtinfo\": \"Nguồn cấp từ MBA 01\",\n\t\"mtloc_lat\": \"25.64589\",\n\t\"mtloc_long\": \"107.2356\",\n\t\"mtcfg_addr\": \"192.168.2.123\",\n\t\"mtcfg_model\": \"EEM_MA_770\",\n\t\"mtcfg_datainterval\": 10,\n\t\"mtalarm_active\": true,\n\t\"gwserial\": \"GW20220105\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/meter/act/MM01",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"act",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete meter",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/meter/act/MM01",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"act",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get match",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/meter/match/MM",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"meter",
+								"match",
+								"MM"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CabinetManagement",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/cabinet/list",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabinet",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list with paginition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/cabinet/list/p/2/s/20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabinet",
+								"list",
+								"p",
+								"2",
+								"s",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create cabinet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cabserial\": \"MBS1\",\n\t\"cabname\": \"Tủ MSB1\",\n\t\"cabinfo\": \"Tủ điện MSB1\",\n\t\"cabloc_lat\": \"\",\n\t\"cabloc_long\": \"\",\n\t\"cabmeters\": [\n\t    \"MM01\",\n\t    \"MM02\",\n\t    \"MM03\"\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/cabinet/act",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabinet",
+								"act"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cabinet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/cabinet/act/MBS1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabinet",
+								"act",
+								"MBS1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update cabinet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cabserial\": \"MBS1\",\n\t\"cabname\": \"Tủ MSB1\",\n\t\"cabinfo\": \"Tủ điện MSB1\",\n\t\"cabloc_lat\": \"\",\n\t\"cabloc_long\": \"\",\n\t\"cabmeters\": [\n\t    \"MM01\",\n\t    \"MM02\",\n\t    \"MM03\"\n\t],\n\t\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/cabinet/act/MBS1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabinet",
+								"act",
+								"MBS1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete cabinet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/cabinet/act/MBS1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabinet",
+								"act",
+								"MBS1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AlarmRuleManagement",
+			"item": [
+				{
+					"name": "Get conditions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/conditions",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"conditions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get alarm levels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/alarmlevels",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"alarmlevels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meter params",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/params/MM01",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"params",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/list",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list with paginition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/list/p/1/s/20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"list",
+								"p",
+								"1",
+								"s",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create rule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"rulename\": \"U23 quá áp\",\n\t\"condid\": 1,\n\t\"paramname\": \"U23\",\n\t\"limitvalue\": 220.5,\n\t\"alarmdelay\": 20,\n\t\"alarmlevel\": 1,\n\t\"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/act",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"act"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get rule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/act/cGkkXkbWxmaXIx1H7jA4c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"act",
+								"cGkkXkbWxmaXIx1H7jA4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update rule",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"rulename\": \"U23 over voltage\",\n\t\"condid\": 1,\n\t\"paramname\": \"U23\",\n\t\"limitvalue\": 220.5,\n\t\"alarmdelay\": 20,\n\t\"alarmlevel\": 1,\n\t\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/act/AZn9yElAPCrrLgbKVOiDH",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"act",
+								"AZn9yElAPCrrLgbKVOiDH"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete rule",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/act/DLhp61Gp3lhdvHbWthWYM",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"act",
+								"DLhp61Gp3lhdvHbWthWYM"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SystemLog",
+			"item": [
+				{
+					"name": "Get systemlog",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/systemlog/list/p/1/s/10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"systemlog",
+								"list",
+								"p",
+								"1",
+								"s",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SystemAlarm",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/systemalarm/list",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"systemalarm",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list with paginition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/systemalarm/list/p/1/s/20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"systemalarm",
+								"list",
+								"p",
+								"1",
+								"s",
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get alarm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/systemalarm/act/cGkkXkbWxmaXIx1H7jA4c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"systemalarm",
+								"act",
+								"cGkkXkbWxmaXIx1H7jA4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update alarm",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ishandled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/systemalarm/act/cGkkXkbWxmaXIx1H7jA4c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"systemalarm",
+								"act",
+								"cGkkXkbWxmaXIx1H7jA4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get count unhandled",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/systemalarm/countUnhandled",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"systemalarm",
+								"countUnhandled"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJhZG1pbiIsInJvbGUiOjAsImlhdCI6MTY1MTI4NDY0NywiZXhwIjoxNjUxODg5NDQ3fQ.41sLmnApUCUgjSgGBQyDiGDNcFIPmh3A6p9IhsygiF0",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "79dcf55b-9e57-48c2-bd79-49b64b9fc9b8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4bfeba91-cb48-46f4-ac19-62095634f0dc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

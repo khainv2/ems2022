@@ -10,20 +10,16 @@ import 'package:image/image.dart' as image;
 
 import 'package:flutter/services.dart';
 
-import 'package:flutter/services.dart';
-
 class Point { 
-  double x, y; 
+  double x = 0, y = 0; 
   Point(this.x, this.y); 
   Offset toOffset(){ return Offset(x, y); } 
 }
 
 class Line { 
   Point p1, p2;
-  double width; 
-  Line(this.p1, this.p2, { this.width = 2 }); 
+  Line({required this.p1, required this.p2});
 }
-
 
 
 class LightPlotter extends CustomPainter {
@@ -44,7 +40,7 @@ class LightPlotter extends CustomPainter {
   }
   @override
   bool shouldRepaint(LightPlotter oldDelegate){
-    return color != oldDelegate.color;
+    return color != oldDelegate.color; 
   }
 }
 
@@ -142,88 +138,6 @@ Future<ui.Image> getUiImage(String imageAssetPath, int height, int width) async 
   return frameInfo.image;
 }
 
-class MsbOverview extends CustomPainter {
-  final diagram = msb12Diagram;
-
-  Size plotSize = Size(12000, 10000);
-  List<Line> lines = [
-    Line(Point(0, 5000), Point(12000, 5000), width: 4),
-    Line(Point(1000, 1000), Point(1000, 5000)),
-    Line(Point(2000, 1000), Point(2000, 5000)),
-    Line(Point(3000, 1000), Point(3000, 5000)),
-    Line(Point(4000, 1000), Point(4000, 5000)),
-    
-    Line(Point(5000, 5000), Point(5000, 8500)), 
-    Line(Point(6000, 1000), Point(6000, 5000)),
-    Line(Point(7000, 5000), Point(7000, 8500)), 
-    Line(Point(8000, 5000), Point(8000, 8500)), 
-    Line(Point(9000, 1000), Point(9000, 5000)),
-    Line(Point(10000, 5000), Point(10000, 8500)), 
-  ];
-
-  ui.Image? iconMultimeter;
-  
-  MsbOverview(){
-    
-    getUiImage("assets/images/ic_multimeter.png", 64, 64).then((value) => iconMultimeter = value);
-  }
-
-  Point _plotToScreen(Point plot, Size size){
-    return Point(plot.x * size.width ~/ plotSize.width, plot.y * size.height ~/ plotSize.height);
-  }
-
-  Point _screenToPlot(Point screen, Size size){
-    return Point(screen.x * plotSize.width ~/ size.width, screen.y * plotSize.height ~/ size.height);
-  }
-
-  void _fillBackground(Canvas canvas, Size size){
-    final paint = Paint()..color = bgColor;
-    canvas.drawRect(Offset(0, 0) & size, paint);
-  }
-  
-  List<Line> createWireListFromDiagram(){
-    // Horizontal wire
-    final numPos = diagram.numPos.toDouble();
-    return Line()
-  }
-
-  void _drawLines(Canvas canvas, Size size){
-    final paint = Paint()..color = accentColor ..strokeWidth = 2;
-    final lineList = createWireListFromDiagram();
-    for (final line in lineList){
-      final p1 = _plotToScreen(line.p1, size);
-      final p2 = _plotToScreen(line.p2, size);
-      paint.strokeWidth = line.width;
-      canvas.drawLine(p1.toOffset(), p2.toOffset(), paint);
-    }
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    _fillBackground(canvas, size);
-    plotSize = Size(diagram.numPos.toDouble(), 1000);
-    _drawLines(canvas, size);
-
-
-  }
-  @override
-  bool shouldRepaint(MsbOverview oldDelegate){
-    return iconMultimeter != null;
-  }
-}
-
-final msbImageList = [
-  Container(
-    padding: EdgeInsets.all(defaultPadding),
-    child: CustomPaint(
-      size: Size.infinite,
-      painter: MsbOverview(), //3
-    ),
-  ),
-  ImageStack(imagePath: "assets/images/msb12.png", imageWidth: 4122, imageHeight: 1968),
-  ImageStack(imagePath: "assets/images/msb3.png", imageWidth: 4640, imageHeight: 2266),
-  ImageStack(imagePath: "assets/images/msb4.png", imageWidth: 4443, imageHeight: 1727),
-];
 class OverviewDevice extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -236,51 +150,6 @@ class _OverviewDeviceState extends State<OverviewDevice> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
-        Expanded(
-          child: IndexedStack(
-            children: msbImageList,
-            index: _current,
-          )
-        ),
-        SizedBox(height: defaultHalfPadding),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(child: Container()),
-            SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current = 0;
-                });
-              },
-              child: Text('MSB1 + MSB2', style: TextStyle(color: _current == 0 ? accentColor : Colors.white),),
-            ),
-            SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current = 1;
-                });
-              },
-              child: Text('MSB3', style: TextStyle(color: _current == 1 ? accentColor : Colors.white),),
-            ),
-            SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current = 2;
-                });
-              },
-              child: Text('MSB4', style: TextStyle(color: _current == 2 ? accentColor : Colors.white),),
-            ),
-            SizedBox(width: defaultPadding),
-            Expanded(child: Container()),
-          ],
-        )
-      ]),
-    );
+    
   }
 }

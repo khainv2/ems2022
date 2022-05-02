@@ -1,5 +1,7 @@
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/user_control.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/login/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +31,8 @@ class Header extends StatelessWidget {
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        Expanded(child: SearchField()),
+        Expanded(child: Container()),
+        NotificationButton(),
         ProfileCard()
       ],
     );
@@ -64,11 +67,44 @@ class ProfileCard extends StatelessWidget {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("Khải Nguyễn"),
+              child: Text(UserControl().name),
             ),
-          Icon(Icons.keyboard_arrow_down),
+          // Icon(Icons.keyboard_arrow_down),
+          PopupMenuButton(
+            icon: Icon(Icons.keyboard_arrow_down),
+            onSelected: (value) {
+              print('Sign out');
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginApp()),
+                (Route<dynamic> route) => false,
+              );
+            },
+            itemBuilder: (BuildContext bc) {
+              return const [
+                PopupMenuItem(
+                  child: Text("Tài khoản"),
+                  value: '/account',
+                ),
+                PopupMenuItem(
+                  child: Text("Đăng xuất"),
+                  value: '/signout',
+                ),
+              ];
+            },
+          )
         ],
       ),
+    );
+  }
+}
+
+class NotificationButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        child: Icon(Icons.notifications),
+        onPressed: (){},
     );
   }
 }
