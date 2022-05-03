@@ -238,12 +238,13 @@ final msb4 = MSBDiagram(
       name: "FROM MV PANEL", pos: 2, 
       devices: { NodeDeviceType.Transformer, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams ),
-      acb: ACBDevice( name: "Q3.1" )
+      acb: ACBDevice( name: "Q4.1" )
     ),
     VNode(
       name: "FROM LVG1*.1 PANEL", pos: 3, info: "G4",
       devices: { NodeDeviceType.GNode, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
-      multimeter: MultimeterDevice( params: testParams )
+      multimeter: MultimeterDevice( params: testParams),
+      acb: ACBDevice(name: "Q4.2")
     ),
     VNode(
       name: "TĐ-XMỰC\n170KW", pos: 5, 

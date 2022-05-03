@@ -100,7 +100,7 @@ class ProfileCard extends StatelessWidget {
 }
 
 class NotificationButton extends StatelessWidget {
-  @override
+@override
   Widget build(BuildContext context) {
     return TextButton(
         child: Icon(Icons.notifications),

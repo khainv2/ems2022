@@ -21,7 +21,6 @@ class Line {
   Line({required this.p1, required this.p2});
 }
 
-
 class LightPlotter extends CustomPainter {
   final Color color = Colors.yellow;
   final List<Point> points;
@@ -136,20 +135,4 @@ Future<ui.Image> getUiImage(String imageAssetPath, int height, int width) async 
   ui.Codec codec = await ui.instantiateImageCodec(Uint8List.fromList(image.encodePng(resizeImage)));
   ui.FrameInfo frameInfo = await codec.getNextFrame();
   return frameInfo.image;
-}
-
-class OverviewDevice extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _OverviewDeviceState();
-  }
-}
-
-class _OverviewDeviceState extends State<OverviewDevice> {
-  int _current = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    
-  }
 }

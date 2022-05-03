@@ -170,15 +170,14 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
   Widget listParam(BuildContext context){
     final sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : {};
-    print('rebuild');
-    if (!widget.device.name.contains("ACB")){
+    // if (!widget.device.name.contains("ACB")){
       
-      for (final name in paramRealtime.keys){
-        sampleValue[name] = '${paramRealtime[name]!}${getMultimeterUnit(name)}';
+    //   for (final name in paramRealtime.keys){
+    //     sampleValue[name] = '${paramRealtime[name]!}${getMultimeterUnit(name)}';
         
-      }
-      // print("sample multi ${paramRealtime.length} ${sampleValue.length}");
-    }
+    //   }
+    //   // print("sample multi ${paramRealtime.length} ${sampleValue.length}");
+    // }
     final keys = sampleValue.keys.toList();
 
     List<Widget> paramRows = [];
@@ -189,7 +188,9 @@ class _DeviceDetailState extends State<DeviceDetail> {
       final v2 = i + 1 >= keys.length ? "" : sampleValue[k2]!;
       final k3 = i + 2 >= keys.length ? "" : keys[i + 2];
       final v3 = i + 2 >= keys.length ? "" :sampleValue[k3]!;
-      paramRows.add(paramRow(k1, v1, k2, v2, k3, v3));
+      paramRows.add(paramRow(k1, '0 ${getMultimeterUnit(k1)}', k2, '0 ${getMultimeterUnit(k2)}', k3, '0 ${getMultimeterUnit(k3)}'));
+  
+      // paramRows.add(paramRow(k1, v1, k2, v2, k3, v3));
       paramRows.add(SizedBox(height: defaultHalfPadding));
     }
 
