@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:admin/api/realtime.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/sampleVal.dart';
@@ -69,45 +70,35 @@ class DeviceDetail extends StatefulWidget {
 }
 
 class _DeviceDetailState extends State<DeviceDetail> {
-  Map<String, double> paramRealtime = {};
+  Map<String, String> paramRealtime = {};
   int test = 0;
+  Timer? timerQueryData;
 
   void getConnection(){
-    var url = Uri.parse('http://test.thanhnt.com:8080/api/device/MBS_baf8a04003178/status');
-    http.get(url).then((response){
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      if (response.statusCode == 200){
-        Map<String, dynamic> state = jsonDecode(response.body);
-        if (state['data'] != null){
-          print(state['data']['isConnected']);
-          bool isConnected = state['data']['isConnected'];
-          List<dynamic> params = state['data']['params'];
-          
-          for (final param in params){
-            final key = param['p_name'];
-            final value = param['p_value'];
-            paramRealtime[key] = value;
-          }
-          
-          // print("param realtime ${paramRealtime.length}");
-        
-        }
-      }
+    if (widget.device.name == 'Multimeter 1'){
+      print("Get realtime data from MFM 01");
+      getRealtime().then((value){
+        setState(() {
+          paramRealtime = value;
+        });
+      });
+    }
 
-    });
-    setState(() {
-      // paramRealtime["11"] = 12.3;
-      test++;
-    });
   }
   @override
   void initState(){
     super.initState();
     const oneSec = Duration(seconds: 3);
-    Timer.periodic(oneSec, (Timer t) => getConnection());
-    // paramRealtime['U1'] = 12.33333;
-    
+    timerQueryData = Timer.periodic(oneSec, (Timer t) => getConnection());   
+    getConnection(); 
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    if (timerQueryData != null){
+      timerQueryData!.cancel();
+    }
   }
 
   AppBar appBar(BuildContext context){
@@ -169,15 +160,17 @@ class _DeviceDetailState extends State<DeviceDetail> {
   }
 
   Widget listParam(BuildContext context){
-    final sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : multimeterSampleValue;
-    // if (!widget.device.name.contains("ACB")){
-      
-    //   for (final name in paramRealtime.keys){
-    //     sampleValue[name] = '${paramRealtime[name]!}${getMultimeterUnit(name)}';
+    var sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : multimeterSampleValue;
+    if (!widget.device.name.contains("ACB") && paramRealtime.isNotEmpty){
+      sampleValue = paramRealtime;
+      // for (final name in paramRealtime.keys){
+      //   sampleValue[name] = '${paramRealtime[name]!}${getMultimeterUnit(name)}';
         
-    //   }
-    //   // print("sample multi ${paramRealtime.length} ${sampleValue.length}");
-    // }
+      // }
+      // print("sample multi ${paramRealtime.length} ${sampleValue.length}");
+    } else {
+
+    }
     final keys = sampleValue.keys.toList();
 
     List<Widget> paramRows = [];
@@ -188,9 +181,10 @@ class _DeviceDetailState extends State<DeviceDetail> {
       final v2 = i + 1 >= keys.length ? "" : sampleValue[k2]!;
       final k3 = i + 2 >= keys.length ? "" : keys[i + 2];
       final v3 = i + 2 >= keys.length ? "" :sampleValue[k3]!;
-      paramRows.add(paramRow(k1, '0 ${getMultimeterUnit(k1)}', k2, '0 ${getMultimeterUnit(k2)}', k3, '0 ${getMultimeterUnit(k3)}'));
-  
-      // paramRows.add(paramRow(k1, v1, k2, v2, k3, v3));
+      if (paramRealtime.isEmpty)
+        paramRows.add(paramRow(k1, '0 ${getMultimeterUnit(k1)}', k2, '0 ${getMultimeterUnit(k2)}', k3, '0 ${getMultimeterUnit(k3)}'));
+      else 
+        paramRows.add(paramRow(k1, v1, k2, v2, k3, v3));
       paramRows.add(SizedBox(height: defaultHalfPadding));
     }
 
@@ -220,10 +214,10 @@ class _DeviceDetailState extends State<DeviceDetail> {
             children: [
               Expanded(child: Container(),),
               
-              Text(
-                "Thời gian cập nhật: 15 phút trước",
-                style: TextStyle(color: Colors.white54),
-              )
+              // Text(
+              //   "Thời gian cập nhật: 15 phút trước",
+              //   style: TextStyle(color: Colors.white54),
+              // )
             ],
           )
 

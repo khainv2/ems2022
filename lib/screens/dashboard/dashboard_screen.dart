@@ -1,26 +1,41 @@
+import 'dart:async';
+
+import 'package:admin/api/realtime.dart';
+import 'package:admin/controllers/user_control.dart';
+import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
+import 'package:admin/models/sampleVal.dart';
 import 'package:admin/screens/dashboard/components/overviewdevice.dart';
+import 'package:admin/screens/devicelist/components/devicedetail.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class MsbOverview extends CustomPainter {
   MSBDiagram diagram;
+  int mouseX = 0, mouseY = 0;
+  Map<String, String> paramRealtime;
 
-  final paddingTop = 120.0;
-  final paddingBottom = 120.0;
-  final acbWidth = 45.0;
-  final acbHeight = 45.0;
-  final switchHeight = 30.0;
-  final acbVPos = 70.0;
-  final switchVPos = 70.0;
-  final loaderWidth = 20;
-  final loaderHeight = 30;
-  final gnodeSize = 30.0;
-  final transformerSize = 30.0;
+  static final paddingTop = 120.0;
+  static final paddingBottom = 120.0;
+  static final acbWidth = 45.0;
+  static final acbHeight = 45.0;
+  static final switchHeight = 30.0;
+  static final acbVPos = 70.0;
+  static final switchVPos = 70.0;
+  static final loaderWidth = 20;
+  static final loaderHeight = 30;
+  static final gnodeSize = 30.0;
+  static final transformerSize = 30.0;
+
+  static var lastSize = Size(0, 0);
+  var hoverMFMName = "";
   
-  MsbOverview({ required this.diagram }){
+  MsbOverview({ required this.diagram, this.mouseX = 0, this.mouseY = 0, required this.paramRealtime}){
     // getUiImage("assets/images/ic_multimeter.png", 64, 64).then((value) => iconMultimeter = value);
   }
+
+
 
   void drawHorizontalWireList(Canvas canvas, Size size){
     final paint = Paint()
@@ -38,7 +53,7 @@ class MsbOverview extends CustomPainter {
       canvas.drawLine(Offset(t, vmed), Offset(hxmin, vmed), paint);
       t = hxmax;
     }
-    canvas.drawLine(Offset(t, vmed), Offset(w, vmed), paint);
+    canvas.drawLine(Offset(t, vmed), Offset(w - 5, vmed), paint);
   }
 
   void drawVerticalWireList(Canvas canvas, Size size){
@@ -89,7 +104,7 @@ class MsbOverview extends CustomPainter {
       final hx = hnode.pos * width / numPos;
       final p1 = Offset(hx - (acbWidth / 2), vmed);
       final p2 = Offset(hx + (acbWidth / 2), vmed);
-      paint.color = accentColor;
+      paint.color = Colors.white;
       paint.strokeWidth = 2;
       paint.style = PaintingStyle.stroke;
       canvas.drawCircle(p1, 4, paint);
@@ -104,6 +119,9 @@ class MsbOverview extends CustomPainter {
       canvas.drawLine(mid1, mid1 - Offset(0, 24), paint);
       canvas.drawLine(mid2, mid2 - Offset(0, 24), paint);
 
+      canvas.drawCircle(mid - Offset(0, 32), 8, paint);
+      paint.style = PaintingStyle.fill;
+      paint.color = Colors.green;
       canvas.drawCircle(mid - Offset(0, 32), 8, paint);
 
       paint.style = PaintingStyle.fill;
@@ -215,7 +233,6 @@ class MsbOverview extends CustomPainter {
   void drawLoader(Canvas canvas, Size size){
     final numPos = diagram.numPos.toDouble();
     double width = size.width, height = size.height;
-    double vmed = height / 2;
     
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
@@ -240,67 +257,19 @@ class MsbOverview extends CustomPainter {
           textPainter.layout(minWidth: 0, maxWidth: size.width, );
           textPainter.paint(canvas, rect.topCenter - Offset(textPainter.width / 2, textPainter.height * (lines.length - i - 1)  + 20));
         }
-        // if (vnode.devices.contains(NodeDeviceType.Switch)){
-        //   // Vẽ Switch
-        //   final p1 = Offset(hx, vmed - switchVPos + (switchHeight / 2));
-        //   final p2 = Offset(hx, vmed - switchVPos - (switchHeight / 2));
-        //   paint.color = accentColor;
-        //   paint.strokeWidth = 2;
-        //   paint.style = PaintingStyle.stroke;
-        //   canvas.drawCircle(p1, 3, paint);
-        //   canvas.drawCircle(p2, 3, paint);
-        //   paint.strokeWidth = 2;
-        //   canvas.drawLine(p2, p1 + Offset(-15, -5), paint);
-        //   paint.style = PaintingStyle.fill;
-        //   paint.color = secondaryColor;
-        //   canvas.drawCircle(p1, 3, paint);
-        //   canvas.drawCircle(p2, 3, paint);
-        // }
       }
     }
   }
 
-  void drawSwitch(Canvas canvas, Size size){
-    final numPos = diagram.numPos.toDouble();
-    double width = size.width, height = size.height;
-    double vmed = height / 2;
-    
-    final paint = Paint();
-    for (final vnode in diagram.vNodes){
-      final hx = vnode.pos * width / numPos;
-      if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
-        
-        if (vnode.devices.contains(NodeDeviceType.Switch)){
-          // Vẽ Switch
-          final p1 = Offset(hx, vmed - switchVPos + (switchHeight / 2));
-          final p2 = Offset(hx, vmed - switchVPos - (switchHeight / 2));
-          paint.color = accentColor;
-          paint.strokeWidth = 2;
-          paint.style = PaintingStyle.stroke;
-          canvas.drawCircle(p1, 3, paint);
-          canvas.drawCircle(p2, 3, paint);
-          paint.strokeWidth = 2;
-          canvas.drawLine(p2, p1 + Offset(-15, -5), paint);
-          paint.style = PaintingStyle.fill;
-          paint.color = secondaryColor;
-          canvas.drawCircle(p1, 3, paint);
-          canvas.drawCircle(p2, 3, paint);
-        }
-      }
-    }
-  }
-
-  void drawMultimeter(Canvas canvas, Offset offset){
-   
+  void drawMultimeter(Canvas canvas, Offset offset, String name){
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final textStyleWhite = TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold);
+    final textStyleWhite = TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.normal);
     final textStyleBlack = TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold);
-    final textStyleAccent = TextStyle(color: accentColor, fontSize: 12);
 
     final r = RRect.fromLTRBR(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120, Radius.circular(10));
     paint.style = PaintingStyle.stroke;
-    paint.color = accentColor;
+    paint.color = name == hoverMFMName ? accentColor.withAlpha(200) : accentColor;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 1;
 
@@ -318,7 +287,7 @@ class MsbOverview extends CustomPainter {
     canvas.drawRect(r2, paint);
     
     // Vẽ title của multimeter
-    textPainter.text = TextSpan(text: "MFM", style: textStyleBlack);
+    textPainter.text = TextSpan(text: name, style: textStyleBlack);
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(6, 5));
 
@@ -328,10 +297,11 @@ class MsbOverview extends CustomPainter {
     canvas.drawCircle(r2.bottomCenter + Offset(-20, 10), 4, paint);
     canvas.drawCircle(r2.bottomCenter + Offset( 20, 10), 4, paint);
 
-    final xKeyOffset = 10.0;
-    final xValueOffset = 32.0;
+    final xKeyOffset = 4.0;
+    final xValueOffset = 22.0;
     final yOffset = 30.0;
     final ySpacing = 16;
+
 
     textPainter.text = TextSpan(text: "U1", style: textStyleWhite);
     textPainter.layout(minWidth: 0, maxWidth: 500);
@@ -349,21 +319,42 @@ class MsbOverview extends CustomPainter {
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xKeyOffset, yOffset + ySpacing * 3));
 
-    textPainter.text = TextSpan(text: "0 V", style: textStyleWhite);
-    textPainter.layout(minWidth: 0, maxWidth: 500);
-    textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset));
+    // test
+    if (name == "MFM 01" && paramRealtime.isNotEmpty){
+      textPainter.text = TextSpan(text: paramRealtime['U1'], style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset));
 
-    textPainter.text = TextSpan(text: "0 A", style: textStyleWhite);
-    textPainter.layout(minWidth: 0, maxWidth: 500);
-    textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 1));
+      textPainter.text = TextSpan(text: paramRealtime['I1'], style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 1));
 
-    textPainter.text = TextSpan(text: "0 Hz", style: textStyleWhite);
-    textPainter.layout(minWidth: 0, maxWidth: 500);
-    textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 2));
+      textPainter.text = TextSpan(text: paramRealtime['F'], style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 2));
 
-    textPainter.text = TextSpan(text: "0 W", style: textStyleWhite);
-    textPainter.layout(minWidth: 0, maxWidth: 500);
-    textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 3));
+      textPainter.text = TextSpan(text: paramRealtime['P'], style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 3));
+    } else {
+      textPainter.text = TextSpan(text: "0 V", style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset));
+
+      textPainter.text = TextSpan(text: "0 A", style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 1));
+
+      textPainter.text = TextSpan(text: "0 Hz", style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 2));
+
+      textPainter.text = TextSpan(text: "0 W", style: textStyleWhite);
+      textPainter.layout(minWidth: 0, maxWidth: 500);
+      textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 3));
+    }
+
+
   }
 
   void drawMultimeterList(Canvas canvas, Size size){
@@ -377,11 +368,11 @@ class MsbOverview extends CustomPainter {
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
         // Vẽ multimeter và các tham số 
         if (vnode.devices.contains(NodeDeviceType.Multimeter)){
-          drawMultimeter(canvas, Offset(hx + 8, paddingTop + 30));
+          drawMultimeter(canvas, Offset(hx + 8, paddingTop + 30), vnode.multimeter!.name);
         }
       } else if (vnode.devices.contains(NodeDeviceType.GNode) || vnode.devices.contains(NodeDeviceType.Transformer)){
         if (vnode.devices.contains(NodeDeviceType.Multimeter)){
-          drawMultimeter(canvas, Offset(hx + 8, vmed + 30));
+          drawMultimeter(canvas, Offset(hx + 8, vmed + 30), vnode.multimeter!.name);
         }
       }
     }
@@ -455,9 +446,7 @@ class MsbOverview extends CustomPainter {
         canvas.drawLine(tpos21, tpos22, paint);
         canvas.drawLine(tpos21, tpos23, paint);
         canvas.drawLine(tpos23, tpos22, paint);
-      
-
-
+    
         // Vẽ mô tả của GNode và Transformer
         textPainter.text = TextSpan(text: vnode.name, style: textStyle);
         textPainter.layout(minWidth: 0, maxWidth: size.width);
@@ -466,9 +455,48 @@ class MsbOverview extends CustomPainter {
       }
     }
   }
+
+  void drawType34(Canvas canvas, Size size){
+    double width = size.width, height = size.height;
+    double vmed = height / 2;
+    if (diagram.type == MSBDiagramType.MSB3){
+      final path = Path();
+      path.moveTo(width - 30, vmed - 10);
+      path.lineTo(width - 30, vmed + 10);
+      path.lineTo(width, vmed);
+      final paint = Paint();
+      paint.style = PaintingStyle.fill;
+      paint.color = accentColor;
+      canvas.drawPath(path, paint);
+
+      final textPainter = TextPainter(textDirection: TextDirection.ltr);
+      final textStyle = TextStyle(color: Colors.white60, fontSize: 13);
+
+      textPainter.text = TextSpan(text: "MSB4", style: textStyle);
+      textPainter.layout(minWidth: 0, maxWidth: size.width);
+      textPainter.paint(canvas, Offset(width - textPainter.width - 2, vmed + textPainter.height + 20));
+    } else if (diagram.type == MSBDiagramType.MSB4){
+      final path = Path();
+      path.moveTo(0, vmed - 10);
+      path.lineTo(0, vmed + 10);
+      path.lineTo(30, vmed);
+      final paint = Paint();
+      paint.style = PaintingStyle.fill;
+      paint.color = accentColor;
+      canvas.drawPath(path, paint);
+
+      final textPainter = TextPainter(textDirection: TextDirection.ltr);
+      final textStyle = TextStyle(color: Colors.white60, fontSize: 13);
+
+      textPainter.text = TextSpan(text: "MSB3", style: textStyle);
+      textPainter.layout(minWidth: 0, maxWidth: size.width);
+      textPainter.paint(canvas, Offset(2, vmed + textPainter.height + 5));
+    }
+  }
   
   @override
   void paint(Canvas canvas, Size size) {
+    lastSize = Size(size.width, size.height);
 
     drawHorizontalWireList(canvas, size);
     drawVerticalWireList(canvas, size);
@@ -482,52 +510,51 @@ class MsbOverview extends CustomPainter {
     drawGNode(canvas, size);
     drawTransformerList(canvas, size);
     
+    drawType34(canvas, size);
+
+    // final paint = Paint()
+    // ..color = Colors.red;
+    // canvas.drawCircle(Offset(mouseX.toDouble(), mouseY.toDouble()), 22, paint);
   }
+
+
   @override
   bool shouldRepaint(MsbOverview oldDelegate){
-    // return iconMultimeter != null;
-    return false;
+    if (lastSize.width == 0 || lastSize.height == 0){
+      return false;
+    }
+    if (paramRealtime != oldDelegate.paramRealtime)
+      return true;
+
+    final numPos = diagram.numPos.toDouble();
+    double width = lastSize.width, height = lastSize.height;
+    double vmed = height / 2;
+    
+    for (final vnode in diagram.vNodes){
+      final hx = vnode.pos * width / numPos;
+      if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
+        // Vẽ multimeter và các tham số 
+        if (vnode.devices.contains(NodeDeviceType.Multimeter)){
+          final offset = Offset(hx + 8, paddingTop + 30);
+          final r = Rect.fromLTRB(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120);
+          if (r.contains(Offset(mouseX.toDouble(), mouseY.toDouble()))){
+            hoverMFMName = vnode.multimeter!.name;
+          }
+        }
+      } else if (vnode.devices.contains(NodeDeviceType.GNode) || vnode.devices.contains(NodeDeviceType.Transformer)){
+        if (vnode.devices.contains(NodeDeviceType.Multimeter)){
+          final offset = Offset(hx + 8, vmed + 30);
+          final r = Rect.fromLTRB(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120);
+          if (r.contains(Offset(mouseX.toDouble(), mouseY.toDouble()))){
+            hoverMFMName = vnode.multimeter!.name;
+          }
+        }
+      }
+    }
+    return hoverMFMName != oldDelegate.hoverMFMName;
   }
 }
 
-final msbImageList = [
-  Container(
-    padding: EdgeInsets.all(defaultPadding),
-    decoration: BoxDecoration(
-      color: secondaryColor,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-    ),
-    child: CustomPaint(
-      size: Size.infinite,
-      painter: MsbOverview(diagram: msb12Diagram), //3
-    ),
-  ),
-  Container(
-    padding: EdgeInsets.all(defaultPadding),
-    decoration: BoxDecoration(
-      color: secondaryColor,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-    ),
-    child: CustomPaint(
-      size: Size.infinite,
-      painter: MsbOverview(diagram: msb3), //3
-    ),
-  ),
-  Container(
-    padding: EdgeInsets.all(defaultPadding),
-    decoration: BoxDecoration(
-      color: secondaryColor,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-    ),
-    child: CustomPaint(
-      size: Size.infinite,
-      painter: MsbOverview(diagram: msb4), //3
-    ),
-  ),
-  ImageStack(imagePath: "assets/images/msb12.png", imageWidth: 4122, imageHeight: 1968),
-  ImageStack(imagePath: "assets/images/msb3.png", imageWidth: 4640, imageHeight: 2266),
-  ImageStack(imagePath: "assets/images/msb4.png", imageWidth: 4443, imageHeight: 1727),
-];
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -536,13 +563,168 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _current = 0;
+  int _x = 0, _y = 0;
+  final _listMSB = [
+    msb12Diagram,
+    msb3,
+    msb4
+  ];
+  
+  Map<String, String> paramRealtime = {};
+
+  Timer? timerQueryData;
+
+  void getConnection(){
+    final userControl = UserControl();
+    if (userControl.currentStackIndex == 0){
+      print("Get realtime data from MFM 01");
+      getRealtime().then((value){
+        setState(() {
+          paramRealtime = value;
+        });
+      });
+    }
+    
+  }
+  @override
+  void initState(){
+    super.initState();
+    const oneSec = Duration(seconds: 3);
+    timerQueryData = Timer.periodic(oneSec, (Timer t) => getConnection());   
+    // getConnection(); 
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    if (timerQueryData != null){
+      timerQueryData!.cancel();
+    }
+  }
+
+  void _showMSBDetail(String name){
+    // Find msb name
+    int index = int.parse(name.split(' ').last);
+    final device = indexToDevice(index);
+    if (device != null){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context){
+          return DeviceDetail(
+            device: Device(
+              id: 1,
+              name: device.name,
+              model: device.model,
+              address: device.address!,
+              online: false,
+              note: device.note!
+            ),
+          );
+        }),
+      );
+    }
+  }
+  
+  void _onTabDown(TapDownDetails details){
+    // print(details.localPosition);
+    final mouseX = details.localPosition.dx;
+    final mouseY = details.localPosition.dy;
+    
+    // print('Size diagram ${}');
+    final msb =_listMSB[_current];
+    final size = MsbOverview.lastSize;
+    final vmed = size.height / 2;
+    for (final vnode in msb.vNodes){
+      final hx = vnode.pos * size.width / msb.numPos;
+      if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
+        // Vẽ multimeter và các tham số 
+        if (vnode.devices.contains(NodeDeviceType.Multimeter)){
+          final offset = Offset(hx + 8, MsbOverview.paddingTop + 30);
+          final r = Rect.fromLTRB(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120);
+          if (r.contains(Offset(mouseX.toDouble(), mouseY.toDouble()))){
+            print('Click mfm in ${vnode.multimeter!.name}');
+            _showMSBDetail(vnode.multimeter!.name);
+          }
+        }
+      } else if (vnode.devices.contains(NodeDeviceType.GNode) || vnode.devices.contains(NodeDeviceType.Transformer)){
+        if (vnode.devices.contains(NodeDeviceType.Multimeter)){
+          final offset = Offset(hx + 8, vmed + 30);
+          final r = Rect.fromLTRB(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120);
+          if (r.contains(Offset(mouseX.toDouble(), mouseY.toDouble()))){
+            print('Click mfm in ${vnode.multimeter!.name}');
+            _showMSBDetail(vnode.multimeter!.name);
+          }
+        }
+      }
+    }
+  }
+
+  void _onHover(PointerHoverEvent details){
+    setState(() {
+      _x = details.localPosition.dx.toInt();
+      _y = details.localPosition.dy.toInt();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
         Expanded(
           child: IndexedStack(
-            children: msbImageList,
+            children: [
+              Container(
+                padding: EdgeInsets.all(defaultPadding),
+                decoration: BoxDecoration(
+                  color: secondaryColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: GestureDetector(
+                  onTapDown: _onTabDown,
+                  child: MouseRegion(
+                    onHover: _onHover,
+                    child: CustomPaint(
+                      size: Size.infinite,
+                      painter: MsbOverview(diagram: msb12Diagram, mouseX: _x, mouseY: _y, paramRealtime: paramRealtime),
+                    ),
+                  ),
+                )
+              ),
+              Container(
+                padding: EdgeInsets.all(defaultPadding),
+                decoration: BoxDecoration(
+                  color: secondaryColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: GestureDetector(
+                  onTapDown: _onTabDown,
+                  child: MouseRegion(
+                    onHover: _onHover,
+                    child: CustomPaint(
+                      size: Size.infinite,
+                      painter: MsbOverview(diagram: msb3, mouseX: _x, mouseY: _y, paramRealtime: {}),
+                    ),
+                  ),
+                )
+              ),
+              Container(
+                padding: EdgeInsets.all(defaultPadding),
+                decoration: BoxDecoration(
+                  color: secondaryColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: GestureDetector(
+                  onTapDown: _onTabDown,
+                  child: MouseRegion(
+                    onHover: _onHover,
+                    child: CustomPaint(
+                      size: Size.infinite,
+                      painter: MsbOverview(diagram: msb4, mouseX: _x, mouseY: _y, paramRealtime: {}),
+                    ),
+                  ),
+                )
+              ),
+            ],
             index: _current,
           )
         ),

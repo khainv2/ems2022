@@ -13,4 +13,8 @@ class UserControl {
   String name = 'Admin';
   String role = '';
   String token = '';
+
+  int currentStackIndex = 0;
+
+  
 }

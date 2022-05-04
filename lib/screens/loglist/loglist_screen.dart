@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:admin/api/systemlog.dart';
+import 'package:admin/controllers/user_control.dart';
+import 'package:admin/models/event.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +16,31 @@ class LogListScreen extends StatefulWidget {
   State<LogListScreen> createState() => _LogListScreenState();
 }
 
-
 class _LogListScreenState extends State<LogListScreen> {
+  Timer? timerQueryData;
+  List<Event> events = [];
+  final defaultPageSize = 15;
+  int currentPage = 0;
+  int countPage = 0;
+  
+  @override
+  void initState(){
+    super.initState();
+    timerQueryData = Timer.periodic(Duration(seconds: 3), (Timer t){
+      final userControl = UserControl();
+      if (userControl.currentStackIndex == 3){
+        getSystemLog(1, defaultPageSize).then((value){
+          
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,17 +53,15 @@ class _LogListScreenState extends State<LogListScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Danh sách thiết bị",
+            "Danh sách sự kiện",
             style: Theme.of(context).textTheme.subtitle1,
           ),
           Expanded(
-            // child: Scrollbar(
-            //   isAlwaysShown: true,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  width: double.infinity,
-                  child: DataTable(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                width: double.infinity,
+                child: DataTable(
                   columnSpacing: 0,
                   showCheckboxColumn: false,
                   columns: [
@@ -71,11 +97,18 @@ class _LogListScreenState extends State<LogListScreen> {
                     },
                   ),
                 ),
-                )
-              // )
+              )
             )
-            
           ),
+          Row(
+            children: [
+              ElevatedButton(onPressed: (){}, child: Text("1")),
+              ElevatedButton(onPressed: (){}, child: Text("2")),
+              ElevatedButton(onPressed: (){}, child: Text("3")),
+              Text("..."),
+              ElevatedButton(onPressed: (){}, child: Text("3")),
+            ],
+          )
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/controllers/user_control.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/components/header.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
@@ -54,6 +55,8 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _stackIndex = index;
     });
+    final userControl = UserControl();
+    userControl.currentStackIndex = index;
   }
 
   @override

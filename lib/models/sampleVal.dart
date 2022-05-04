@@ -457,6 +457,21 @@ var listMsbSample = [
   ),
 ];
 
+Device? indexToDevice(int mfmIndex){
+  for (final msb in listMsbSample){
+    for (final device in msb.deviceList!){
+      if (!device.name.startsWith("Multi")){
+        continue;
+      }
+      final deviceIndex = int.parse(device.name.split(' ').last);
+      if (deviceIndex == mfmIndex){
+        return device;
+      }
+    }
+    return null;
+  }
+}
+
 final sampleEventList = [
 
   
