@@ -24,7 +24,7 @@ class MsbOverview extends CustomPainter {
 
   void drawHorizontalWireList(Canvas canvas, Size size){
     final paint = Paint()
-      ..color = Colors.white70
+      ..color = Colors.green
       ..strokeWidth = 3;
     final numPos = diagram.numPos.toDouble();
     double w = size.width, h = size.height;
@@ -42,8 +42,8 @@ class MsbOverview extends CustomPainter {
   }
 
   void drawVerticalWireList(Canvas canvas, Size size){
-    final paint = Paint()
-      ..color = Colors.white70
+    final paint = Paint() 
+      ..color = Colors.green
       ..strokeWidth = 2;
     final numPos = diagram.numPos.toDouble();
     double w = size.width, h = size.height;
@@ -53,8 +53,9 @@ class MsbOverview extends CustomPainter {
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
         // Draw load: line from mid to top
         if (vnode.devices.contains(NodeDeviceType.Switch)){
-          canvas.drawLine(Offset(hx, vmed), Offset(hx, vmed - switchVPos + (switchHeight / 2)), paint);
-          canvas.drawLine(Offset(hx, vmed - switchVPos - (switchHeight / 2)), Offset(hx, paddingTop), paint);
+          canvas.drawLine(Offset(hx, vmed), Offset(hx, paddingTop), paint);
+          // canvas.drawLine(Offset(hx, vmed), Offset(hx, vmed - switchVPos + (switchHeight / 2)), paint);
+          // canvas.drawLine(Offset(hx, vmed - switchVPos - (switchHeight / 2)), Offset(hx, paddingTop), paint);
         } else if (vnode.devices.contains(NodeDeviceType.ACB)){
           canvas.drawLine(Offset(hx, vmed), Offset(hx, vmed - acbVPos + (acbHeight / 2)), paint);
           canvas.drawLine(Offset(hx, vmed - acbVPos - (acbHeight / 2)), Offset(hx, paddingTop), paint);
@@ -122,32 +123,69 @@ class MsbOverview extends CustomPainter {
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
     final textStyle = TextStyle(color: Colors.white60, fontSize: 11);
 
+
+    if (state == ACBDeviceState.Off){
+      final p1 = offset + Offset(0, acbHeight / 2);
+      final p2 = offset - Offset(0, acbHeight / 2);
+
+      final mid = (p1 + p2) / 2;
+      final mid1 = mid - Offset(0, 3);
+      final mid2 = mid + Offset(0, 3);
+      paint.strokeWidth = 2;
+      paint.style = PaintingStyle.stroke;
+      paint.color = Colors.white;
+      canvas.drawCircle(p1, 4, paint);
+      canvas.drawCircle(p2, 4, paint);
+      paint.strokeWidth = 2;
+      canvas.drawLine(p2, p1, paint);
+
+      paint.strokeWidth = 1;
+      canvas.drawLine(mid1, mid1 - Offset(24, 0), paint);
+      canvas.drawLine(mid2, mid2 - Offset(24, 0), paint);
+
+      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+      paint.style = PaintingStyle.fill;
+      paint.color = Colors.green;
+      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+
+      paint.style = PaintingStyle.fill;
+      paint.color = secondaryColor;
+      canvas.drawCircle(p1, 4, paint);
+      canvas.drawCircle(p2, 4, paint);
+    } else {
+      final p1 = offset + Offset(-20, acbHeight / 2 - 5);
+      final p2 = offset - Offset(0, acbHeight / 2);
+
+      final mid = (p1 + p2) / 2;
+      final mid1 = mid - Offset(0, 3);
+      final mid2 = mid + Offset(0, 3);
+      paint.strokeWidth = 2;
+      paint.style = PaintingStyle.stroke;
+      paint.color = Colors.white;
+      canvas.drawCircle(p1, 4, paint);
+      canvas.drawCircle(p2, 4, paint);
+      paint.strokeWidth = 2;
+      canvas.drawLine(p2, p1, paint);
+
+      paint.strokeWidth = 1;
+      canvas.drawLine(mid1, mid1 - Offset(24, 0), paint);
+      canvas.drawLine(mid2, mid2 - Offset(24, 0), paint); 
+
+      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+      paint.style = PaintingStyle.fill;
+      paint.color = Colors.red;
+      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+
+      paint.style = PaintingStyle.fill;
+      paint.color = secondaryColor;
+      canvas.drawCircle(p1, 4, paint);
+      canvas.drawCircle(p2, 4, paint);
+    }
+    
     final p1 = offset + Offset(0, acbHeight / 2);
     final p2 = offset - Offset(0, acbHeight / 2);
-    // final p1 = Offset(hx, vmed - acbVPos + (acbHeight / 2));
-    // final p2 = Offset(hx, vmed - acbVPos - (acbHeight / 2));
-    paint.strokeWidth = 2;
-    paint.style = PaintingStyle.stroke;
-    paint.color = accentColor;
-    canvas.drawCircle(p1, 4, paint);
-    canvas.drawCircle(p2, 4, paint);
-    paint.strokeWidth = 2;
-    canvas.drawLine(p2, p1, paint);
 
-    paint.strokeWidth = 1;
     final mid = (p1 + p2) / 2;
-    final mid1 = mid - Offset(0, 3);
-    final mid2 = mid + Offset(0, 3);
-    canvas.drawLine(mid1, mid1 - Offset(24, 0), paint);
-    canvas.drawLine(mid2, mid2 - Offset(24, 0), paint);
-
-    canvas.drawCircle(mid - Offset(32, 0), 8, paint);
-
-    paint.style = PaintingStyle.fill;
-    paint.color = secondaryColor;
-    canvas.drawCircle(p1, 4, paint);
-    canvas.drawCircle(p2, 4, paint);
-
     textPainter.text = TextSpan(text: name, style: textStyle);
     textPainter.layout(minWidth: 0, maxWidth: 500, );
     textPainter.paint(canvas, mid + Offset(10, - textPainter.height / 2));
@@ -202,22 +240,22 @@ class MsbOverview extends CustomPainter {
           textPainter.layout(minWidth: 0, maxWidth: size.width, );
           textPainter.paint(canvas, rect.topCenter - Offset(textPainter.width / 2, textPainter.height * (lines.length - i - 1)  + 20));
         }
-        if (vnode.devices.contains(NodeDeviceType.Switch)){
-          // Vẽ Switch
-          final p1 = Offset(hx, vmed - switchVPos + (switchHeight / 2));
-          final p2 = Offset(hx, vmed - switchVPos - (switchHeight / 2));
-          paint.color = accentColor;
-          paint.strokeWidth = 2;
-          paint.style = PaintingStyle.stroke;
-          canvas.drawCircle(p1, 3, paint);
-          canvas.drawCircle(p2, 3, paint);
-          paint.strokeWidth = 2;
-          canvas.drawLine(p2, p1 + Offset(-15, -5), paint);
-          paint.style = PaintingStyle.fill;
-          paint.color = secondaryColor;
-          canvas.drawCircle(p1, 3, paint);
-          canvas.drawCircle(p2, 3, paint);
-        }
+        // if (vnode.devices.contains(NodeDeviceType.Switch)){
+        //   // Vẽ Switch
+        //   final p1 = Offset(hx, vmed - switchVPos + (switchHeight / 2));
+        //   final p2 = Offset(hx, vmed - switchVPos - (switchHeight / 2));
+        //   paint.color = accentColor;
+        //   paint.strokeWidth = 2;
+        //   paint.style = PaintingStyle.stroke;
+        //   canvas.drawCircle(p1, 3, paint);
+        //   canvas.drawCircle(p2, 3, paint);
+        //   paint.strokeWidth = 2;
+        //   canvas.drawLine(p2, p1 + Offset(-15, -5), paint);
+        //   paint.style = PaintingStyle.fill;
+        //   paint.color = secondaryColor;
+        //   canvas.drawCircle(p1, 3, paint);
+        //   canvas.drawCircle(p2, 3, paint);
+        // }
       }
     }
   }
@@ -280,7 +318,7 @@ class MsbOverview extends CustomPainter {
     canvas.drawRect(r2, paint);
     
     // Vẽ title của multimeter
-    textPainter.text = TextSpan(text: "M1", style: textStyleBlack);
+    textPainter.text = TextSpan(text: "MFM", style: textStyleBlack);
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(6, 5));
 
@@ -311,19 +349,19 @@ class MsbOverview extends CustomPainter {
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xKeyOffset, yOffset + ySpacing * 3));
 
-    textPainter.text = TextSpan(text: "0 V", style: textStyleAccent);
+    textPainter.text = TextSpan(text: "0 V", style: textStyleWhite);
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset));
 
-    textPainter.text = TextSpan(text: "0 A", style: textStyleAccent);
+    textPainter.text = TextSpan(text: "0 A", style: textStyleWhite);
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 1));
 
-    textPainter.text = TextSpan(text: "0 Hz", style: textStyleAccent);
+    textPainter.text = TextSpan(text: "0 Hz", style: textStyleWhite);
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 2));
 
-    textPainter.text = TextSpan(text: "0 W", style: textStyleAccent);
+    textPainter.text = TextSpan(text: "0 W", style: textStyleWhite);
     textPainter.layout(minWidth: 0, maxWidth: 500);
     textPainter.paint(canvas, Offset(r.left, r.top) + Offset(xValueOffset, yOffset + ySpacing * 3));
   }

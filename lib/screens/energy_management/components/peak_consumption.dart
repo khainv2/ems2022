@@ -66,11 +66,11 @@ class PeakConsumption extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: DayInfoCart(title: "Hôm qua", value: "40.281W", valueColor: accentColor,),
+            child: DayInfoCart(title: "Hôm qua", value: "0W", valueColor: accentColor,),
           ),
           SizedBox(height: defaultPadding),
           Expanded(
-            child: DayInfoCart(title: "Hôm nay", value: "45.283W", valueColor: primaryColor,),
+            child: DayInfoCart(title: "Hôm nay", value: "0W", valueColor: primaryColor,),
           )
           
         ],

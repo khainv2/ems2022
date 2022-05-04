@@ -73,15 +73,15 @@ class _ChainAnalysisState extends State<ChainAnalysis> {
           Row(
             children: [
               Expanded(
-                child: EnergyCart(title: "Hôm nay", value: "40.281 kWh", valueColor: primaryColor,),
+                child: EnergyCart(title: "Hôm nay", value: "0 kWh", valueColor: primaryColor,),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Hôm qua", value: "45.283 kWh", valueColor: accentColor,),
+                child: EnergyCart(title: "Hôm qua", value: "0 kWh", valueColor: accentColor,),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Xu hướng", value: "-4.22 kWh", valueColor: diffColor,),
+                child: EnergyCart(title: "Xu hướng", value: "0 kWh", valueColor: diffColor,),
               ),
             ],
           ),
@@ -89,15 +89,15 @@ class _ChainAnalysisState extends State<ChainAnalysis> {
           Row(
             children: [
               Expanded(
-                child: EnergyCart(title: "Tháng này", value: "44212 kWh", valueColor: primaryColor),
+                child: EnergyCart(title: "Tháng này", value: "0 kWh", valueColor: primaryColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Tháng trước", value: "38482 kWh", valueColor: accentColor),
+                child: EnergyCart(title: "Tháng trước", value: "0 kWh", valueColor: accentColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Xu hướng", value: "+4828 kWh", valueColor: diffColor),
+                child: EnergyCart(title: "Xu hướng", value: "0 kWh", valueColor: diffColor),
               ),
             ],
           ),
@@ -105,15 +105,15 @@ class _ChainAnalysisState extends State<ChainAnalysis> {
           Row(
             children: [
               Expanded(
-                child: EnergyCart(title: "Năm này", value: "442120 kWh", valueColor: primaryColor),
+                child: EnergyCart(title: "Năm này", value: "0 kWh", valueColor: primaryColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Năm trước", value: "282828 kWh", valueColor: accentColor),
+                child: EnergyCart(title: "Năm trước", value: "0 kWh", valueColor: accentColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Xu hướng", value: "+23121 kWh", valueColor: diffColor),
+                child: EnergyCart(title: "Xu hướng", value: "0 kWh", valueColor: diffColor),
               ),
             ],
           ),

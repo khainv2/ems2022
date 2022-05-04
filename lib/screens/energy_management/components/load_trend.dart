@@ -32,7 +32,7 @@ class _LoadTrendChartState extends State<LoadTrendChart> {
           x: e.hour, 
           barRods: [
             BarChartRodData(
-              toY: e.val, 
+              toY: 0, //e.val, 
               width: 10, 
               colors: [primaryColor]
             ),
@@ -42,7 +42,7 @@ class _LoadTrendChartState extends State<LoadTrendChart> {
           x: e.day, 
           barRods: [
             BarChartRodData(
-              toY: e.val, 
+              toY: 0, //e.val, 
               width: 10, 
               colors: [primaryColor]
             ),

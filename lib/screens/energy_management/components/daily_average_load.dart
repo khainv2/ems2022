@@ -1,4 +1,5 @@
 import 'package:admin/constants.dart';
+import 'package:admin/models/energyinfo.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,11 @@ class DailyAverageLoadChart extends StatefulWidget {
 class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
   @override
   Widget build(BuildContext context) {
+    List<DailyEnergyInfo> list = [];
+    for (int i = 0; i < 23; i++){
+      list.add(sampleDailyEnergy[i]);
+    }
+
     return BarChart(
       BarChartData(
         borderData: FlBorderData(
@@ -27,16 +33,16 @@ class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
           )
         ),
         groupsSpace: 6,
-        barGroups: sampleDailyEnergy.map((e) => BarChartGroupData(
+        barGroups: list.map((e) => BarChartGroupData(
           x: e.hour, 
           barRods: [
             BarChartRodData(
-              toY: e.val, 
+              toY: 0, 
               width: 10, 
               colors: [accentColor]
             ),
             BarChartRodData(
-              toY: e.val - e.hour + 12, 
+              toY: 0, //e.val - e.hour + 12, 
               width: 10, 
               colors: [primaryColor]
             )

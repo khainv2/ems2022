@@ -169,7 +169,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
   }
 
   Widget listParam(BuildContext context){
-    final sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : {};
+    final sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : multimeterSampleValue;
     // if (!widget.device.name.contains("ACB")){
       
     //   for (final name in paramRealtime.keys){
@@ -285,13 +285,13 @@ class _DeviceDetailState extends State<DeviceDetail> {
                 lineBarsData: [
                   LineChartBarData(
                     spots: [
-                      FlSpot(1, 20),
-                      FlSpot(2, 20),
-                      FlSpot(3, 40),
-                      FlSpot(4, 30),
-                      FlSpot(5, 60),
-                      FlSpot(6, 40),
-                      FlSpot(7, 35),
+                      FlSpot(1, 0),
+                      FlSpot(2, 0),
+                      FlSpot(3, 0),
+                      FlSpot(4, 0),
+                      FlSpot(5, 0),
+                      FlSpot(6, 0),
+                      FlSpot(7, 0),
                     ]
                   )
                 ]

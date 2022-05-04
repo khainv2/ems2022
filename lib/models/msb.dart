@@ -110,7 +110,7 @@ final msb12Diagram = MSBDiagram(
     VNode(
       name: "PHÒNG MÁY IN PHỦ\nTĐ-ĐL1\n2190KW", pos: 80, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.ACB },
-      acb: ACBDevice( name: "Q1.4" )
+      acb: ACBDevice( name: "Q1.4", state: ACBDeviceState.On )
     ),
     VNode(
       name: "FROM MV PANEL", pos: 90, 
@@ -122,7 +122,7 @@ final msb12Diagram = MSBDiagram(
       name: "FROM MV PANEL", pos: 110, 
       devices: { NodeDeviceType.Transformer, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams ),
-      acb: ACBDevice( name: "Q2.1" )
+      acb: ACBDevice( name: "Q2.1" , state: ACBDeviceState.On )
     ),
     VNode(
       name: "PHÒNG MÁY IN PHỦ\nTĐ-ĐL2\n3270KW", pos: 120, 
