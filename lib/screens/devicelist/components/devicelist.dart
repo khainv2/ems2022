@@ -23,29 +23,27 @@ class _DeviceListState extends State<DeviceList> {
   bool _isConnected = false;
 
   void getConnection(){
-    var url = Uri.parse('http://test.thanhnt.com:8080/api/device/MBS_baf8a04003178/status');
-    http.get(url).then((response){
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      if (response.statusCode == 200){
-        Map<String, dynamic> state = jsonDecode(response.body);
-        if (state['data'] != null){
-          print(state['data']['isConnected']);
-          bool isConnected = state['data']['isConnected'];
-          setState(() {
-            _isConnected = isConnected;
-          });
-        }
-      }
-
-    });
+    // var url = Uri.parse('http://test.thanhnt.com:8080/api/device/MBS_baf8a04003178/status');
+    // http.get(url).then((response){
+    //   print('Response status: ${response.statusCode}');
+    //   print('Response body: ${response.body}');
+    //   if (response.statusCode == 200){
+    //     Map<String, dynamic> state = jsonDecode(response.body);
+    //     if (state['data'] != null){
+    //       print(state['data']['isConnected']);
+    //       bool isConnected = state['data']['isConnected'];
+    //       setState(() {
+    //         _isConnected = isConnected;
+    //       });
+    //     }
+    //   }
+    // });
   }
   @override
   void initState(){
     super.initState();
-    
-
   }
+  
   @override
   Widget build(BuildContext context) {
     final deviceList = widget.msb.deviceList ?? [];

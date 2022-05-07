@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:admin/api/systemlog.dart';
 import 'package:admin/controllers/user_control.dart';
 import 'package:admin/models/event.dart';
+import 'package:admin/models/log.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:flutter/material.dart';
 
@@ -18,22 +19,30 @@ class LogListScreen extends StatefulWidget {
 
 class _LogListScreenState extends State<LogListScreen> {
   Timer? timerQueryData;
-  List<Event> events = [];
-  final defaultPageSize = 15;
-  int currentPage = 0;
-  int countPage = 0;
+  List<Log> logs = [];
+  final defaultPageSize = 10;
+  int currentPage = 1;
+  int countPage = 1;
   
+  void getDataLogs(){
+    getSystemLog(currentPage, defaultPageSize).then((value){
+      setState(() {
+        logs = value.eventList;
+        countPage = value.totalPage;
+        currentPage = value.currentPage;
+      });
+    });
+  }
   @override
   void initState(){
     super.initState();
     timerQueryData = Timer.periodic(Duration(seconds: 3), (Timer t){
       final userControl = UserControl();
       if (userControl.currentStackIndex == 3){
-        getSystemLog(1, defaultPageSize).then((value){
-          
-        });
+        getDataLogs();
       }
     });
+    getDataLogs();
   }
 
   @override
@@ -41,8 +50,50 @@ class _LogListScreenState extends State<LogListScreen> {
     super.dispose();
   }
 
+  List<Widget> createPageButton(){
+    List<Widget> output = [];
+    for (int i = 1; i <= countPage; i++){
+      if (i == currentPage){
+        final currentPageText = Container(
+          child: Center(child: Text(  
+            i.toString()
+          ),),
+          width: 40,
+        );
+        output.add(currentPageText);
+      } else {
+        final btPage = ElevatedButton(
+          child: Text(
+            i.toString()
+          ),
+          onPressed: (){
+            getSystemLog(i, defaultPageSize).then((value){
+            setState(() {
+              logs = value.eventList;
+              countPage = value.totalPage;
+              currentPage = value.currentPage;
+            });
+          });
+          },
+        );
+        output.add(btPage);
+      }
+      output.add(SizedBox(width: defaultHalfPadding));
+    }
+    return output;
+    // [
+    //           ElevatedButton(onPressed: (){}, child: Text("1")),
+    //           ElevatedButton(onPressed: (){}, child: Text("2")),
+    //           ElevatedButton(onPressed: (){}, child: Text("3")),
+    //           Text("..."),
+    //           ElevatedButton(onPressed: (){}, child: Text("3")),
+    //         ],
+  }
+
   @override
   Widget build(BuildContext context) {
+    final logList = logs;
+    // final logList = logs.isEmpty ? sampleLogList : logs;
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -82,9 +133,9 @@ class _LogListScreenState extends State<LogListScreen> {
                     ),
                   ],
                   rows: List.generate(
-                    sampleLogList.length,
+                    logList.length,
                     (index){
-                      final log = sampleLogList[index];
+                      final log = logList[index];
                       return DataRow(
                         cells: [
                           DataCell(Text(log.num.toString())),
@@ -101,13 +152,7 @@ class _LogListScreenState extends State<LogListScreen> {
             )
           ),
           Row(
-            children: [
-              ElevatedButton(onPressed: (){}, child: Text("1")),
-              ElevatedButton(onPressed: (){}, child: Text("2")),
-              ElevatedButton(onPressed: (){}, child: Text("3")),
-              Text("..."),
-              ElevatedButton(onPressed: (){}, child: Text("3")),
-            ],
+            children: createPageButton()
           )
         ],
       ),

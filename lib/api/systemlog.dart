@@ -5,11 +5,12 @@ import 'dart:convert';
 import 'package:admin/controllers/user_control.dart';
 import 'package:admin/models/define.dart';
 import 'package:admin/models/event.dart';
+import 'package:admin/models/log.dart';
 import 'package:http/http.dart' as http;
 
 class LogResult {
   bool ok = false;
-  List<Event> eventList = [];
+  List<Log> eventList = [];
   int currentPage = 1;
   int totalPage = 1;
   int total = 1;
@@ -47,12 +48,12 @@ Future<LogResult> getSystemLog(int pageIndex, int pageSize) async {
     final list = d['list'];
     int index = 0;
     for (final item in list){
-      final e = Event(
+      final e = Log(
         num: (logResult.currentPage - 1) * logResult.pageSize + index,
         readed: false,
         time: DateTime.fromMillisecondsSinceEpoch(item['createdTime'] * 1000),
         message: 'User ${item['loginname']} ${item['content']}',
-        type: EventType.Info
+        type: LogType.Info
       );
       logResult.eventList.add(e);
       index++;
