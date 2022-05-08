@@ -4,7 +4,7 @@ import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
-import '../../devicelist/components/devicedetail.dart';
+import '../../devicelist/devicedetail.dart';
 import 'dart:ui' as ui;
 import 'package:image/image.dart' as image;
 
@@ -66,6 +66,7 @@ class _ImageStackState extends State<ImageStack> {
       return null;
     }
   }
+  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

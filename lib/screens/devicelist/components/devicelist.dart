@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/sampleVal.dart';
-import 'package:admin/screens/devicelist/components/devicedetail.dart';
+import 'package:admin/screens/devicelist/devicedetail.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -100,7 +100,7 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   DataRow getDataRow(Device device, int index){
-    var online = device.online != null && device.online!;
+    var online = device.online && device.online;
     if (device.name == 'Multimeter 1' && device.id == 5){
       online = _isConnected;
     }
@@ -115,13 +115,13 @@ class _DeviceListState extends State<DeviceList> {
       },
       cells: [
         DataCell(Text(device.name.contains("ACB") ? device.model : device.name)),
-        DataCell(Text(device.address ?? device.modbusAddress ?? "")),
+        DataCell(Text(device.modbusAddress)),
         DataCell(Text(
           online ? "Bật" : "Tắt",
           style: TextStyle(color: online ? Color(0xFF00cc00) : Color(0xFFcc0000)),
         )),
         DataCell( 
-          Container(constraints: BoxConstraints(maxWidth: 300), child: Text(device.note ?? ""))
+          Container(constraints: BoxConstraints(maxWidth: 300), child: Text(device.note))
         )
       ],
     );

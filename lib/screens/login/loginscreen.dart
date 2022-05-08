@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:admin/api/auth.dart';
 import 'package:admin/constants.dart';
-import 'package:admin/controllers/user_control.dart';
-import 'package:admin/models/define.dart';
+import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';

@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:admin/api/realtime.dart';
-import 'package:admin/controllers/user_control.dart';
+import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
+import 'package:admin/models/msbdiagramsample.dart';
+import 'package:admin/models/msblistsample.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:admin/screens/dashboard/components/overviewdevice.dart';
-import 'package:admin/screens/devicelist/components/devicedetail.dart';
+import 'package:admin/screens/devicelist/devicedetail.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
@@ -31,11 +33,7 @@ class MsbOverview extends CustomPainter {
   static var lastSize = Size(0, 0);
   var hoverMFMName = "";
   
-  MsbOverview({ required this.diagram, this.mouseX = 0, this.mouseY = 0, required this.paramRealtime}){
-    // getUiImage("assets/images/ic_multimeter.png", 64, 64).then((value) => iconMultimeter = value);
-  }
-
-
+  MsbOverview({ required this.diagram, this.mouseX = 0, this.mouseY = 0, required this.paramRealtime});
 
   void drawHorizontalWireList(Canvas canvas, Size size){
     final paint = Paint()
@@ -574,13 +572,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Timer? timerQueryData;
 
-  void getConnection(){
+  void getDataFromServer(){
     final userControl = UserControl();
     if (userControl.currentStackIndex == 0){
-      print("Get realtime data from MFM 01");
       getRealtime().then((value){
         setState(() {
-          paramRealtime = value;
+          // paramRealtime = value;
         });
       });
     }
@@ -590,8 +587,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState(){
     super.initState();
     const oneSec = Duration(seconds: 3);
-    timerQueryData = Timer.periodic(oneSec, (Timer t) => getConnection());   
-    // getConnection(); 
+    timerQueryData = Timer.periodic(oneSec, (Timer t) => getDataFromServer());   
   }
 
   @override
@@ -615,9 +611,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               id: 1,
               name: device.name,
               model: device.model,
-              address: device.address!,
+              address: device.address,
               online: false,
-              note: device.note!
+              note: device.note
             ),
           );
         }),
@@ -629,7 +625,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // print(details.localPosition);
     final mouseX = details.localPosition.dx;
     final mouseY = details.localPosition.dy;
-    
+     
     // print('Size diagram ${}');
     final msb =_listMSB[_current];
     final size = MsbOverview.lastSize;

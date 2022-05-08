@@ -1,5 +1,5 @@
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/controllers/user_control.dart';
+import 'package:admin/controllers/menucontroller.dart';
+import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/login/loginscreen.dart';
 import 'package:flutter/material.dart';

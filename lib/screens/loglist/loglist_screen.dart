@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:admin/api/systemlog.dart';
-import 'package:admin/controllers/user_control.dart';
+import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/event.dart';
 import 'package:admin/models/log.dart';
 import 'package:admin/models/sampleVal.dart';

@@ -1,5 +1,3 @@
-
-
 class UserControl {
   
   static final UserControl _singleton = UserControl._internal();
@@ -8,13 +6,10 @@ class UserControl {
   }
   UserControl._internal();
 
-
   String username = '';
   String name = 'Admin';
   String role = '';
   String token = '';
 
   int currentStackIndex = 0;
-
-  
 }

@@ -1,4 +1,5 @@
 import 'package:admin/constants.dart';
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,57 +15,29 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> listViewChildren = [
+      DrawerHeader(
+        child: Image.asset("assets/images/logo2.png"),
+      )
+    ];
+    
+    listViewChildren.addAll(
+      screenList.asMap().keys.map((index){
+        final screenData = screenList[index];
+        return DrawerListTile(
+          title: screenData.name,
+          svgSrc: screenData.image,
+          press: (){ 
+            print("Stack index changed to $index");
+            requestChangeStackIndex(index); 
+          },
+          selected: currentStackIndex == index
+        );
+      })
+    );
     return Drawer(
       child: ListView(
-        children: [
-          DrawerHeader(
-            child: Image.asset("assets/images/logo2.png"),
-          ),
-          DrawerListTile(
-            title: "Tổng quan",
-            svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {
-              requestChangeStackIndex(0);
-            },
-            selected: currentStackIndex == 0,
-          ),
-          DrawerListTile(
-            title: "Danh sách thiết bị",
-            svgSrc: "assets/icons/menu_tran.svg",
-            press: () { requestChangeStackIndex(1); },
-            selected: currentStackIndex == 1,
-          ),
-          DrawerListTile(
-            title: "Sự kiện",
-            svgSrc: "assets/icons/menu_task.svg",
-            press: () { requestChangeStackIndex(2); },
-            selected: currentStackIndex == 2,
-          ),
-          DrawerListTile(
-            title: "Nhật ký hoạt động",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () { requestChangeStackIndex(3); },
-            selected: currentStackIndex == 3,
-          ),
-          // DrawerListTile(
-          //   title: "Báo cáo",
-          //   svgSrc: "assets/icons/menu_notification.svg",
-          //   press: () { requestChangeStackIndex(4); },
-          //   selected: currentStackIndex == 4,
-          // ),
-          DrawerListTile(
-            title: "Quản lý năng lượng",
-            svgSrc: "assets/icons/menu_doc.svg",
-            press: () { requestChangeStackIndex(4); },
-            selected: currentStackIndex == 4,
-          ),
-          DrawerListTile(
-            title: "Thiết lập",
-            svgSrc: "assets/icons/menu_setting.svg",
-            press: () { requestChangeStackIndex(5); },
-            selected: currentStackIndex == 5,
-          ),
-        ],
+        children: listViewChildren
       ),
     );
   }
