@@ -2,7 +2,7 @@
 // Mô tả các loại tham số khác nhau của device 
 class DeviceParam {
   String name;
-  String value;
+  double value;
   String unit;
   DeviceParam(this.name, this.value, this.unit);
   String getFullValue(){ return "$value $unit"; }
