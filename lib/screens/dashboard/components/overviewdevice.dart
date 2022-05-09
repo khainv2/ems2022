@@ -77,23 +77,7 @@ class _ImageStackState extends State<ImageStack> {
         double vx = details.localPosition.dx / size.width;
         double vy = details.localPosition.dy / size.height;
 
-        if (vx >= (85.0 / 1459) && vx <= (131.0 / 1459) && vy >= (96.0 / 490) && vy <= (135/490)){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context){
-              return DeviceDetail(
-                device: Device(
-                  id: 1,
-                  name: "Multimeter 1",
-                  model: "EEM-MA 770",
-                  address: "192.168.1.151",
-                  online: true,
-                  note: "MFM phía sau ACB Q3.1"
-                ),
-              );
-            }),
-          );
-        }
+        
         print("Detail pos ${details.localPosition.dx}, ${details.localPosition.dy}");        
       },
       behavior: HitTestBehavior.translucent,

@@ -13,7 +13,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 
-class MsbOverview extends CustomPainter {
+class MsbOverviewPainter extends CustomPainter {
   MSBDiagram diagram;
   int mouseX = 0, mouseY = 0;
   Map<String, String> paramRealtime;
@@ -33,7 +33,7 @@ class MsbOverview extends CustomPainter {
   static var lastSize = Size(0, 0);
   var hoverMFMName = "";
   
-  MsbOverview({ required this.diagram, this.mouseX = 0, this.mouseY = 0, required this.paramRealtime});
+  MsbOverviewPainter({ required this.diagram, this.mouseX = 0, this.mouseY = 0, required this.paramRealtime});
 
   void drawHorizontalWireList(Canvas canvas, Size size){
     final paint = Paint()
@@ -509,15 +509,11 @@ class MsbOverview extends CustomPainter {
     drawTransformerList(canvas, size);
     
     drawType34(canvas, size);
-
-    // final paint = Paint()
-    // ..color = Colors.red;
-    // canvas.drawCircle(Offset(mouseX.toDouble(), mouseY.toDouble()), 22, paint);
   }
 
 
   @override
-  bool shouldRepaint(MsbOverview oldDelegate){
+  bool shouldRepaint(MsbOverviewPainter oldDelegate){
     if (lastSize.width == 0 || lastSize.height == 0){
       return false;
     }
@@ -567,8 +563,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     msb3,
     msb4
   ];
-  
-  Map<String, String> paramRealtime = {};
+  List<Device> _deviceListInfo = [];
 
   Timer? timerQueryData;
 
@@ -612,7 +607,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               name: device.name,
               model: device.model,
               address: device.address,
-              online: false,
+              state: DeviceState.Offline,
               note: device.note
             ),
           );
@@ -628,14 +623,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
      
     // print('Size diagram ${}');
     final msb =_listMSB[_current];
-    final size = MsbOverview.lastSize;
+    final size = MsbOverviewPainter.lastSize;
     final vmed = size.height / 2;
     for (final vnode in msb.vNodes){
       final hx = vnode.pos * size.width / msb.numPos;
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
         // Vẽ multimeter và các tham số 
         if (vnode.devices.contains(NodeDeviceType.Multimeter)){
-          final offset = Offset(hx + 8, MsbOverview.paddingTop + 30);
+          final offset = Offset(hx + 8, MsbOverviewPainter.paddingTop + 30);
           final r = Rect.fromLTRB(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120);
           if (r.contains(Offset(mouseX.toDouble(), mouseY.toDouble()))){
             print('Click mfm in ${vnode.multimeter!.name}');
@@ -662,6 +657,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  Widget createMsbOverviewPage(MSBDiagram diagram){
+    return Container(
+      padding: EdgeInsets.all(defaultPadding),
+      decoration: BoxDecoration(
+        color: secondaryColor,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: GestureDetector(
+        onTapDown: _onTabDown,
+        child: MouseRegion(
+          onHover: _onHover,
+          child: CustomPaint(
+            size: Size.infinite,
+            painter: MsbOverviewPainter(
+              diagram: diagram, 
+              mouseX: _x, 
+              mouseY: _y,
+              paramRealtime: {}
+            ),
+          ),
+        ),
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -669,57 +689,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Expanded(
           child: IndexedStack(
             children: [
-              Container(
-                padding: EdgeInsets.all(defaultPadding),
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: GestureDetector(
-                  onTapDown: _onTabDown,
-                  child: MouseRegion(
-                    onHover: _onHover,
-                    child: CustomPaint(
-                      size: Size.infinite,
-                      painter: MsbOverview(diagram: msb12Diagram, mouseX: _x, mouseY: _y, paramRealtime: paramRealtime),
-                    ),
-                  ),
-                )
-              ),
-              Container(
-                padding: EdgeInsets.all(defaultPadding),
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: GestureDetector(
-                  onTapDown: _onTabDown,
-                  child: MouseRegion(
-                    onHover: _onHover,
-                    child: CustomPaint(
-                      size: Size.infinite,
-                      painter: MsbOverview(diagram: msb3, mouseX: _x, mouseY: _y, paramRealtime: {}),
-                    ),
-                  ),
-                )
-              ),
-              Container(
-                padding: EdgeInsets.all(defaultPadding),
-                decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                child: GestureDetector(
-                  onTapDown: _onTabDown,
-                  child: MouseRegion(
-                    onHover: _onHover,
-                    child: CustomPaint(
-                      size: Size.infinite,
-                      painter: MsbOverview(diagram: msb4, mouseX: _x, mouseY: _y, paramRealtime: {}),
-                    ),
-                  ),
-                )
-              ),
+              createMsbOverviewPage(msb12Diagram),
+              createMsbOverviewPage(msb3),
+              createMsbOverviewPage(msb4),
             ],
             index: _current,
           )

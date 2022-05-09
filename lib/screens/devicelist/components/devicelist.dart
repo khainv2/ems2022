@@ -100,7 +100,7 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   DataRow getDataRow(Device device, int index){
-    var online = device.online && device.online;
+    var online = device.state == DeviceState.Online;
     if (device.name == 'Multimeter 1' && device.id == 5){
       online = _isConnected;
     }

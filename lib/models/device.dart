@@ -13,7 +13,11 @@ enum DeviceType {
   ACB, Multimeter
 }
 
-const Map<DeviceParam, double> defaultRealtimeParam = {};
+enum DeviceState {
+  Online, Offline, Alarm, Inactive, Error
+}
+
+const List<DeviceParam> defaultRealtimeParam = [];
   
   /// Mô tả một thiết bị cùng trạng thái đi kèm
 class Device {
@@ -23,8 +27,8 @@ class Device {
   String address;
   String modbusAddress;
   String note;
-  bool online;
-  Map<DeviceParam, double> realtimeParam;
+  DeviceState state;
+  List<DeviceParam> realtimeParam;
   
   Device({
     required this.id, 
@@ -33,7 +37,7 @@ class Device {
     this.address = "", 
     this.note = "",
     this.modbusAddress = "",
-    this.online = false,
+    this.state = DeviceState.Offline,
     this.realtimeParam = defaultRealtimeParam,
   });
 
