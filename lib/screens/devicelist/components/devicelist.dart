@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:admin/api/realtime.dart';
+import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/sampleVal.dart';
@@ -20,28 +22,25 @@ class DeviceList extends StatefulWidget {
 }
 
 class _DeviceListState extends State<DeviceList> {
-  bool _isConnected = false;
+  Timer? timerQueryData;
+  DeviceTable deviceTable = DeviceTable({}, {});
 
-  void getConnection(){
-    // var url = Uri.parse('http://test.thanhnt.com:8080/api/device/MBS_baf8a04003178/status');
-    // http.get(url).then((response){
-    //   print('Response status: ${response.statusCode}');
-    //   print('Response body: ${response.body}');
-    //   if (response.statusCode == 200){
-    //     Map<String, dynamic> state = jsonDecode(response.body);
-    //     if (state['data'] != null){
-    //       print(state['data']['isConnected']);
-    //       bool isConnected = state['data']['isConnected'];
-    //       setState(() {
-    //         _isConnected = isConnected;
-    //       });
-    //     }
-    //   }
-    // });
+  void getDataFromServer(){
+    final userControl = UserControl();
+    if (userControl.currentStackIndex == 1){
+      getRealtimeAllDevice().then((value){
+        setState(() {
+          deviceTable = value;
+        });
+      });
+    }
   }
+
   @override
   void initState(){
     super.initState();
+    const oneSec = Duration(seconds: 3);
+    timerQueryData = Timer.periodic(oneSec, (Timer t) => getDataFromServer());   
   }
   
   @override
@@ -100,9 +99,38 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   DataRow getDataRow(Device device, int index){
-    var online = device.state == DeviceState.Online;
-    if (device.name == 'Multimeter 1' && device.id == 5){
-      online = _isConnected;
+    String state = 'Tắt';
+    Color colorState = Color(0xFFcc0000);
+    Device? dev;
+    if (device.type == DeviceType.ACB){
+      if (deviceTable.acbDevices.containsKey(device.name)){
+        dev = deviceTable.acbDevices[device.name];
+      }
+    } else {
+      if (deviceTable.multimeterDevices.containsKey(device.name)){
+        dev = deviceTable.multimeterDevices[device.name];
+      }
+    }
+    if (dev != null){
+      switch (dev.state){
+        case DeviceState.Online:
+          state = "Bật";
+          colorState = Color(0xff00cc00);
+          break;
+        case DeviceState.Alarm:
+          state = 'Cảnh báo';
+          colorState = Color(0xFF888888);
+          break;
+        case DeviceState.Inactive:
+          state = 'Không hoạt động';
+          colorState = Color(0xFF888888);
+          break;
+        case DeviceState.Error:
+          state = 'Lỗi';
+          colorState = Color(0xFFcc0000);
+          break;
+        default: break;
+      }
     }
     return DataRow(
       onSelectChanged: (v){
@@ -114,11 +142,11 @@ class _DeviceListState extends State<DeviceList> {
         );
       },
       cells: [
-        DataCell(Text(device.name.contains("ACB") ? device.model : device.name)),
-        DataCell(Text(device.modbusAddress)),
+        DataCell(Text(device.name)),
+        DataCell(Text(device.address)),
         DataCell(Text(
-          online ? "Bật" : "Tắt",
-          style: TextStyle(color: online ? Color(0xFF00cc00) : Color(0xFFcc0000)),
+          state,
+          style: TextStyle(color: colorState),
         )),
         DataCell( 
           Container(constraints: BoxConstraints(maxWidth: 300), child: Text(device.note))

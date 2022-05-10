@@ -48,6 +48,7 @@ class _LogListScreenState extends State<LogListScreen> {
   @override
   void dispose(){
     super.dispose();
+
   }
 
   List<Widget> createPageButton(){
@@ -62,6 +63,9 @@ class _LogListScreenState extends State<LogListScreen> {
         );
         output.add(currentPageText);
       } else {
+        if (i > 2 && i < countPage - 1 && (i - currentPage).abs() > 2){
+          continue;
+        }
         final btPage = ElevatedButton(
           child: Text(
             i.toString()
@@ -81,13 +85,6 @@ class _LogListScreenState extends State<LogListScreen> {
       output.add(SizedBox(width: defaultHalfPadding));
     }
     return output;
-    // [
-    //           ElevatedButton(onPressed: (){}, child: Text("1")),
-    //           ElevatedButton(onPressed: (){}, child: Text("2")),
-    //           ElevatedButton(onPressed: (){}, child: Text("3")),
-    //           Text("..."),
-    //           ElevatedButton(onPressed: (){}, child: Text("3")),
-    //         ],
   }
 
   @override

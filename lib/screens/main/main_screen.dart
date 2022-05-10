@@ -45,11 +45,11 @@ final screenList = [
     image: "assets/icons/menu_doc.svg",
     screen: LogListScreen(),
   ),
-  ScreenData(
-    name: "Báo cáo",
-    image: "assets/icons/menu_notification.svg",
-    screen: ReportScreen(),
-  ),
+  // ScreenData(
+  //   name: "Báo cáo",
+  //   image: "assets/icons/menu_notification.svg",
+  //   screen: ReportScreen(),
+  // ),
   ScreenData(
     name: "Quản lý năng lượng",
     image: "assets/icons/menu_doc.svg",
@@ -61,7 +61,6 @@ final screenList = [
     screen: SettingScreen(),
   ),
 ];
-
 
 class MainApp extends StatelessWidget {
   @override

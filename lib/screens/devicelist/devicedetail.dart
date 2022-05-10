@@ -23,7 +23,7 @@ class DeviceDetail extends StatefulWidget {
 }
 
 class _DeviceDetailState extends State<DeviceDetail> {
-  Map<String, String> paramRealtime = {};
+  Device? deviceInfo;
   String selectionParam = '';
   DateTime timeSearch = DateTime(
     DateTime.now().year,
@@ -35,20 +35,21 @@ class _DeviceDetailState extends State<DeviceDetail> {
   final dateFormatter = DateFormat('dd/MM/yyyy');
 
   void getRealtimeData(){
-    if (widget.device.name == 'Multimeter 1'){
-      print("Get realtime data from MFM 01");
-      getRealtime().then((value){
-        setState(() {
-          // paramRealtime = value;
-          if (paramRealtime.length > 0 && selectionParam.isEmpty){
-            if (paramRealtime.containsKey('U1')){
+    print('get serial from ${widget.device.getSerial()}');
+    getRealtime(widget.device.getSerial()).then((value){
+      setState(() {
+        deviceInfo = value;
+        if (deviceInfo != null){
+          
+          if (deviceInfo!.realtimeParam.length > 0 && selectionParam.isEmpty){
+            if (deviceInfo!.realtimeParam.containsKey('U1')){
               selectionParam = 'U1';
             }
             getHistoryData();
           }
-        });
+        }
       });
-    }
+    });
   }
 
   void getHistoryData(){
@@ -56,7 +57,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
     final timeSearchEnd = timeSearchBegin + 86400;
     if (selectionParam.isEmpty)
       return;
-    getHistory(widget.device.serial(), selectionParam, timeSearchBegin, timeSearchEnd).then((value){
+    getHistory(widget.device.getSerial(), selectionParam, timeSearchBegin, timeSearchEnd).then((value){
       setState(() {
         _historyParam = value;
       });
@@ -66,7 +67,6 @@ class _DeviceDetailState extends State<DeviceDetail> {
   @override
   void initState(){
     super.initState();
-    print(widget.device.serial());
     const oneSec = Duration(seconds: 3);
     timerQueryData = Timer.periodic(oneSec, (Timer t) => getRealtimeData());   
     getRealtimeData();
@@ -81,14 +81,8 @@ class _DeviceDetailState extends State<DeviceDetail> {
   }
 
   AppBar appBar(BuildContext context){
-    String address;
-    if (widget.device.address.isEmpty){
-      address = widget.device.modbusAddress;
-    } else {
-      address = widget.device.address;
-    }
     return AppBar(
-      title: Text("${widget.device.name} - ${widget.device.model} [$address]"),
+      title: Text("${widget.device.name} [${widget.device.address}]"),
       backgroundColor: primaryColor,
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
@@ -146,11 +140,14 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
   Widget listParam(BuildContext context){
     var sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : multimeterSampleValue;
-    if (!widget.device.name.contains("ACB") && paramRealtime.isNotEmpty){
-      sampleValue = paramRealtime;
-    } else {
-
+    if (deviceInfo != null){
+      sampleValue.clear();
+      for (final k in deviceInfo!.realtimeParam.keys){
+        final v = deviceInfo!.realtimeParam[k];
+        sampleValue[k] = v!.getFullValue();
+      }
     }
+
     final keys = sampleValue.keys.toList();
 
     List<Widget> paramColumns = [];
@@ -161,7 +158,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
       final v2 = i + 1 >= keys.length ? "" : sampleValue[k2]!;
       final k3 = i + 2 >= keys.length ? "" : keys[i + 2];
       final v3 = i + 2 >= keys.length ? "" :sampleValue[k3]!;
-      if (paramRealtime.isEmpty)
+      if (deviceInfo == null)
         paramColumns.add(paramColumn(k1, '0 ${getMultimeterUnit(k1)}', k2, '0 ${getMultimeterUnit(k2)}', k3, '0 ${getMultimeterUnit(k3)}'));
       else 
         paramColumns.add(paramColumn(k1, v1, k2, v2, k3, v3));
@@ -229,20 +226,26 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
 
     return LineChart(
+    
       LineChartData(
         lineBarsData: [
           LineChartBarData(
             spots: _historyParam.map((e) => 
               FlSpot(e.time.toDouble(), e.value)
             ).toList(),
-            dotData: FlDotData(show: false)
+            dotData: FlDotData(show: false),            
           )
         ],
+        
         minX: minx == null ? null : minx.toDouble(),
         maxX: maxx == null ? null : maxx.toDouble(),
         minY: miny,
         maxY: maxy,
-        showingTooltipIndicators: [],
+        lineTouchData: LineTouchData(
+          enabled: false,
+          handleBuiltInTouches: false,
+          getTouchedSpotIndicator: (barData, spotIndex) => [],
+        ),
         titlesData: FlTitlesData(
           show: true,
           topTitles: SideTitles(showTitles: false),
@@ -254,6 +257,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
                 fontSize: 10,
               );
             },
+            
             getTitles: (value){
               final formatter = DateFormat('hh:mm');
               return formatter.format(DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000));
@@ -292,14 +296,14 @@ class _DeviceDetailState extends State<DeviceDetail> {
         children: [
           Row(
             children: [
-              if (paramRealtime.length > 0)
+              if (deviceInfo != null)
                 Text('Chọn tham số'),
-              if (paramRealtime.length > 0)
+              if (deviceInfo != null)
                 SizedBox(width: defaultPadding,),
-              if (paramRealtime.length > 0)
+              if (deviceInfo != null)
                 DropdownButton<String>(
                   value: selectionParam,
-                  items: paramRealtime.keys.map((e) 
+                  items: deviceInfo!.realtimeParam.keys.map((e) 
                     => DropdownMenuItem(child: Text(e), value: e)).toList(),
                   onChanged: (val){
                     setState(() {

@@ -14,42 +14,45 @@ enum DeviceType {
 }
 
 enum DeviceState {
-  Online, Offline, Alarm, Inactive, Error
+  None, Online, Offline, Alarm, Inactive, Error
 }
 
-const List<DeviceParam> defaultRealtimeParam = [];
+const Map<String,DeviceParam> defaultRealtimeParam = {};
   
   /// Mô tả một thiết bị cùng trạng thái đi kèm
 class Device {
-  final int id;
-  final String name;
-  final String model;
+  String name;
+  DeviceType type;
   String address;
-  String modbusAddress;
   String note;
   DeviceState state;
-  List<DeviceParam> realtimeParam;
+  // Key is name of device param
+  Map<String, DeviceParam> realtimeParam;
   
   Device({
-    required this.id, 
     required this.name, 
-    required this.model, 
+    required this.type, 
     this.address = "", 
     this.note = "",
-    this.modbusAddress = "",
     this.state = DeviceState.Offline,
     this.realtimeParam = defaultRealtimeParam,
   });
 
-  String serial(){
-    if (name == "ACB"){
-      return "$name$model".replaceAll(".", "_");
+  String getSerial(){
+    if (type == DeviceType.ACB){
+      return "ACB$name".replaceAll('.', '_');
     } else {
-      String id = name.split(' ').last;
-      if (id.length == 1){
-        id = "0$id";
-      }
-      return "MM$id";
+      var n = name.split(' ').last;
+      if (n.length == 1) n = '0$n';
+      return 'MM$n';
     }
   }
+}
+
+class DeviceTable {
+  // Key: Q1.1, Q1.2,...
+  Map<String, Device> acbDevices;
+  // Key: Multimeter 1, Multimeter 2
+  Map<String, Device> multimeterDevices;
+  DeviceTable(this.acbDevices, this.multimeterDevices);
 }

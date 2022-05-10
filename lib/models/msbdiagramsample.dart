@@ -6,7 +6,7 @@ final testParams = {
   "Uc" : "22V",
 };
 
-final msb12Diagram = MSBDiagram(
+final msb12 = MSBDiagram(
   type: MSBDiagramType.MSB12,
   numPos: 150,
   hNodes: [
