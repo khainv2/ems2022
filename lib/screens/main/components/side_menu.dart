@@ -17,10 +17,17 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> listViewChildren = [
       DrawerHeader(
-        child: Image.asset("assets/images/logo2.png"),
+        child:  Image.asset(
+          "assets/images/logo3.png", 
+          height: 100,
+          width: 100,
+          // color: primaryColor,
+          // colorBlendMode: BlendMode.darken,
+          fit: BoxFit.fitHeight,
+        ) 
       )
     ];
-    
+
     listViewChildren.addAll(
       screenList.asMap().keys.map((index){
         final screenData = screenList[index];

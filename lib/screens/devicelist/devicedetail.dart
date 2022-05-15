@@ -224,16 +224,23 @@ class _DeviceDetailState extends State<DeviceDetail> {
       }
     }
 
-
-    return LineChart(
+    List<FlSpot> spots = [];
+    for (int i = 0; i < _historyParam.length; i++){
+      final historyItem = _historyParam[i];
+      spots.add(FlSpot(historyItem.time.toDouble(), historyItem.value));
+      if (i < _historyParam.length - 1){
+        if (_historyParam[i + 1].time - _historyParam[i].time > 600){
+          spots.add(FlSpot.nullSpot);
+        }
+      }
+    }
     
+    return LineChart(
       LineChartData(
         lineBarsData: [
           LineChartBarData(
-            spots: _historyParam.map((e) => 
-              FlSpot(e.time.toDouble(), e.value)
-            ).toList(),
-            dotData: FlDotData(show: false),            
+            spots: spots,
+            dotData: FlDotData(show: false),
           )
         ],
         

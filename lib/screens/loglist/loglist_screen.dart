@@ -33,6 +33,7 @@ class _LogListScreenState extends State<LogListScreen> {
       });
     });
   }
+  
   @override
   void initState(){
     super.initState();
@@ -43,12 +44,6 @@ class _LogListScreenState extends State<LogListScreen> {
       }
     });
     getDataLogs();
-  }
-
-  @override
-  void dispose(){
-    super.dispose();
-
   }
 
   List<Widget> createPageButton(){

@@ -586,7 +586,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"name\": \"EEM_MA_770\",\r\n    \"info\": \"EEM_MA_770 Modbus TCP\",\r\n    \"params\": [\r\n    \t{\r\n\t\t    \"pname\": \"U12\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U23\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U31\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"In\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"F\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"P\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Q\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"S\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Pf\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U12\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U23\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U31\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I1\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I2\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I3\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-In\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t}]\r\n}",
+							"raw": "{\r\n\t\"name\": \"EEM_MA_770\",\r\n    \"info\": \"EEM_MA_770 Modbus TCP\",\r\n    \"params\": [\r\n    \t{\r\n\t\t    \"pname\": \"U12\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U23\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U31\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U1\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U2\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U3\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I1\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I2\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I3\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"In\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"F\",\r\n\t\t    \"punit\": \"Hz\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"P\",\r\n\t\t    \"punit\": \"W\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Q\",\r\n\t\t    \"punit\": \"VAR\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"S\",\r\n\t\t    \"punit\": \"VA\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Pf\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U12\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U23\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U31\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-In\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"E\",\r\n\t\t    \"punit\": \"kWh\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t}]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -641,7 +641,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"info\": \"EEM_MA_770 Modbus TCP\",\r\n    \"params\": [\r\n    \t{\r\n\t\t    \"pname\": \"U12\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U23\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U31\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U1\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U2\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U3\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I1\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I2\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I3\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"In\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"F\",\r\n\t\t    \"punit\": \"Hz\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"P\",\r\n\t\t    \"punit\": \"W\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Q\",\r\n\t\t    \"punit\": \"VAR\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"S\",\r\n\t\t    \"punit\": \"VA\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Pf\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U12\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U23\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U31\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-In\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t}]\r\n}",
+							"raw": "{\r\n    \"info\": \"EEM_MA_770 Modbus TCP\",\r\n    \"params\": [\r\n    \t{\r\n\t\t    \"pname\": \"U12\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U23\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U31\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U1\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U2\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"U3\",\r\n\t\t    \"punit\": \"V\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I1\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I2\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"I3\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"In\",\r\n\t\t    \"punit\": \"A\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"F\",\r\n\t\t    \"punit\": \"Hz\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"P\",\r\n\t\t    \"punit\": \"W\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Q\",\r\n\t\t    \"punit\": \"VAR\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"S\",\r\n\t\t    \"punit\": \"VA\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"Pf\",\r\n\t\t    \"punit\": \"\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U12\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U23\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U31\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-U3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I1\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I2\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-I3\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"THD-In\",\r\n\t\t    \"punit\": \"%\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t},\r\n\t\t{\r\n\t\t    \"pname\": \"E\",\r\n\t\t    \"punit\": \"Wh\",\r\n\t\t    \"pinfo\": \"\"\r\n\t\t}]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -785,7 +785,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"mtserial\": \"MM02\",\n\t\"mtname\": \"Multimeter 2\",\n\t\"mtinfo\": \"Nguồn cấp từ lộ G1 tủ máy phát\",\n\t\"mtloc_lat\": \"25.64589\",\n\t\"mtloc_long\": \"107.2356\",\n\t\"mtcfg_addr\": \"192.168.1.52\",\n\t\"mtcfg_model\": \"EEM_MA_770\",\n\t\"mtcfg_datainterval\": 5,\n\t\"mtalarm_active\": false,\n\t\"gwserial\": \"GW20220105\"\n}",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"mtname\": \"Multimeter 1\",\n\t\"mtinfo\": \"MFM phía sau ACB Q1.1\",\n\t\"mtloc_lat\": \"25.64589\",\n\t\"mtloc_long\": \"107.2356\",\n\t\"mtcfg_addr\": \"192.168.0.24\",\n\t\"mtcfg_model\": \"EEM_MA_770\",\n\t\"mtcfg_datainterval\": 60,\n\t\"mtalarm_active\": true,\n\t\"gwserial\": \"GW20220105\",\n\t\"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -840,7 +840,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"mtname\": \"Multimeter1\",\n\t\"mtinfo\": \"Nguồn cấp từ MBA 01\",\n\t\"mtloc_lat\": \"25.64589\",\n\t\"mtloc_long\": \"107.2356\",\n\t\"mtcfg_addr\": \"192.168.2.123\",\n\t\"mtcfg_model\": \"EEM_MA_770\",\n\t\"mtcfg_datainterval\": 10,\n\t\"mtalarm_active\": true,\n\t\"gwserial\": \"GW20220105\"\n}",
+							"raw": "{\n\t\"mtname\": \"Multimeter1\",\n\t\"mtinfo\": \"Nguồn cấp từ MBA 01\",\n\t\"mtloc_lat\": \"25.64589\",\n\t\"mtloc_long\": \"107.2356\",\n\t\"mtcfg_addr\": \"192.168.2.123\",\n\t\"mtcfg_model\": \"EEM_MA_770\",\n\t\"mtcfg_datainterval\": 10,\n\t\"mtcfg_sampleinterval\": 2,\n\t\"mtalarm_active\": true,\n\t\"gwserial\": \"GW20220105\",\n\t\"active\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -848,7 +848,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/api/meter/act/MM01",
+							"raw": "{{baseURL}}/api/meter/act/Q1.1",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -856,7 +856,7 @@
 								"api",
 								"meter",
 								"act",
-								"MM01"
+								"Q1.1"
 							]
 						}
 					},
@@ -964,7 +964,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"cabserial\": \"MBS1\",\n\t\"cabname\": \"Tủ MSB1\",\n\t\"cabinfo\": \"Tủ điện MSB1\",\n\t\"cabloc_lat\": \"\",\n\t\"cabloc_long\": \"\",\n\t\"cabmeters\": [\n\t    \"MM01\",\n\t    \"MM02\",\n\t    \"MM03\"\n\t]\n}",
+							"raw": "{\r\n\t\"cabserial\": \"MBS4\",\r\n\t\"cabname\": \"Tủ MSB4\",\r\n\t\"cabinfo\": \"Tủ điện MSB4\",\r\n\t\"cabloc_lat\": \"\",\r\n\t\"cabloc_long\": \"\",\r\n\t\"cabmeters\": [\r\n\t    \"ACBQ4.1\",\r\n\t\t\"ACBQ4.2\",\r\n\t\t\"ACBQ4.3\",\r\n\t\t\"ACBQ4.4\",\r\n\t\t\"MM24\",\r\n\t\t\"MM25\",\r\n\t\t\"MM26\",\r\n\t\t\"MM27\",\r\n\t\t\"MM28\",\r\n\t\t\"MM29\",\r\n\t\t\"MM30\"\r\n\t]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1100,6 +1100,25 @@
 								"api",
 								"alarmrule",
 								"alarmlevels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get alarm types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarmrule/alarmtypes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarmrule",
+								"alarmtypes"
 							]
 						}
 					},
@@ -1290,18 +1309,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/systemlog/list/p/1/s/10",
+							"raw": "{{baseURL}}/api/systemlog/list",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
 								"systemlog",
-								"list",
-								"p",
-								"1",
-								"s",
-								"10"
+								"list"
 							]
 						}
 					},
@@ -1319,13 +1334,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/systemalarm/list",
+							"raw": "{{baseURL}}/api/alarm/list",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
-								"systemalarm",
+								"alarm",
 								"list"
 							]
 						}
@@ -1338,13 +1353,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/systemalarm/list/p/1/s/20",
+							"raw": "{{baseURL}}/api/alarm/list/p/1/s/20",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
-								"systemalarm",
+								"alarm",
 								"list",
 								"p",
 								"1",
@@ -1356,20 +1371,59 @@
 					"response": []
 				},
 				{
-					"name": "Get alarm",
+					"name": "Get meter alarm",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/systemalarm/act/cGkkXkbWxmaXIx1H7jA4c",
+							"raw": "{{baseURL}}/api/alarm/meter/MM01",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
-								"systemalarm",
+								"alarm",
+								"meter",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get system alarm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarm/system",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarm",
+								"system"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get an alarm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/alarm/act/fRrDpcNipfOLoKYWJFvoC",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"alarm",
 								"act",
-								"cGkkXkbWxmaXIx1H7jA4c"
+								"fRrDpcNipfOLoKYWJFvoC"
 							]
 						}
 					},
@@ -1397,15 +1451,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/api/systemalarm/act/cGkkXkbWxmaXIx1H7jA4c",
+							"raw": "{{baseURL}}/api/alarm/act/fRrDpcNipfOLoKYWJFvoC",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
-								"systemalarm",
+								"alarm",
 								"act",
-								"cGkkXkbWxmaXIx1H7jA4c"
+								"fRrDpcNipfOLoKYWJFvoC"
 							]
 						}
 					},
@@ -1417,14 +1471,263 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/systemalarm/countUnhandled",
+							"raw": "{{baseURL}}/api/alarm/countUnhandled",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
-								"systemalarm",
+								"alarm",
 								"countUnhandled"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "RealtimeMonitor",
+			"item": [
+				{
+					"name": "Get meter status list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/datamonitor/meterStatusList",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"datamonitor",
+								"meterStatusList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meter info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/datamonitor/meterMonitor/MM01",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"datamonitor",
+								"meterMonitor",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meters info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/datamonitor/metersMonitor",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"datamonitor",
+								"metersMonitor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meter realtime data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/datamonitor/meterRealtimeData/MM01",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"datamonitor",
+								"meterRealtimeData",
+								"MM01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get meter history",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"paramname\": \"U1\",\n\t\"starttime\": 0,\n\t\"endtime\": 1651698700\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/datamonitor/meterHistory",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"datamonitor",
+								"meterHistory"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "EnergyTrend",
+			"item": [
+				{
+					"name": "Get trend types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/energy/trendtypes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"energy",
+								"trendtypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get energy trend day",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"trendtype\": 1,\n\t\"timestr\": \"2022-05-31\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/energy/energy_trend",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"energy",
+								"energy_trend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get energy trend month",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"trendtype\": 2,\n\t\"timestr\": \"2022-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/energy/energy_trend",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"energy",
+								"energy_trend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get energy trend year",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mtserial\": \"MM01\",\n\t\"trendtype\": 3,\n\t\"timestr\": \"2022\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/energy/energy_trend",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"energy",
+								"energy_trend"
 							]
 						}
 					},
@@ -1439,7 +1742,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJhZG1pbiIsInJvbGUiOjAsImlhdCI6MTY1MTI4NDY0NywiZXhwIjoxNjUxODg5NDQ3fQ.41sLmnApUCUgjSgGBQyDiGDNcFIPmh3A6p9IhsygiF0",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZnVsbG5hbWUiOiJhZG1pbiIsInJvbGUiOjAsImlhdCI6MTY1MTkxNTk0OSwiZXhwIjoxNjUyNTIwNzQ5fQ.6IR2PpUz0rtoz87PNtOTBP9pVziCaCP4Uqcg1ERaZxc",
 				"type": "string"
 			}
 		]

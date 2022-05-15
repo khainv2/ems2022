@@ -57,7 +57,7 @@ class MsbList extends StatelessWidget {
 
   DataRow recentFileDataRow(Msb msb, int index) {
     final selected = index == currentMsbIndex;
-    Color titleColor = selected ? accentColor : Colors.white54;
+    Color titleColor = selected ? accentColor : Colors.white;
     final backgroundColor = selected ? bgColor : secondaryColor;
     return DataRow(
       onSelectChanged: (selected) => {
