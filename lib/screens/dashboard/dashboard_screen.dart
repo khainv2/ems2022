@@ -7,6 +7,7 @@ import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/msbdiagramsample.dart';
 import 'package:admin/models/msblistsample.dart';
+import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/msboverviewpainter.dart';
 import 'package:admin/screens/devicelist/devicedetail.dart';
 import 'package:flutter/gestures.dart';
@@ -119,25 +120,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget createScrollArea(Widget widget){
-    return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: InteractiveViewer(
-        // alignPanAxis: true,
-        // boundaryMargin: EdgeInsets.all(defaultPadding),
-        constrained: false,
-        scaleEnabled: false,
-        // panEnabled: false,
-        child: Container(
-          width: 1500,
-          height: 800,
-          child: widget
+    if (MediaQuery.of(context).size.width < 1200){
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: InteractiveViewer(
+          // alignPanAxis: true,
+          // boundaryMargin: EdgeInsets.all(defaultPadding),
+          constrained: false,
+          scaleEnabled: false,
+          // panEnabled: false,
+          child: Container(
+            width: 1300,
+            height: 800,
+            child: widget
+          )
         )
-      )
-    );
+      ); 
+    } else {
+      return Container(
+        padding: EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: widget,
+      );
+    }
   }
 
   Widget createMsbOverviewPage(MSBDiagram diagram){

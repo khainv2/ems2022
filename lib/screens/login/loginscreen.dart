@@ -39,6 +39,7 @@ class LoginScreen extends StatelessWidget {
       disableCustomPageTransformer: true,
       onSignup: (val){},
       onRecoverPassword: (val){},
+      
       logo: 'assets/images/logo2.png',
       passwordValidator: (text) => null,    
       hideForgotPasswordButton: true,  
@@ -56,6 +57,7 @@ class LoginScreen extends StatelessWidget {
         return null;
       },
       messages: LoginMessages(
+        
         flushbarTitleError: "Lỗi",
         flushbarTitleSuccess: "Đăng nhập thành công",
         userHint: 'Tên đăng nhập',

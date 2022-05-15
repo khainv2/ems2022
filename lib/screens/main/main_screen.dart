@@ -2,10 +2,11 @@ import 'package:admin/constants.dart';
 import 'package:admin/controllers/menucontroller.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/alarm_rule/alarm_rule_screen.dart';
 import 'package:admin/screens/components/header.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:admin/screens/devicelist/devicelist_screen.dart';
-import 'package:admin/screens/energy_management/energy_managerment_screen.dart';
+import 'package:admin/screens/energy_management/energy_management_screen.dart';
 import 'package:admin/screens/eventlist/eventlist_screen.dart';
 import 'package:admin/screens/loglist/loglist_screen.dart';
 import 'package:admin/screens/report/report_screen.dart';
@@ -24,6 +25,14 @@ class ScreenData {
   ScreenData({ required this.name, required this.image, required this.screen });
 }
 
+int get overviewIndex => 0;
+int get deviceListIndex => 1;
+int get eventListIndex => 2;
+int get alarmRuleIndex => 3;
+int get logListIndex => 4;
+int get energyManagementIndex => 5;
+int get settingIndex => 6;
+
 final screenList = [
   ScreenData(
     name: "Tổng quan",
@@ -39,6 +48,11 @@ final screenList = [
     name: "Sự kiện",
     image: "assets/icons/menu_task.svg",
     screen: EventListScreen(),
+  ),
+  ScreenData(
+    name: "Cấu hình cảnh báo",
+    image: "assets/icons/menu_store.svg",
+    screen: AlarmRuleScreen(),
   ),
   ScreenData(
     name: "Nhật ký hoạt động",
@@ -77,8 +91,8 @@ class MainApp extends StatelessWidget {
       title: 'EMS',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
-        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-            .apply(bodyColor: Colors.white),
+        // textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+        //     .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
       home: MultiProvider(   
@@ -107,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
       _stackIndex = index;
     });
     final userControl = UserControl();
-    userControl.currentStackIndex = index;
+    userControl.setCurrentStackIndex(index);
   }
 
   @override

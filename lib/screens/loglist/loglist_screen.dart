@@ -5,6 +5,7 @@ import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/event.dart';
 import 'package:admin/models/log.dart';
 import 'package:admin/models/sampleVal.dart';
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
@@ -39,7 +40,7 @@ class _LogListScreenState extends State<LogListScreen> {
     super.initState();
     timerQueryData = Timer.periodic(Duration(seconds: 3), (Timer t){
       final userControl = UserControl();
-      if (userControl.currentStackIndex == 3){
+      if (userControl.currentStackIndex == logListIndex){
         getDataLogs();
       }
     });
@@ -120,9 +121,6 @@ class _LogListScreenState extends State<LogListScreen> {
                     DataColumn(
                       label: Text("Thời gian"),
                     ),
-                    DataColumn(
-                      label: Text("Trạng thái"),
-                    ),
                   ],
                   rows: List.generate(
                     logList.length,
@@ -134,7 +132,6 @@ class _LogListScreenState extends State<LogListScreen> {
                           DataCell(Text(log.type.toString().split('.').last)),
                           DataCell(Text(log.message)),
                           DataCell(Text(log.time.toString())),
-                          DataCell(Text(log.readed ? 'Đã đọc' : 'Chưa đọc'))
                         ],
                       );
                     },

@@ -347,6 +347,18 @@ var listMsbSample = [
   ),
 ];
 
+List<Device> getDeviceListByType(DeviceType type){
+  List<Device> output = [];
+  for (final msb in listMsbSample){
+    for (final device in msb.deviceList!){
+      if (device.type == type){
+        output.add(device);
+      }
+    }
+  }
+  return output;
+}
+
 Device? indexToDevice(int mfmIndex){
   for (final msb in listMsbSample){
     for (final device in msb.deviceList!){

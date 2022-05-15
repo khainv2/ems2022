@@ -47,6 +47,23 @@ class Device {
       return 'MM$n';
     }
   }
+
+  static DeviceType getTypeFromSerial(String serial){
+    if (serial.contains('ACB')){
+      return DeviceType.ACB;
+    } else {
+      return DeviceType.Multimeter;
+    }
+  }
+  
+  static String getNameFromSerial(String serial){
+    if (serial.contains('ACB')){
+      return serial.replaceAll('ACB', '');
+    } else {
+      return serial.replaceAll('MM', 'Multimeter ').replaceAll(' 0', ' ');
+    }
+  }
+  
 }
 
 class DeviceTable {

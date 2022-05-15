@@ -4,6 +4,28 @@ import 'package:admin/models/event.dart';
 import 'package:admin/models/log.dart';
 import 'package:admin/models/msb.dart';
 
+final multimeterParamList = [
+  "U12","U23", "U31", 
+  "U1", "U2", "U3", 
+  "I1", "I2", "I3", 
+  "In", "F", "P", 
+  "Q", "S", "Pf", 
+  "THD-U12", "THD-U23", "THD-U31", 
+  "THD-U1", "THD-U2", "THD-U3",  
+  "THD-I1", "THD-I2",  "THD-I3",
+  "THD-In",
+];
+
+final acbParamList = {
+  "I1", "I2", "I3",
+  "U1", "U2", "U3",
+  "P", "Q", "S", "Pf", "F",
+  "Temperature", "Operation count",
+  "Trip count", "Time last operation",
+  "Time max temperature", "Operation time", "Trip"
+};
+
+
 final multimeterSampleValue = {
   "U12": "23.289V",
   "U23": "29.282V",
