@@ -31,12 +31,19 @@ class MsbList extends StatelessWidget {
             "Tủ điện",
             style: Theme.of(context).textTheme.subtitle1,
           ),
+          SizedBox( height: defaultPadding ),
           SizedBox(
             width: double.infinity,
-            child: DataTable2(
+            child: DataTable(
+              border: TableBorder(
+                verticalInside: BorderSide(
+                  color: Colors.white12,
+                  width: 1,
+                )
+              ),
               columnSpacing: defaultPadding,
               showCheckboxColumn: false,
-              minWidth: 250,
+              // minWidth: 250,
               columns: [
                 DataColumn(
                   label: Text("Tên"),

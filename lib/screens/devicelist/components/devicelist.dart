@@ -58,8 +58,9 @@ class _DeviceListState extends State<DeviceList> {
         children: [
           Text(
             "Danh sách thiết bị",
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.headline6,
           ),
+          SizedBox(height: defaultPadding),
           Expanded(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
@@ -67,12 +68,8 @@ class _DeviceListState extends State<DeviceList> {
                   width: double.infinity,
                   child: DataTable(
                     border: TableBorder(
-                      // horizontalInside: BorderSide(
-                      //   color: Colors.white24,
-                      //   width: 1,
-                      // ),
                       verticalInside: BorderSide(
-                        color: Colors.white24,
+                        color: Colors.white12,
                         width: 1,
                       )
                     ),
@@ -171,14 +168,12 @@ class _DeviceListState extends State<DeviceList> {
         );
       },
       cells: [
-        DataCell(Text(device.name, textAlign: TextAlign.center)),
-        DataCell(Text(device.address)),
-        DataCell(Text(
-          state,
-          style: TextStyle(color: colorState),
-        )),
+        DataCell(Padding(child: Text(device.name), padding: EdgeInsets.only(left: defaultPadding),)),
+        DataCell(Padding(child: Text(device.address), padding: EdgeInsets.only(left: defaultPadding),)),
+        // DataCell(Text(device.address)),
+        DataCell(Padding(padding: EdgeInsets.only(left: defaultPadding), child: Text(state, style: TextStyle(color: colorState),))),
         DataCell( 
-          Container(constraints: BoxConstraints(maxWidth: 300), child: Text(device.note))
+          Container(padding: EdgeInsets.only(left: defaultPadding), constraints: BoxConstraints(maxWidth: 320), child: Text(device.note))
         )
       ],
     );
