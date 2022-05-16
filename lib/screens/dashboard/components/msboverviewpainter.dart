@@ -10,8 +10,8 @@ class MsbOverviewPainter extends CustomPainter {
   int mouseX = 0, mouseY = 0;
   DeviceTable deviceTable;
 
-  static final paddingTop = 120.0;
-  static final paddingBottom = 120.0;
+  static final paddingTop = 85.0;
+  static final paddingBottom = 85.0;
   static final acbWidth = 45.0;
   static final acbHeight = 45.0;
   static final switchHeight = 30.0;
@@ -22,6 +22,8 @@ class MsbOverviewPainter extends CustomPainter {
   static final gnodeSize = 30.0;
   static final transformerSize = 30.0;
 
+  static final textColor = Color.fromARGB(255, 255, 255, 255);
+
   static var lastSize = Size(0, 0);
   var hoverMFMName = "";
   
@@ -29,27 +31,33 @@ class MsbOverviewPainter extends CustomPainter {
 
   void drawHorizontalWireList(Canvas canvas, Size size){
     final paint = Paint()
-      ..color = Colors.green
+      ..color = Colors.green.shade400
       ..strokeWidth = 3;
     final numPos = diagram.numPos.toDouble();
     double w = size.width, h = size.height;
     double vmed = h / 2;
-    // Horizontal wire
-    double t = 0;
+    double xmin = 0, xmax = w - 5;
+    if (diagram.type == MSBDiagramType.MSB12 || diagram.type == MSBDiagramType.MSB3){
+      xmin = diagram.vNodes.first.pos * w / numPos;
+    }
+    if (diagram.type == MSBDiagramType.MSB12 || diagram.type == MSBDiagramType.MSB4){
+      xmax = diagram.vNodes.last.pos * w / numPos;
+    }
+    double t = xmin;
     for (final hnode in diagram.hNodes){
       final hx = hnode.pos * w / numPos;
       final hxmin = hx - (acbWidth / 2);
       final hxmax = hx + (acbWidth / 2);
       canvas.drawLine(Offset(t, vmed), Offset(hxmin, vmed), paint);
       t = hxmax;
-    }
-    canvas.drawLine(Offset(t, vmed), Offset(w - 5, vmed), paint);
+    } 
+    canvas.drawLine(Offset(t, vmed), Offset(xmax, vmed), paint);
   }
 
   void drawVerticalWireList(Canvas canvas, Size size){
     final paint = Paint() 
-      ..color = Colors.green
-      ..strokeWidth = 2;
+      ..color = Colors.green.shade400
+      ..strokeWidth = 3;
     final numPos = diagram.numPos.toDouble();
     double w = size.width, h = size.height;
     double vmed = h / 2;
@@ -86,7 +94,7 @@ class MsbOverviewPainter extends CustomPainter {
     final numPos = diagram.numPos.toDouble();
     double width = size.width, height = size.height;
     double vmed = height / 2;
-    final textStyle = TextStyle(color: Colors.white60, fontSize: 11);
+    final textStyle = TextStyle(color: textColor, fontSize: 12);
     
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
@@ -129,7 +137,7 @@ class MsbOverviewPainter extends CustomPainter {
     // Vẽ ACB
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final textStyle = TextStyle(color: Colors.white60, fontSize: 11);
+    final textStyle = TextStyle(color: textColor, fontSize: 12);
 
 
     if (state == ACBDeviceState.Off){
@@ -226,7 +234,7 @@ class MsbOverviewPainter extends CustomPainter {
     
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final textStyle = TextStyle(color: Colors.white60, fontSize: 11);
+    final textStyle = TextStyle(color: textColor, fontSize: 12);
     for (final vnode in diagram.vNodes){
       final hx = vnode.pos * width / numPos;
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
@@ -366,7 +374,7 @@ class MsbOverviewPainter extends CustomPainter {
     double width = size.width, height = size.height;    
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final textStyle = TextStyle(color: Colors.white60, fontSize: 11);    
+    final textStyle = TextStyle(color: textColor, fontSize: 12);    
     for (final vnode in diagram.vNodes){
       final hx = vnode.pos * width / numPos;
       if (vnode.devices.contains(NodeDeviceType.GNode)){
@@ -404,7 +412,7 @@ class MsbOverviewPainter extends CustomPainter {
     
     final paint = Paint();
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final textStyle = TextStyle(color: Colors.white60, fontSize: 11);
+    final textStyle = TextStyle(color: textColor, fontSize: 12);
     
     for (final vnode in diagram.vNodes){
       if (vnode.devices.contains(NodeDeviceType.Transformer)){

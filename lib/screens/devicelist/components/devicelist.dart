@@ -51,6 +51,7 @@ class _DeviceListState extends State<DeviceList> {
       decoration: BoxDecoration(
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.white24),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,34 +61,62 @@ class _DeviceListState extends State<DeviceList> {
             style: Theme.of(context).textTheme.subtitle1,
           ),
           Expanded(
-            // child: Scrollbar(
-            //   isAlwaysShown: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
                   width: double.infinity,
                   child: DataTable(
-                  columnSpacing: 0,
-                  showCheckboxColumn: false,
-                  columns: [
-                    DataColumn(
-                      label: Text("Tên"),
+                    border: TableBorder(
+                      // horizontalInside: BorderSide(
+                      //   color: Colors.white24,
+                      //   width: 1,
+                      // ),
+                      verticalInside: BorderSide(
+                        color: Colors.white24,
+                        width: 1,
+                      )
                     ),
-                    DataColumn(
-                      label: Text("Địa chỉ"),
+                    columnSpacing: 0,
+                    showCheckboxColumn: false,
+                    columns: [
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Tên',
+                            textAlign: TextAlign.center,
+                          )
+                        )
+                      ),
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Địa chỉ',
+                            textAlign: TextAlign.center,
+                          )
+                        )
+                      ),
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Trạng thái',
+                            textAlign: TextAlign.center,
+                          )
+                        )
+                      ),
+                      DataColumn(
+                        label: Expanded(
+                          child: Text(
+                            'Mô tả',
+                            textAlign: TextAlign.center,
+                          )
+                        )
+                      ),
+                    ],
+                    rows: List.generate(
+                      deviceList.length,
+                      (index) => getDataRow(deviceList[index], index),
                     ),
-                    DataColumn(
-                      label: Text("Trạng thái"),
-                    ),
-                    DataColumn(
-                      label: Text("Mô tả"),
-                    ),
-                  ],
-                  rows: List.generate(
-                    deviceList.length,
-                    (index) => getDataRow(deviceList[index], index),
                   ),
-                ),
                 )
               // )
             )
@@ -119,11 +148,11 @@ class _DeviceListState extends State<DeviceList> {
           break;
         case DeviceState.Alarm:
           state = 'Cảnh báo';
-          colorState = Color(0xFF888888);
+          colorState = Color.fromARGB(255, 249, 220, 59);
           break;
         case DeviceState.Inactive:
           state = 'Không hoạt động';
-          colorState = Color(0xFF888888);
+          colorState = Color.fromARGB(255, 247, 149, 129);
           break;
         case DeviceState.Error:
           state = 'Lỗi';
@@ -142,7 +171,7 @@ class _DeviceListState extends State<DeviceList> {
         );
       },
       cells: [
-        DataCell(Text(device.name)),
+        DataCell(Text(device.name, textAlign: TextAlign.center)),
         DataCell(Text(device.address)),
         DataCell(Text(
           state,

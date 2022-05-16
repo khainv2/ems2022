@@ -22,6 +22,7 @@ class MsbList extends StatelessWidget {
       decoration: BoxDecoration(
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.white24),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

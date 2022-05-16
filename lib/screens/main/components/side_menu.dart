@@ -17,14 +17,24 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> listViewChildren = [
       DrawerHeader(
-        child:  Image.asset(
-          "assets/images/logo3.png", 
-          height: 100,
-          width: 100,
-          // color: primaryColor,
-          // colorBlendMode: BlendMode.darken,
-          fit: BoxFit.fitHeight,
-        ) 
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/images/logo3.png", 
+              height: 60,
+              width: 60,
+              fit: BoxFit.fitHeight,
+            ),
+            SizedBox(width: defaultPadding),
+            Image.asset(
+              "assets/images/logo4.png", 
+              height: 100,
+              width: 100,
+              fit: BoxFit.fitWidth,
+            ),
+          ],
+        )
       )
     ];
 

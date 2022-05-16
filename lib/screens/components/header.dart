@@ -28,6 +28,14 @@ class Header extends StatelessWidget {
           SizedBox(width: defaultPadding),
         if (!Responsive.isMobile(context))
           Image.asset(
+            "assets/images/logo3.png", 
+            width: 50,
+            height: 50,
+            fit: BoxFit.fitWidth,
+          ),
+        SizedBox(width: defaultPadding),
+        if (!Responsive.isMobile(context))
+          Image.asset(
             "assets/images/logo4.png", 
             width: 100,
             height: 50,
@@ -50,15 +58,7 @@ class Header extends StatelessWidget {
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
         Expanded(child: Container()),
-        if (!Responsive.isMobile(context))
-          Image.asset(
-            "assets/images/logo3.png", 
-            width: 40,
-            height: 40,
-            // color: primaryColor,
-            // colorBlendMode: BlendMode.darken,
-            fit: BoxFit.fitWidth,
-          ),
+
         NotificationButton(),
         ProfileCard()
       ],

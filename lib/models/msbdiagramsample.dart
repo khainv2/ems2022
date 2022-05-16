@@ -37,13 +37,13 @@ final msb12 = MSBDiagram(
       multimeter: MultimeterDevice( params: testParams, name: "MFM 03" )
     ),
     VNode(
-      name: "FROM LVG1*.2 PANEL", pos: 70, info: "G1",
+      name: "FROM LVG1*.2 PANEL", pos: 67, info: "G1",
       devices: { NodeDeviceType.GNode, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 02" ),
       acb: ACBDevice( name: "Q1.2" )
     ),
     VNode(
-      name: "PHÒNG MÁY IN PHỦ\nTĐ-ĐL1\n2190KW", pos: 80, 
+      name: "PHÒNG MÁY IN PHỦ\nTĐ-ĐL1\n2190KW", pos: 79, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.ACB },
       acb: ACBDevice( name: "Q1.4", state: ACBDeviceState.On )
     ),
@@ -174,7 +174,7 @@ final msb4 = MSBDiagram(
     VNode(
       name: "FROM MV PANEL", pos: 2, 
       devices: { NodeDeviceType.Transformer, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
-      multimeter: MultimeterDevice( params: testParams, name: "MFM 24" ),
+      multimeter: MultimeterDevice( params: testParams, name: "MFM 24"),
       acb: ACBDevice( name: "Q4.1" )
     ),
     VNode(
@@ -186,17 +186,17 @@ final msb4 = MSBDiagram(
     VNode(
       name: "TĐ-XMỰC\n170KW", pos: 5, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
-      multimeter: MultimeterDevice( params: testParams, name: "MFM 26" )
+      multimeter: MultimeterDevice( params: testParams, name: "MFM 26")
     ),
     VNode(
       name: "PHÒNG M.CẮT VÀ Đ.GÓI\nTĐ-ĐG\n236KW", pos: 7, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
-      multimeter: MultimeterDevice( params: testParams, name: "MFM 27" )
+      multimeter: MultimeterDevice( params: testParams, name: "MFM 27")
     ),
     VNode(
       name: "PHÒNG MÁY IN PHỦ\nTĐ-DCT\n900KW", pos: 8, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Multimeter },
-      multimeter: MultimeterDevice( params: testParams, name: "MFM 28" ),
+      multimeter: MultimeterDevice( params: testParams, name: "MFM 28"),
       // acb: ACBDevice(name: "Q4.6")
     ),
     VNode(

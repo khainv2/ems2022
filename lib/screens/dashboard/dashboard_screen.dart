@@ -7,7 +7,6 @@ import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/msbdiagramsample.dart';
 import 'package:admin/models/msblistsample.dart';
-import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/msboverviewpainter.dart';
 import 'package:admin/screens/devicelist/devicedetail.dart';
 import 'package:flutter/gestures.dart';
@@ -120,12 +119,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget createScrollArea(Widget widget){
-    if (MediaQuery.of(context).size.width < 1200){
+    final screenSize = MediaQuery.of(context).size;
+    if (screenSize.width < 1300 || screenSize.height < 750){
       return Container(
         padding: EdgeInsets.all(defaultPadding),
         decoration: BoxDecoration(
           color: secondaryColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: Colors.white24),
         ),
         child: InteractiveViewer(
           // alignPanAxis: true,
@@ -134,8 +135,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           scaleEnabled: false,
           // panEnabled: false,
           child: Container(
-            width: 1300,
-            height: 800,
+            width: 1400,
+            height: 750,
             child: widget
           )
         )
@@ -146,6 +147,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         decoration: BoxDecoration(
           color: secondaryColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: Colors.white24),
         ),
         child: widget,
       );
@@ -192,32 +194,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: <Widget>[
             Expanded(child: Container()),
             SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current = 0;
-                });
-              },
-              child: Text('MSB1 + MSB2', style: TextStyle(color: _current == 0 ? accentColor : Colors.white),),
+            Container(
+              width: 140,
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    _current = 0;
+                  });
+                },
+                child: Text('MSB1 + MSB2', style: TextStyle(color: _current == 0 ? accentColor : Colors.white),),
+              ),
             ),
+            
             SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current = 1;
-                });
-              },
-              child: Text('MSB3', style: TextStyle(color: _current == 1 ? accentColor : Colors.white),),
+            Container(
+              width: 140,
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    _current = 1;
+                  });
+                },
+                child: Text('MSB3', style: TextStyle(color: _current == 1 ? accentColor : Colors.white),),
+              ),
             ),
+            
             SizedBox(width: defaultPadding),
-            ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _current = 2;
-                });
-              },
-              child: Text('MSB4', style: TextStyle(color: _current == 2 ? accentColor : Colors.white),),
+            Container(
+              width: 140, 
+              child: ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    _current = 2;
+                  });
+                },
+                child: Text('MSB4', style: TextStyle(color: _current == 2 ? accentColor : Colors.white),),
+              ),
             ),
+            
             SizedBox(width: defaultPadding),
             Expanded(child: Container()),
           ],

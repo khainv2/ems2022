@@ -91,8 +91,8 @@ class MainApp extends StatelessWidget {
       title: 'EMS',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
-        // textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-        //     .apply(bodyColor: Colors.white),
+        textTheme: GoogleFonts.notoSansTextTheme(Theme.of(context).textTheme)
+                              .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
       home: MultiProvider(   
@@ -101,7 +101,7 @@ class MainApp extends StatelessWidget {
             create: (context) => MenuController(),
           ),
         ],
-        child: MainScreen(),
+        child: MainScreen(), 
       ),
     );
   }
