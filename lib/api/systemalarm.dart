@@ -49,7 +49,7 @@ Future<AlarmResult> getSystemAlarm(int pageIndex, int pageSize) async {
     int index = 0;
     for (final item in list){
       final e = Event(
-        num: (logResult.currentPage - 1) * logResult.pageSize + index,
+        num: (logResult.currentPage - 1) * logResult.pageSize + index + 1,
         readed: false,
         time: DateTime.fromMillisecondsSinceEpoch(item['createdTime'] * 1000),
         message: 'User ${item['loginname']} ${item['content']}',

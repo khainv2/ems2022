@@ -13,9 +13,6 @@ const defaultHalfPadding = 8.0;
 
 const hostname = 'http://test.thanhnt.com:8080';
 
-
-
-
 // import 'dart:ui' as ui;
 // import 'package:image/image.dart' as image;
 
@@ -27,3 +24,30 @@ const hostname = 'http://test.thanhnt.com:8080';
 //   ui.FrameInfo frameInfo = await codec.getNextFrame();
 //   return frameInfo.image;
 // }
+
+const defaultTableBorder = TableBorder(
+  top: BorderSide(
+    color: Colors.white12,
+    width: 1,
+  ),
+  bottom: BorderSide(
+    color: Colors.white12,
+    width: 1,
+  ),
+  left: BorderSide(
+    color: Colors.white12,
+    width: 1,
+  ),
+  right: BorderSide(
+    color: Colors.white12,
+    width: 1,
+  ),
+  verticalInside: BorderSide(
+    color: Colors.white12,
+    width: 1,
+  )
+);
+
+const defaultTableHeaderStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+);

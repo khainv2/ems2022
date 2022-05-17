@@ -19,7 +19,7 @@ class AlarmRuleScreen extends StatefulWidget {
 class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
   List<AlarmRule> alarmRules = [];
   List<int> alarmRuleSelectionIndexes = [];
-  final defaultPageSize = 10;
+  int defaultPageSize = 10;
   int currentPage = 1;
   int countPage = 1;
 
@@ -34,7 +34,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         currentPage = 1;
-        getRuleListAndSetState(currentPage, defaultPageSize);
+        getRuleListThenUpdate();
       });
     };
     showDialog(
@@ -69,17 +69,17 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       currentPage = 1;
-      getRuleListAndSetState(currentPage, defaultPageSize);
+      getRuleListThenUpdate();
     });
   }
 
   void listenIndexChange(int index){
     if (index == alarmRuleIndex){
-      getRuleListAndSetState(currentPage, defaultPageSize);
+      getRuleListThenUpdate();
     }
   }
 
-  void getRuleListAndSetState(int page, int defaultPageSize){
+  void getRuleListThenUpdate(){
     getRuleList(currentPage, defaultPageSize).then((value){
       setState(() {
         alarmRules = value.rules;
@@ -129,13 +129,32 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
           ),
           onPressed: (){
             currentPage = i;
-            getRuleListAndSetState(i, defaultPageSize);
+            getRuleListThenUpdate();
           },
         );
         output.add(btPage);
       }
       output.add(SizedBox(width: defaultHalfPadding));
     }
+    output.add(Expanded(child: Container()));
+    output.add(Text('Số trang'));
+    output.add(SizedBox(width: defaultPadding));
+    output.add(
+      DropdownButton<int>(
+        value: defaultPageSize,
+        items: [10, 30, 50, 100].map((e) 
+          => DropdownMenuItem<int>(
+            child: Text(e.toString()), 
+            value: e)
+          ).toList(),
+        onChanged: (val){
+          if (val == null) return;
+          defaultPageSize = val;
+          currentPage = 1;
+          getRuleListThenUpdate();
+        }
+      )
+    );
     return output;
   }
 
@@ -147,7 +166,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
             backgroundColor: MaterialStateProperty.all(primaryColor)
           ),
           onPressed: openCreateAlarmRuleDialog, 
-          child: Text('Thêm')
+          child: Text('  Thêm  ')
         ),
         SizedBox(width: defaultPadding),
         ElevatedButton(
@@ -195,14 +214,14 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       currentPage = 1;
-                      getRuleListAndSetState(currentPage, defaultPageSize);
+                      getRuleListThenUpdate();
                     });
                   }
                 ) 
               )
             );
           }, 
-          child: Text('Sửa')
+          child: Text('   Sửa   ')
         ),
         SizedBox(width: defaultPadding),
         ElevatedButton(
@@ -235,7 +254,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
               },
             );
           }, 
-          child: Text('Xóa')
+          child: Text('   Xóa   ')
         ),
         Expanded(child: Container())
       ],
@@ -260,15 +279,17 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
+              primary: false,
               child: Container(
                 width: double.infinity,
                 child: DataTable(
-                  columnSpacing: 0,
+                  border: defaultTableBorder,
+                  columnSpacing: defaultPadding,
                   showCheckboxColumn: false,
                   columns: [
                     'Chọn', 'Tên', 'Thiết bị', 'Tham số', 'Điều kiện', 
                     'Giá trị ngưỡng', 'Mức độ', 'Kích hoạt', 'Thời điểm tạo'
-                  ].map((e) => DataColumn( label: Text(e))).toList(),
+                  ].map((e) => DataColumn( label: Text(e, style: defaultTableHeaderStyle))).toList(),
                   rows: List.generate(
                     alarmRules.length,
                     (index){
@@ -312,6 +333,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
               )
             )
           ),
+          SizedBox(height: defaultPadding,),
           Row(
             children: createPageButton()
           )

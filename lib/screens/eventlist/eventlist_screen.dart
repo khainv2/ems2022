@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:admin/api/systemalarm.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/event.dart';
-import 'package:admin/models/sampleVal.dart';
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
 import '../../constants.dart';
 
 
@@ -18,13 +18,12 @@ class EventListScreen extends StatefulWidget {
 
 
 class _EventListScreenState extends State<EventListScreen> {
-  Timer? timerQueryData;
   List<Event> eventList = [];
-  final defaultPageSize = 10;
+  int defaultPageSize = 30;
   int currentPage = 1;
   int countPage = 1;
   
-  void getDataEvents(){
+  void getSystemEventThenUpdate(){
     getSystemAlarm(currentPage, defaultPageSize).then((value){
       setState(() {
         eventList = value.eventList;
@@ -37,13 +36,12 @@ class _EventListScreenState extends State<EventListScreen> {
   @override
   void initState(){
     super.initState();
-    timerQueryData = Timer.periodic(Duration(seconds: 3), (Timer t){
-      final userControl = UserControl();
-      if (userControl.currentStackIndex == 2){
-        getDataEvents();
+    final userControl = UserControl();
+    userControl.addStackIndexChangeListener((index){
+      if (index == eventListIndex){
+        getSystemEventThenUpdate();
       }
     });
-    getDataEvents();
   }
 
   List<Widget> createPageButton(){
@@ -62,23 +60,35 @@ class _EventListScreenState extends State<EventListScreen> {
           continue;
         }
         final btPage = ElevatedButton(
-          child: Text(
-            i.toString()
-          ),
+          child: Text(i.toString()),
           onPressed: (){
-            getSystemAlarm(i, defaultPageSize).then((value){
-            setState(() {
-              eventList = value.eventList;
-              countPage = value.totalPage;
-              currentPage = value.currentPage;
-            });
-          });
+            currentPage = i;
+            getSystemEventThenUpdate();
           },
         );
         output.add(btPage);
       }
       output.add(SizedBox(width: defaultHalfPadding));
     }
+    output.add(Expanded(child: Container()));
+    output.add(Text('Số trang'));
+    output.add(SizedBox(width: defaultPadding));
+    output.add(
+      DropdownButton<int>(
+        value: defaultPageSize,
+        items: [10, 30, 50, 100].map((e) 
+          => DropdownMenuItem<int>(
+            child: Text(e.toString()), 
+            value: e)
+          ).toList(),
+        onChanged: (val){
+          if (val == null) return;
+          defaultPageSize = val;
+          currentPage = 1;
+          getSystemEventThenUpdate();
+        }
+      )
+    );
     return output;
   }
 
@@ -97,35 +107,23 @@ class _EventListScreenState extends State<EventListScreen> {
             "Danh sách sự kiện",
             style: Theme.of(context).textTheme.subtitle1,
           ),
+          SizedBox(height: defaultPadding),
           Expanded(
             child: SingleChildScrollView(
+              primary: false,
               scrollDirection: Axis.vertical,
               child: Container(
                 width: double.infinity,
                 child: DataTable(
-                columnSpacing: 0,
-                showCheckboxColumn: false,
-                columns: [
-                  DataColumn(
-                    label: Text("STT"),
-                  ),
-                  DataColumn(
-                    label: Text("Loại"),
-                  ),
-                  DataColumn(
-                    label: Text("Thông báo"),
-                  ),
-                  DataColumn(
-                    label: Text("Thời gian"),
-                  ),
-                  DataColumn(
-                    label: Text("Trạng thái"),
-                  ),
-                ],
-                rows: List.generate(
-                  eventList.length,
-                  (index){
-                    final event = eventList[index];
+                  columnSpacing: defaultPadding,
+                  border: defaultTableBorder,
+                  showCheckboxColumn: false,
+                  columns: ['STT', 'Loại', 'Thông báo', 'Thời gian', 'Trạng thái']
+                    .map((e) => DataColumn(label: Text(e, style: defaultTableHeaderStyle))).toList(),
+                  rows: List.generate(
+                    eventList.length,
+                    (index){
+                      final event = eventList[index];
                       return DataRow(
                         cells: [
                           DataCell(Text(event.num.toString())),
@@ -135,14 +133,13 @@ class _EventListScreenState extends State<EventListScreen> {
                           DataCell(Text(event.readed ? 'Đã đọc' : 'Chưa đọc'))
                         ],
                       );
-                  },
+                    },
+                  ),
                 ),
-              ),
+              )
             )
-            // )
-          )
-            
           ),
+          SizedBox(height: defaultPadding),
           Row(
             children: createPageButton()
           )

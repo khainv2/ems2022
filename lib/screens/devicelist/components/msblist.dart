@@ -35,15 +35,9 @@ class MsbList extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DataTable(
-              border: TableBorder(
-                verticalInside: BorderSide(
-                  color: Colors.white12,
-                  width: 1,
-                )
-              ),
+              border: defaultTableBorder,
               columnSpacing: defaultPadding,
               showCheckboxColumn: false,
-              // minWidth: 250,
               columns: [
                 DataColumn(
                   label: Text("Tên"),

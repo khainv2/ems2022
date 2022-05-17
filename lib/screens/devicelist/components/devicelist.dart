@@ -6,6 +6,7 @@ import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:admin/screens/devicelist/devicedetail.dart';
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +26,9 @@ class _DeviceListState extends State<DeviceList> {
   Timer? timerQueryData;
   DeviceTable deviceTable = DeviceTable({}, {});
 
-  void getDataFromServer(){
+  void getRealtimeAndUpdate(){
     final userControl = UserControl();
-    if (userControl.currentStackIndex == 1){
+    if (userControl.currentStackIndex == deviceListIndex){
       getRealtimeAllDevice().then((value){
         setState(() {
           deviceTable = value;
@@ -40,7 +41,11 @@ class _DeviceListState extends State<DeviceList> {
   void initState(){
     super.initState();
     const oneSec = Duration(seconds: 3);
-    timerQueryData = Timer.periodic(oneSec, (Timer t) => getDataFromServer());   
+    timerQueryData = Timer.periodic(oneSec, (Timer t) => getRealtimeAndUpdate());  
+    final userControl = UserControl();
+    userControl.addStackIndexChangeListener((_){
+      getRealtimeAndUpdate();
+    });
   }
   
   @override
@@ -67,48 +72,16 @@ class _DeviceListState extends State<DeviceList> {
                 child: Container(
                   width: double.infinity,
                   child: DataTable(
-                    border: TableBorder(
-                      verticalInside: BorderSide(
-                        color: Colors.white12,
-                        width: 1,
-                      )
-                    ),
-                    columnSpacing: 0,
+                    border: defaultTableBorder,
+                    columnSpacing: defaultPadding,
                     showCheckboxColumn: false,
-                    columns: [
-                      DataColumn(
+                    columns: ['Tên', 'Địa chỉ', 'Trạng thái', 'Mô tả']
+                      .map((title) => DataColumn(
                         label: Expanded(
-                          child: Text(
-                            'Tên',
-                            textAlign: TextAlign.center,
-                          )
+                          child: Text(title, style: defaultTableHeaderStyle)
                         )
-                      ),
-                      DataColumn(
-                        label: Expanded(
-                          child: Text(
-                            'Địa chỉ',
-                            textAlign: TextAlign.center,
-                          )
-                        )
-                      ),
-                      DataColumn(
-                        label: Expanded(
-                          child: Text(
-                            'Trạng thái',
-                            textAlign: TextAlign.center,
-                          )
-                        )
-                      ),
-                      DataColumn(
-                        label: Expanded(
-                          child: Text(
-                            'Mô tả',
-                            textAlign: TextAlign.center,
-                          )
-                        )
-                      ),
-                    ],
+                      )
+                    ).toList(),
                     rows: List.generate(
                       deviceList.length,
                       (index) => getDataRow(deviceList[index], index),
@@ -138,25 +111,8 @@ class _DeviceListState extends State<DeviceList> {
       }
     }
     if (dev != null){
-      switch (dev.state){
-        case DeviceState.Online:
-          state = "Bật";
-          colorState = Color(0xff00cc00);
-          break;
-        case DeviceState.Alarm:
-          state = 'Cảnh báo';
-          colorState = Color.fromARGB(255, 249, 220, 59);
-          break;
-        case DeviceState.Inactive:
-          state = 'Không hoạt động';
-          colorState = Color.fromARGB(255, 247, 149, 129);
-          break;
-        case DeviceState.Error:
-          state = 'Lỗi';
-          colorState = Color(0xFFcc0000);
-          break;
-        default: break;
-      }
+      state = dev.stateStr();
+      colorState = dev.stateColor();
     }
     return DataRow(
       onSelectChanged: (v){
@@ -168,12 +124,14 @@ class _DeviceListState extends State<DeviceList> {
         );
       },
       cells: [
-        DataCell(Padding(child: Text(device.name), padding: EdgeInsets.only(left: defaultPadding),)),
-        DataCell(Padding(child: Text(device.address), padding: EdgeInsets.only(left: defaultPadding),)),
-        // DataCell(Text(device.address)),
-        DataCell(Padding(padding: EdgeInsets.only(left: defaultPadding), child: Text(state, style: TextStyle(color: colorState),))),
+        DataCell(Text(device.name)),
+        DataCell(Text(device.address)),
+        DataCell(Text(state, style: TextStyle(color: colorState))),
         DataCell( 
-          Container(padding: EdgeInsets.only(left: defaultPadding), constraints: BoxConstraints(maxWidth: 320), child: Text(device.note))
+          Container(
+            constraints: BoxConstraints(maxWidth: 320), 
+            child: Text(device.note)
+          )
         )
       ],
     );

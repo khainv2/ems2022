@@ -28,23 +28,27 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      
-      child: Container(
-        width: 400,
-        child: Column(
-          children: [
-            Text("Mật khẩu cũ"),
-            textFieldPass(),
-            SizedBox(height: defaultPadding,),
-            Text("Mật khẩu mới"),
-            textFieldPass(),
-            SizedBox(height: defaultPadding,),
-            Text("Nhập lại mật khẩu"),
-            textFieldPass(),
-            SizedBox(height: defaultPadding,),
-            ElevatedButton(onPressed: (){}, child: Text("Đổi mật khẩu"))
-          ],
-        )
+      child: Center(
+        child: Container(
+          width: 400,
+          child: Column(
+            children: [
+              Text("Mật khẩu cũ"),
+              SizedBox(height: defaultPadding,),
+              textFieldPass(),
+              SizedBox(height: defaultPadding,),
+              Text("Mật khẩu mới"),
+              SizedBox(height: defaultPadding,),
+              textFieldPass(),
+              SizedBox(height: defaultPadding,),
+              Text("Nhập lại mật khẩu"),
+              SizedBox(height: defaultPadding,),
+              textFieldPass(),
+              SizedBox(height: defaultPadding,),
+              ElevatedButton(onPressed: (){}, child: Text("Đổi mật khẩu"))
+            ],
+          )
+        ),
       )
     );
   }

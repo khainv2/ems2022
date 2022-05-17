@@ -21,11 +21,11 @@ class LogListScreen extends StatefulWidget {
 class _LogListScreenState extends State<LogListScreen> {
   Timer? timerQueryData;
   List<Log> logs = [];
-  final defaultPageSize = 10;
+  int defaultPageSize = 10;
   int currentPage = 1;
   int countPage = 1;
   
-  void getDataLogs(){
+  void getDataLogAndUpdate(){
     getSystemLog(currentPage, defaultPageSize).then((value){
       setState(() {
         logs = value.eventList;
@@ -41,10 +41,10 @@ class _LogListScreenState extends State<LogListScreen> {
     timerQueryData = Timer.periodic(Duration(seconds: 3), (Timer t){
       final userControl = UserControl();
       if (userControl.currentStackIndex == logListIndex){
-        getDataLogs();
+        getDataLogAndUpdate();
       }
     });
-    getDataLogs();
+    getDataLogAndUpdate();
   }
 
   List<Widget> createPageButton(){
@@ -67,19 +67,33 @@ class _LogListScreenState extends State<LogListScreen> {
             i.toString()
           ),
           onPressed: (){
-            getSystemLog(i, defaultPageSize).then((value){
-            setState(() {
-              logs = value.eventList;
-              countPage = value.totalPage;
-              currentPage = value.currentPage;
-            });
-          });
+            currentPage = i;
+            getDataLogAndUpdate();
           },
         );
         output.add(btPage);
       }
       output.add(SizedBox(width: defaultHalfPadding));
     }
+    output.add(Expanded(child: Container()));
+    output.add(Text('Số trang'));
+    output.add(SizedBox(width: defaultPadding));
+    output.add(
+      DropdownButton<int>(
+        value: defaultPageSize,
+        items: [10, 30, 50, 100].map((e) 
+          => DropdownMenuItem<int>(
+            child: Text(e.toString()), 
+            value: e)
+          ).toList(),
+        onChanged: (val){
+          if (val == null) return;
+          defaultPageSize = val;
+          currentPage = 1;
+          getDataLogAndUpdate();
+        }
+      )
+    );
     return output;
   }
 
@@ -100,26 +114,29 @@ class _LogListScreenState extends State<LogListScreen> {
             "Danh sách sự kiện",
             style: Theme.of(context).textTheme.subtitle1,
           ),
+          SizedBox(height: defaultPadding),
           Expanded(
             child: SingleChildScrollView(
+              primary: false,
               scrollDirection: Axis.vertical,
               child: Container(
                 width: double.infinity,
                 child: DataTable(
-                  columnSpacing: 0,
+                  columnSpacing: defaultPadding,
+                  border: defaultTableBorder,
                   showCheckboxColumn: false,
                   columns: [
                     DataColumn(
-                      label: Text("STT"),
+                      label: Text("STT", style: defaultTableHeaderStyle),
                     ),
                     DataColumn(
-                      label: Text("Loại"),
+                      label: Text("Loại", style: defaultTableHeaderStyle),
                     ),
                     DataColumn(
-                      label: Text("Thông báo"),
+                      label: Text("Thông báo", style: defaultTableHeaderStyle),
                     ),
                     DataColumn(
-                      label: Text("Thời gian"),
+                      label: Text("Thời gian", style: defaultTableHeaderStyle),
                     ),
                   ],
                   rows: List.generate(

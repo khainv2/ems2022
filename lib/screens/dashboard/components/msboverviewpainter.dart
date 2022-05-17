@@ -267,7 +267,7 @@ class MsbOverviewPainter extends CustomPainter {
 
     final r = RRect.fromLTRBR(offset.dx, offset.dy, offset.dx + 72, offset.dy + 120, Radius.circular(10));
     paint.style = PaintingStyle.stroke;
-    paint.color = name == hoverMFMName ? accentColor.withAlpha(200) : accentColor;
+    paint.color = name == hoverMFMName ? Color.fromARGB(255, 255, 67, 38) : accentColor;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 1;
 

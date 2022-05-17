@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 
 // Mô tả các loại tham số khác nhau của device 
+
 class DeviceParam {
   String name;
   double value;
@@ -37,6 +39,27 @@ class Device {
     this.state = DeviceState.Offline,
     this.realtimeParam = defaultRealtimeParam,
   });
+
+  String stateStr(){
+    switch (state){
+      case DeviceState.Online: return "Bật";
+      case DeviceState.Offline: return "Tắt";
+      case DeviceState.Alarm: return 'Cảnh báo';
+      case DeviceState.Inactive: return 'Không hoạt động';
+      case DeviceState.Error: return 'Lỗi';
+      default: return '';
+    }
+  }
+  Color stateColor(){
+    switch (state){
+    case DeviceState.Online: return Color(0xff00cc00);
+    case DeviceState.Offline: return Color(0xffcc0000);
+    case DeviceState.Alarm: return Color.fromARGB(255, 249, 220, 59);
+    case DeviceState.Inactive: return Color.fromARGB(255, 247, 149, 129);
+    case DeviceState.Error: return Color(0xFFcc0000);
+    default: return Colors.transparent;
+  }
+  }
 
   String getSerial(){
     if (type == DeviceType.ACB){

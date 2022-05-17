@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/menucontroller.dart';
 import 'package:admin/controllers/usercontrol.dart';
@@ -122,6 +124,14 @@ class _MainScreenState extends State<MainScreen> {
     });
     final userControl = UserControl();
     userControl.setCurrentStackIndex(index);
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    // Timer(Duration(seconds: 1), (){
+    //   setStackIndex(3);
+    // });
   }
 
   @override
