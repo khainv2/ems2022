@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:admin/api/systemalarm.dart';
 import 'package:admin/controllers/menucontroller.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/responsive.dart';
@@ -7,12 +10,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants.dart';
-
+import 'package:badges/badges.dart';
 
 class Header extends StatelessWidget {
   final String title;
+  final Function() notificationClicked;
   const Header({
-    Key? key, required this.title 
+    Key? key, required this.title, required this.notificationClicked
   }) : super(key: key);
 
   @override
@@ -58,8 +62,7 @@ class Header extends StatelessWidget {
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
         Expanded(child: Container()),
-
-        NotificationButton(),
+        NotificationButton(onPressed: notificationClicked),
         ProfileCard()
       ],
     );
@@ -126,12 +129,50 @@ class ProfileCard extends StatelessWidget {
   }
 }
 
-class NotificationButton extends StatelessWidget {
-@override
+class NotificationButton extends StatefulWidget {
+  Function() onPressed;
+  NotificationButton({required this.onPressed });
+  @override
+  State<NotificationButton> createState() => _NotificationButtonState();
+}
+
+class _NotificationButtonState extends State<NotificationButton> {
+  Timer? timerQueryData;
+  AlarmCount? _alarmCount;
+
+  void getDataFromServer(){
+    getCountUnhanded().then((alarmCount){
+      setState(() {
+        _alarmCount = alarmCount;
+      });
+    });
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    const oneSec = Duration(seconds: 5);
+    timerQueryData = Timer.periodic(oneSec, (Timer t) => getDataFromServer());   
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    if (timerQueryData != null){
+      timerQueryData!.cancel();
+    }
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    return TextButton(
+    
+    return Badge(
+      badgeColor: _alarmCount == null ? Colors.transparent : Colors.red,
+      badgeContent: _alarmCount == null ? null : Text(_alarmCount!.total.toString()),
+      child: TextButton(
         child: Icon(Icons.notifications),
-        onPressed: (){},
+        onPressed: widget.onPressed,
+      )
     );
   }
 }

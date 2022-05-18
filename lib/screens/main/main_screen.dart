@@ -159,7 +159,12 @@ class _MainScreenState extends State<MainScreen> {
                 padding: EdgeInsets.all(defaultPadding),
                 child: Column(
                   children: [
-                    Header(title: screenList[_stackIndex].name),
+                    Header(
+                      title: screenList[_stackIndex].name,
+                      notificationClicked: (){
+                        setStackIndex(eventListIndex);
+                      },
+                    ),
                     SizedBox(height: defaultPadding),
                     Expanded(
                       flex: 5,

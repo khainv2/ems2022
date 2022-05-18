@@ -17,6 +17,40 @@ class AlarmResult {
   int pageSize = 1;
 }
 
+class AlarmCount {
+  bool ok = true;
+  int high = 0;
+  int med = 0;
+  int low = 0;
+  int get total => high + med + low;
+}
+
+Future<AlarmCount> getCountUnhanded() async {
+  final userControl = UserControl();
+  var headers = {
+  'Authorization': 'Bearer ${userControl.token}'
+  };
+  var request = http.Request('GET', Uri.parse('$hostname/api/alarm/countUnhandled'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    final ret = await response.stream.bytesToString();
+    final data = json.decode(ret);
+    final d = data['data'];
+    return AlarmCount()
+      ..ok = true
+      ..high = d['highAlarmCount']
+      ..med = d['midAlarmCount']
+      ..low = d['lowAlarmCount'];
+  } else {
+    print(response.reasonPhrase);
+    return AlarmCount() ..ok = false;
+  }
+}
+
 Future<AlarmResult> getSystemAlarm(int pageIndex, int pageSize) async {
   final userControl = UserControl();
   var headers = {
@@ -48,12 +82,16 @@ Future<AlarmResult> getSystemAlarm(int pageIndex, int pageSize) async {
     final list = d['list'];
     int index = 0;
     for (final item in list){
+      
       final e = Event(
         num: (logResult.currentPage - 1) * logResult.pageSize + index + 1,
-        readed: false,
+        readed: item['ishandled'],
         time: DateTime.fromMillisecondsSinceEpoch(item['createdTime'] * 1000),
-        message: 'User ${item['loginname']} ${item['content']}',
-        type: EventType.Info
+        message: '${item['content']}',
+        type: EventType.Info,
+        level: getLevelFromValue(item['alarmtype']),
+        ruleName: item['rulename'],
+        device: item['mtname']
       );
       logResult.eventList.add(e);
       index++;

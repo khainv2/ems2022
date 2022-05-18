@@ -27,6 +27,7 @@ dependencies:
   flutter_login: ^2.2.1
   intl: ^0.17.0
   adaptive_scrollbar: ^2.1.2
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:

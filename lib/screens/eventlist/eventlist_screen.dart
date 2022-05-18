@@ -118,7 +118,7 @@ class _EventListScreenState extends State<EventListScreen> {
                   columnSpacing: defaultPadding,
                   border: defaultTableBorder,
                   showCheckboxColumn: false,
-                  columns: ['STT', 'Loại', 'Thông báo', 'Thời gian', 'Trạng thái']
+                  columns: ['STT', 'Mức cảnh báo', 'Thiết bị', 'Cấu hình tạo', 'Thông báo', 'Thời gian', 'Trạng thái']
                     .map((e) => DataColumn(label: Text(e, style: defaultTableHeaderStyle))).toList(),
                   rows: List.generate(
                     eventList.length,
@@ -127,7 +127,14 @@ class _EventListScreenState extends State<EventListScreen> {
                       return DataRow(
                         cells: [
                           DataCell(Text(event.num.toString())),
-                          DataCell(Text(event.type.toString().split('.').last)),
+                          DataCell(Text(
+                            levelToString(event.level),
+                            style: TextStyle(
+                              color: levelToColor(event.level),
+                            ),
+                          )),
+                          DataCell(Text(event.device)),
+                          DataCell(Text(event.ruleName)),
                           DataCell(Text(event.message)),
                           DataCell(Text(event.time.toString())),
                           DataCell(Text(event.readed ? 'Đã đọc' : 'Chưa đọc'))
