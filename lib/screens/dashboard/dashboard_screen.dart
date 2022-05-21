@@ -129,8 +129,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           border: Border.all(color: Colors.white24),
         ),
         child: InteractiveViewer(
-          // alignPanAxis: true,
-          // boundaryMargin: EdgeInsets.all(defaultPadding),
           constrained: false,
           scaleEnabled: false,
           // panEnabled: false,

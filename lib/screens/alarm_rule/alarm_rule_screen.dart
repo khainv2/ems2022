@@ -283,6 +283,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
               child: Container(
                 width: double.infinity,
                 child: DataTable(
+                  headingRowColor: defaultHeaderBackground,
                   border: defaultTableBorder,
                   columnSpacing: defaultPadding,
                   showCheckboxColumn: false,

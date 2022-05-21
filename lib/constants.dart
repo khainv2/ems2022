@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 const primaryColor = Color(0xFF2697FF);
 // const secondaryColor = Color(0xFF2A2D3E);
@@ -24,6 +25,8 @@ const hostname = 'http://test.thanhnt.com:8080';
 //   ui.FrameInfo frameInfo = await codec.getNextFrame();
 //   return frameInfo.image;
 // }
+
+final fullDateFormatter = DateFormat('dd/MM/yyyy');
 
 const defaultTableBorder = TableBorder(
   top: BorderSide(
@@ -51,3 +54,5 @@ const defaultTableBorder = TableBorder(
 const defaultTableHeaderStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
+
+final defaultHeaderBackground = MaterialStateColor.resolveWith((states) => primaryColor.withAlpha(80));

@@ -35,6 +35,7 @@ class MsbList extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DataTable(
+              headingRowColor: defaultHeaderBackground,
               border: defaultTableBorder,
               columnSpacing: defaultPadding,
               showCheckboxColumn: false,

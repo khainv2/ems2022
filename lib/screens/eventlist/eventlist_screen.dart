@@ -117,6 +117,7 @@ class _EventListScreenState extends State<EventListScreen> {
                 child: DataTable(
                   columnSpacing: defaultPadding,
                   border: defaultTableBorder,
+                  headingRowColor: defaultHeaderBackground,
                   showCheckboxColumn: false,
                   columns: ['STT', 'Mức cảnh báo', 'Thiết bị', 'Cấu hình tạo', 'Thông báo', 'Thời gian', 'Trạng thái']
                     .map((e) => DataColumn(label: Text(e, style: defaultTableHeaderStyle))).toList(),
@@ -126,7 +127,9 @@ class _EventListScreenState extends State<EventListScreen> {
                       final event = eventList[index];
                       return DataRow(
                         cells: [
-                          DataCell(Text(event.num.toString())),
+                          DataCell(
+                            Container(width: 10, child: Text(event.num.toString()))
+                          ),
                           DataCell(Text(
                             levelToString(event.level),
                             style: TextStyle(
@@ -137,7 +140,27 @@ class _EventListScreenState extends State<EventListScreen> {
                           DataCell(Text(event.ruleName)),
                           DataCell(Text(event.message)),
                           DataCell(Text(event.time.toString())),
-                          DataCell(Text(event.readed ? 'Đã đọc' : 'Chưa đọc'))
+                          DataCell(
+                            Row(
+                              children: [
+                                Text(event.readed ? 'Đã đọc' : 'Chưa đọc'),
+                                SizedBox(width: defaultPadding),
+                                if (!event.readed)
+                                  SizedBox(
+                                    width: 60, height: 32,
+                                    child: TextButton(
+                                      child: Icon(Icons.check),
+                                      onPressed: (){
+                                        setState(() {
+                                          eventList[index].readed = true;
+                                        });
+                                        markReadedSystemAlarm(event.id);
+                                      },
+                                    )
+                                  )
+                              ],
+                            )
+                          )
                         ],
                       );
                     },

@@ -73,6 +73,7 @@ class _DeviceListState extends State<DeviceList> {
                   width: double.infinity,
                   child: DataTable(
                     border: defaultTableBorder,
+                    headingRowColor: defaultHeaderBackground,
                     columnSpacing: defaultPadding,
                     showCheckboxColumn: false,
                     columns: ['Tên', 'Địa chỉ', 'Trạng thái', 'Mô tả']

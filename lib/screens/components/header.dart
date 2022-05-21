@@ -39,6 +39,18 @@ class Header extends StatelessWidget {
           ),
         SizedBox(width: defaultPadding),
         if (!Responsive.isMobile(context))
+          Text(
+            "HỆ THỐNG GIÁM SÁT NĂNG LƯỢNG NHÀ MÁY VẬT LIỆU POLYMER CÔNG NGHỆ CAO", 
+            style: TextStyle(
+              fontSize: 18,
+              color: primaryColor
+            ),
+            // style:Theme.of(context).textTheme.headline6!.copyWith(
+            //   color: primaryColor
+            // )
+          ),
+        SizedBox(width: defaultPadding),
+        if (!Responsive.isMobile(context))
           Image.asset(
             "assets/images/logo4.png", 
             width: 100,
@@ -46,18 +58,6 @@ class Header extends StatelessWidget {
             // color: primaryColor,
             // colorBlendMode: BlendMode.darken,
             fit: BoxFit.fitWidth,
-          ),
-          SizedBox(width: defaultPadding),
-        if (!Responsive.isMobile(context))
-          Text(
-            "HỆ THỐNG GIÁM SÁT NĂNG LƯỢNG", 
-            style: TextStyle(
-              fontSize: 22,
-              color: primaryColor
-            ),
-            // style:Theme.of(context).textTheme.headline6!.copyWith(
-            //   color: primaryColor
-            // )
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
@@ -103,12 +103,14 @@ class ProfileCard extends StatelessWidget {
           PopupMenuButton(
             icon: Icon(Icons.keyboard_arrow_down),
             onSelected: (value) {
-              print('Sign out');
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => LoginApp()),
-                (Route<dynamic> route) => false,
-              );
+              if (value == '/signout'){
+                print('Sign out');
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginApp()),
+                  (Route<dynamic> route) => false,
+                );
+              }
             },
             itemBuilder: (BuildContext bc) {
               return const [
@@ -130,7 +132,7 @@ class ProfileCard extends StatelessWidget {
 }
 
 class NotificationButton extends StatefulWidget {
-  Function() onPressed;
+  final Function() onPressed;
   NotificationButton({required this.onPressed });
   @override
   State<NotificationButton> createState() => _NotificationButtonState();
@@ -165,15 +167,22 @@ class _NotificationButtonState extends State<NotificationButton> {
   
   @override
   Widget build(BuildContext context) {
-    
-    return Badge(
-      badgeColor: _alarmCount == null ? Colors.transparent : Colors.red,
-      badgeContent: _alarmCount == null ? null : Text(_alarmCount!.total.toString()),
-      child: TextButton(
+    int countNotification = _alarmCount == null ? 0 : _alarmCount!.total;
+    if (countNotification == 0){
+      return TextButton(
         child: Icon(Icons.notifications),
         onPressed: widget.onPressed,
-      )
-    );
+      );
+    } else {
+      return Badge(
+        badgeContent: Text(countNotification.toString()),
+        child: TextButton(
+          child: Icon(Icons.notifications),
+          onPressed: widget.onPressed,
+        )
+      );
+    }
+    
   }
 }
 

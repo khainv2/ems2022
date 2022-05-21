@@ -165,47 +165,47 @@ final msb3 = MSBDiagram(
 
 final msb4 = MSBDiagram(
   type: MSBDiagramType.MSB4,
-  numPos: 12,
+  numPos: 130,
   hNodes: [
-    HNode(acbDevice: ACBDevice(name: "Q4.3"), pos: 4),
-    HNode(acbDevice: ACBDevice(name: "Q4.4"), pos: 6),
+    HNode(acbDevice: ACBDevice(name: "Q4.3"), pos: 40),
+    HNode(acbDevice: ACBDevice(name: "Q4.4"), pos: 60),
   ],
   vNodes: [
     VNode(
-      name: "FROM MV PANEL", pos: 2, 
+      name: "FROM MV PANEL", pos: 15, 
       devices: { NodeDeviceType.Transformer, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 24"),
       acb: ACBDevice( name: "Q4.1" )
     ),
     VNode(
-      name: "FROM LVG1*.1 PANEL", pos: 3, info: "G4",
+      name: "FROM LVG1*.1 PANEL", pos: 30, info: "G4",
       devices: { NodeDeviceType.GNode, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 25"),
       acb: ACBDevice(name: "Q4.2")
     ),
     VNode(
-      name: "TĐ-XMỰC\n170KW", pos: 5, 
+      name: "TĐ-XMỰC\n170KW", pos: 50, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 26")
     ),
     VNode(
-      name: "PHÒNG M.CẮT VÀ Đ.GÓI\nTĐ-ĐG\n236KW", pos: 7, 
+      name: "PHÒNG M.CẮT VÀ Đ.GÓI\nTĐ-ĐG\n236KW", pos: 70, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 27")
     ),
     VNode(
-      name: "PHÒNG MÁY IN PHỦ\nTĐ-DCT\n900KW", pos: 8, 
+      name: "PHÒNG MÁY IN PHỦ\nTĐ-DCT\n900KW", pos: 85, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 28"),
       // acb: ACBDevice(name: "Q4.6")
     ),
     VNode(
-      name: "TĐ-AHU-4~7\n30KW", pos: 9, 
+      name: "TĐ-AHU-4~7\n30KW", pos: 100, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 29" )
     ),
     VNode(
-      name: "NHÀ VP\nHVAC-VP\n180.9KW", pos: 10, 
+      name: "NHÀ VP\nHVAC-VP\n180.9KW", pos: 115, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 30" )
     ),

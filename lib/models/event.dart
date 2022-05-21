@@ -31,6 +31,7 @@ Color levelToColor(EventLevel level){
 
 class Event {
   int num = 0;
+  String id = '';
   EventType type;
   EventLevel level;
   String device;
@@ -40,6 +41,7 @@ class Event {
   bool readed;
 
   Event({
+    this.id = '',
     required this.num, 
     required this.type, 
     required this.message, 

@@ -28,7 +28,7 @@ class AlarmCount {
 Future<AlarmCount> getCountUnhanded() async {
   final userControl = UserControl();
   var headers = {
-  'Authorization': 'Bearer ${userControl.token}'
+    'Authorization': 'Bearer ${userControl.token}'
   };
   var request = http.Request('GET', Uri.parse('$hostname/api/alarm/countUnhandled'));
 
@@ -49,6 +49,33 @@ Future<AlarmCount> getCountUnhanded() async {
     print(response.reasonPhrase);
     return AlarmCount() ..ok = false;
   }
+}
+
+Future<void> markReadedSystemAlarm(String id) async {
+  final userControl = UserControl();
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${userControl.token}'
+  };
+  var request = http.Request('PUT', Uri.parse('$hostname/api/alarm/act/$id'));
+  request.body = json.encode({
+    "ishandled": true
+  });
+  request.headers.addAll(headers);
+
+  print('Set marked to system alarm $id');
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    final ret = await response.stream.bytesToString();
+    final data = json.decode(ret);
+    final d = data['data'];
+  }
+  else {
+    print(response.reasonPhrase);
+  }
+
 }
 
 Future<AlarmResult> getSystemAlarm(int pageIndex, int pageSize) async {
@@ -91,7 +118,8 @@ Future<AlarmResult> getSystemAlarm(int pageIndex, int pageSize) async {
         type: EventType.Info,
         level: getLevelFromValue(item['alarmtype']),
         ruleName: item['rulename'],
-        device: item['mtname']
+        device: item['mtname'],
+        id: item['id']
       );
       logResult.eventList.add(e);
       index++;

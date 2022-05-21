@@ -19,7 +19,7 @@ class LogListScreen extends StatefulWidget {
 }
 
 class _LogListScreenState extends State<LogListScreen> {
-  Timer? timerQueryData;
+  // Timer? timerQueryData;
   List<Log> logs = [];
   int defaultPageSize = 10;
   int currentPage = 1;
@@ -38,13 +38,12 @@ class _LogListScreenState extends State<LogListScreen> {
   @override
   void initState(){
     super.initState();
-    timerQueryData = Timer.periodic(Duration(seconds: 3), (Timer t){
-      final userControl = UserControl();
-      if (userControl.currentStackIndex == logListIndex){
+    final userControl = UserControl();
+    userControl.addStackIndexChangeListener((index){
+      if (index == logListIndex){
         getDataLogAndUpdate();
       }
     });
-    getDataLogAndUpdate();
   }
 
   List<Widget> createPageButton(){
@@ -122,6 +121,7 @@ class _LogListScreenState extends State<LogListScreen> {
               child: Container(
                 width: double.infinity,
                 child: DataTable(
+                  headingRowColor: defaultHeaderBackground,
                   columnSpacing: defaultPadding,
                   border: defaultTableBorder,
                   showCheckboxColumn: false,

@@ -1,3 +1,5 @@
+import 'package:admin/models/device.dart';
+import 'package:admin/models/msblistsample.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:flutter/material.dart';
 
@@ -7,15 +9,6 @@ import 'dart:html' as html;
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
-void downloadFile(String url) {
-   html.AnchorElement anchorElement =  new html.AnchorElement(href: url);
-   anchorElement.download = url;
-   anchorElement.click();
-}
-
-Future<String> loadAsset() async {
-  return await rootBundle.loadString('text/file.txt');
-}
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen({ Key? key }) : super(key: key);
@@ -23,157 +16,106 @@ class ReportScreen extends StatefulWidget {
   @override
   State<ReportScreen> createState() => _ReportScreenState();
 }
-// https://firebasestorage.googleapis.com/v0/b/ewew-bc020.appspot.com/o/DIEN%20NANG%20TIEU%20THU%20TRAM%20BOM%20XXX_01102018.xlsx?alt=media&token=7c168405-7f5f-45fd-b9ae-8d3813b2dddc
 class _ReportScreenState extends State<ReportScreen> {
-  String link = "https://firebasestorage.googleapis.com/v0/b/ewew-bc020.appspot.com/o/DIEN%20NANG%20TIEU%20THU%20TRAM%20BOM%20XXX_01102018.xlsx?alt=media&token=7c168405-7f5f-45fd-b9ae-8d3813b2dddc";
-  final column = "Ngày	HP1	HP2	NĂNG LƯỢNG ĐẦU VAO	NĂNG LƯỢNG TIÊU THỤ	NĂNG LƯỢNG TỔN HAO".split('\t');
+  String _deviceSerial = '';
   String? textData;
+  DateTime timeSearch = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
   
   @override 
   void initState(){
     super.initState();
-    loadAsset().then((value){
-      setState(() {
-        textData = value;
-      });
-    });
   }
 
-  DataRow getDataRow(String name, int index){
-    return DataRow(
-      cells: [
-        DataCell(Text(name, style: TextStyle(color: primaryColor),)),
-        DataCell(Text("              4.2 MB                 ")),
-        DataCell(ElevatedButton(
-          child: Text("Tải về"),
-          onPressed: (){
-            html.AnchorElement anchorElement =  new html.AnchorElement(href: link);
-            anchorElement.download = link;
-            anchorElement.click();
-          },
-        )),
-      ],
+  Widget deviceListDropDown(){
+    final multimeters = getDeviceListByType(DeviceType.Multimeter);
+    final items = multimeters.map((e) => DropdownMenuItem(
+      child: Text(e.name),
+      value: e.getSerial()
+    )).toList();
+    if (_deviceSerial.isEmpty && items.isNotEmpty){
+      _deviceSerial = multimeters.first.getSerial();
+    }
+    return Container(
+      width: 200,
+      height: 40,
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1.0, 
+            style: BorderStyle.solid,
+            color: Colors.white54
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        ),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: ButtonTheme(
+          alignedDropdown: true,
+          child: DropdownButton<String>(
+            elevation: 62,
+            style: const TextStyle(color: primaryColor),
+            underline: Container(
+              height: 2,
+              color: primaryColor,
+            ),
+            value: _deviceSerial,
+            items: items,
+            onChanged: (val){
+              setState(() {
+                if (val == null) 
+                  return;
+                _deviceSerial = val;
+              });
+              // getEnergyTrendAndUpdate();
+            },
+          )
+        ),
+      ),
+    );
+  }
+
+  Widget dateTimeButton(){
+    return Container(
+      width: 200,
+      height: 40,
+      child: OutlinedButton(
+        child: Row(
+          children: [
+            Icon(Icons.calendar_month),
+            Text(fullDateFormatter.format(timeSearch))
+          ],
+        ),
+        onPressed: (){
+          showDatePicker(
+            context: context, 
+            initialDate: DateTime.now(), 
+            firstDate: DateTime(2015, 8), 
+            lastDate: DateTime(2101),
+            cancelText: 'Bỏ qua',
+            confirmText: 'Xác nhận',
+            currentDate: timeSearch,
+            locale: Locale('vi', 'VN')
+          ).then((value){
+            if (value != null){
+              timeSearch = DateTime(
+                value.year,
+                value.month,
+                value.day,
+              );
+              // getHistoryData();
+            }
+          });
+        },
+      )
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<List<String>> rows = [];
-    if (textData != null){
-      final lines = textData!.split('\n');
-      for (final line in lines){
-        final words = line.split('\t');
-        if (words.length == column.length)
-          rows.add(words);
-      }
-    }
-
-    Widget makeDailyFolder(){
-      return Container(
-        padding: EdgeInsets.all(defaultPadding),
-        decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Theo ngày'),
-            DataTable(
-              columnSpacing: 0,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(
-                  label: Text("Tên"),
-                ),
-                DataColumn(
-                  label: Text("Kích thước"),
-                ),
-                DataColumn(
-                  label: Text("Hoạt động"),
-                ),
-              ],
-              rows: List.generate(
-                10,
-                (index) => getDataRow("Tệp ngày ${index + 1}", index),
-              ),
-            )
-          ]
-        )
-      );
-    }
-
-
-    Widget makeMonthlyFolder(){
-      return Container(
-        padding: EdgeInsets.all(defaultPadding),
-        decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Theo tháng'),
-            DataTable(
-              columnSpacing: 0,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(
-                  label: Text("Tên"),
-                ),
-                DataColumn(
-                  label: Text("Kích thước"),
-                ),
-                DataColumn(
-                  label: Text("Hoạt động"),
-                ),
-              ],
-              rows: List.generate(
-                3,
-                (index) => getDataRow("Tệp tháng ${index + 1}", index),
-              ),
-            )
-          ]
-        )
-      );
-    }
-
-
-    Widget makeYearlyFolder(){
-      return Container(
-        padding: EdgeInsets.all(defaultPadding),
-        decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Theo năm'),
-            DataTable(
-              columnSpacing: 0,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(
-                  label: Text("Tên"),
-                ),
-                DataColumn(
-                  label: Text("Kích thước"),
-                ),
-                DataColumn(
-                  label: Text("Hoạt động"),
-                ),
-              ],
-              rows: List.generate(
-                2,
-                (index) => getDataRow("Tệp năm ${2020 + index}", index),
-              ),
-            )
-          ]
-        )
-      );
-    }
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -181,13 +123,25 @@ class _ReportScreenState extends State<ReportScreen> {
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          makeDailyFolder(),
-          makeMonthlyFolder(),
-          makeYearlyFolder(),
-        
+          Row (
+            children: [
+              SizedBox(child: Text('Chọn thiết bị')),
+              SizedBox(width: defaultHalfPadding,),
+              deviceListDropDown(),
+              SizedBox(width: defaultPadding,),
+              SizedBox(child: Text('Chọn ngày')),
+              SizedBox(width: defaultHalfPadding,),
+              dateTimeButton(),
+            ]
+          ),
+          SizedBox(height: defaultPadding),
+          
+          Expanded(
+            child: Container()
+          )
         ],
       ),
     );

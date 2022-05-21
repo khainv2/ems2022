@@ -32,8 +32,9 @@ int get deviceListIndex => 1;
 int get eventListIndex => 2;
 int get alarmRuleIndex => 3;
 int get logListIndex => 4;
-int get energyManagementIndex => 5;
-int get settingIndex => 6;
+int get reportIndex => 5;
+int get energyManagementIndex => 6;
+int get settingIndex => 7;
 
 final screenList = [
   ScreenData(
@@ -61,11 +62,11 @@ final screenList = [
     image: "assets/icons/menu_doc.svg",
     screen: LogListScreen(),
   ),
-  // ScreenData(
-  //   name: "Báo cáo",
-  //   image: "assets/icons/menu_notification.svg",
-  //   screen: ReportScreen(),
-  // ),
+  ScreenData(
+    name: "Báo cáo",
+    image: "assets/icons/menu_notification.svg",
+    screen: ReportScreen(),
+  ),
   ScreenData(
     name: "Quản lý năng lượng",
     image: "assets/icons/menu_doc.svg",
@@ -130,7 +131,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState(){
     super.initState();
     // Timer(Duration(seconds: 1), (){
-    //   setStackIndex(3);
+    //   setStackIndex(reportIndex );
     // });
   }
 

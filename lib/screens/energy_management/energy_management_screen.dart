@@ -1,8 +1,13 @@
+import 'package:admin/api/energy_trend.dart';
 import 'package:admin/constants.dart';
+import 'package:admin/controllers/usercontrol.dart';
+import 'package:admin/models/device.dart';
+import 'package:admin/models/msblistsample.dart';
 import 'package:admin/screens/energy_management/components/chain_analysis.dart';
 import 'package:admin/screens/energy_management/components/daily_average_load.dart';
 import 'package:admin/screens/energy_management/components/load_trend.dart';
 import 'package:admin/screens/energy_management/components/peak_consumption.dart';
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class EnergyManagementScreen extends StatefulWidget {
@@ -13,6 +18,84 @@ class EnergyManagementScreen extends StatefulWidget {
 }
 
 class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
+  String _deviceSerial = '';
+  EnergyTrendTotal _energyTrend = EnergyTrendTotal(success: false);
+
+  void getEnergyTrendAndUpdate(){
+    if (_deviceSerial.isEmpty)
+      return;
+    getEnergyTrendTotal(_deviceSerial, DateTime(2022, 05, 20)).then((value){
+      print('Get energy trend total result ${value.success}');
+      setState(() {
+        _energyTrend = value;
+      });
+    });
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    final userControl = UserControl();
+    userControl.addStackIndexChangeListener((index){
+      if (index == energyManagementIndex){
+        getEnergyTrendAndUpdate();
+      }
+    });
+  }
+
+  Widget deviceListDropDown(){
+    final multimeters = getDeviceListByType(DeviceType.Multimeter);
+    final items = multimeters.map((e) => DropdownMenuItem(
+      child: Text(e.name),
+      value: e.getSerial()
+    )).toList();
+    if (_deviceSerial.isEmpty && items.isNotEmpty){
+      _deviceSerial = multimeters.first.getSerial();
+    }
+    return Row (
+      children: [
+        SizedBox(width: 150, child: Text('Chọn thiết bị')),
+        SizedBox(width: defaultPadding,),
+        Container(
+          width: 250,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1.0, 
+                style: BorderStyle.solid,
+                color: Colors.white54
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: ButtonTheme(
+              alignedDropdown: true,
+              child: DropdownButton<String>(
+                elevation: 62,
+                style: const TextStyle(color: primaryColor),
+                underline: Container(
+                  height: 2,
+                  color: primaryColor,
+                ),
+                value: _deviceSerial,
+                items: items,
+                onChanged: (val){
+                  setState(() {
+                    if (val == null) 
+                      return;
+                    _deviceSerial = val;
+                  });
+                  getEnergyTrendAndUpdate();
+                },
+              )
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,34 +107,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
               color: secondaryColor,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: Row (
-              children: [
-                Text('Chọn thiết bị'),
-                SizedBox(width: defaultPadding,),
-                DropdownButton<String>(
-                  value: "1",
-                  items: [
-                    DropdownMenuItem(
-                      value: "1",
-                      child: Text("Multimeter 1"),
-                    ),
-                    DropdownMenuItem(
-                      value: "2",
-                      child: Text("Multimeter 2"),
-                    ),
-                    DropdownMenuItem(
-                      value: "3",
-                      child: Text("Multimeter 3"),
-                    ),
-                    DropdownMenuItem(
-                      value: "4",
-                      child: Text("Multimeter 4"),
-                    ),
-                  ],
-                  onChanged: (val){},
-                ),
-              ],
-            )
+            child: deviceListDropDown(),
           ),
           SizedBox(height: defaultPadding),
           Expanded(
@@ -60,7 +116,9 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
               children: [
                 Expanded(
                   flex: 5,
-                  child: DailyAverageLoad()
+                  child: DailyAverageLoad(
+                    energyTrendTotal: _energyTrend
+                  )
                 ),
                 SizedBox(width: defaultPadding),
                 Expanded(

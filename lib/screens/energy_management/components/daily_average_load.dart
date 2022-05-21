@@ -1,3 +1,4 @@
+import 'package:admin/api/energy_trend.dart';
 import 'package:admin/constants.dart';
 import 'package:admin/models/energyinfo.dart';
 import 'package:admin/models/sampleVal.dart';
@@ -6,13 +7,12 @@ import 'package:flutter/material.dart';
 
 
 class DailyAverageLoadChart extends StatefulWidget {
-  const DailyAverageLoadChart({ Key? key }) : super(key: key);
+  final EnergyTrendTotal energyTrendTotal;
+  const DailyAverageLoadChart({ Key? key, required this.energyTrendTotal }) : super(key: key);
 
   @override
   State<DailyAverageLoadChart> createState() => _DailyAverageLoadChartState();
 }
-
-
 
 class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
   @override
@@ -20,6 +20,29 @@ class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
     List<DailyEnergyInfo> list = [];
     for (int i = 0; i < 23; i++){
       list.add(sampleDailyEnergy[i]);
+    }
+    List<BarChartGroupData> barDataList = [];
+    if (widget.energyTrendTotal.success){
+      final day = widget.energyTrendTotal.day!;
+      final paramList = day.getListDual();
+      for (final h in paramList){
+        final b = BarChartGroupData(
+          x: h.time,
+          barRods: [
+            BarChartRodData(
+              toY: h.beforeValue, 
+              width: 10, 
+              colors: [accentColor]
+            ),
+            BarChartRodData(
+              toY: h.currentValue, //e.val - e.hour + 12, 
+              width: 10, 
+              colors: [primaryColor]
+            )
+          ]
+        );
+        barDataList.add(b);
+      }
     }
 
     return BarChart(
@@ -33,21 +56,7 @@ class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
           )
         ),
         groupsSpace: 6,
-        barGroups: list.map((e) => BarChartGroupData(
-          x: e.hour, 
-          barRods: [
-            BarChartRodData(
-              toY: 0, 
-              width: 10, 
-              colors: [accentColor]
-            ),
-            BarChartRodData(
-              toY: 0, //e.val - e.hour + 12, 
-              width: 10, 
-              colors: [primaryColor]
-            )
-          ]
-        )).toList(),
+        barGroups: barDataList
       )
     );
   
@@ -55,7 +64,8 @@ class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
 }
 
 class DailyAverageLoad extends StatefulWidget {
-  const DailyAverageLoad({ Key? key }) : super(key: key);
+  final EnergyTrendTotal energyTrendTotal;
+  const DailyAverageLoad({ Key? key, required this.energyTrendTotal }) : super(key: key);
 
   @override
   State<DailyAverageLoad> createState() => _DailyAverageLoadState();
@@ -79,7 +89,7 @@ class _DailyAverageLoadState extends State<DailyAverageLoad> {
           ),
           SizedBox(height: defaultPadding),
           Expanded(
-            child: DailyAverageLoadChart()
+            child: DailyAverageLoadChart(energyTrendTotal: widget.energyTrendTotal,)
           )
         ],
       ),

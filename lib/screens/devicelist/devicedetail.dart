@@ -210,10 +210,11 @@ class _DeviceDetailState extends State<DeviceDetail> {
       }
       final scalex = maxx! - minx!;
       final scaley = maxy! - miny!;
-      // Làm tròn giá trị minx đến phút, maxx tròn 10 phút
+      // Làm tròn giá trị minx đến phút, maxx tròn 1 giờ, 
       if (scalex > 0){
+        minx = minx - (minx % 3600);
         if (minx % 60 > 0) minx -= (minx % 60);
-        if (maxx % 600 > 0) maxx += (600 - (maxx % 600));
+        maxx = minx + 86400 - 60;
       }
       // Nới rộng khoảng cách của miny và maxy, làm tròn đến giá trị thập phân
       if (scaley > 0){
@@ -234,7 +235,12 @@ class _DeviceDetailState extends State<DeviceDetail> {
         }
       }
     }
-    
+    // if (_historyParam.length > 0){
+    //   // spots.add(FlSpot.nullSpot);
+    //   final lastTimeOfDay = _historyParam[0].time + 86400;
+    //   spots.add(FlSpot(lastTimeOfDay.toDouble(), 0));
+    // }
+
     return LineChart(
       LineChartData(
         lineBarsData: [
@@ -243,7 +249,6 @@ class _DeviceDetailState extends State<DeviceDetail> {
             dotData: FlDotData(show: false),
           )
         ],
-        
         minX: minx == null ? null : minx.toDouble(),
         maxX: maxx == null ? null : maxx.toDouble(),
         minY: miny,
@@ -252,6 +257,10 @@ class _DeviceDetailState extends State<DeviceDetail> {
           enabled: false,
           handleBuiltInTouches: false,
           getTouchedSpotIndicator: (barData, spotIndex) => [],
+        ),
+        gridData: FlGridData(
+          show: true,
+          verticalInterval: 3600,
         ),
         titlesData: FlTitlesData(
           show: true,
@@ -264,14 +273,16 @@ class _DeviceDetailState extends State<DeviceDetail> {
                 fontSize: 10,
               );
             },
+            interval: 3600,
             
             getTitles: (value){
-              final formatter = DateFormat('hh:mm');
-              return formatter.format(DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000));
+              final formatter = DateFormat('HH:mm');
+              final dateTime = DateTime.fromMillisecondsSinceEpoch(value.toInt() * 1000);
+              return formatter.format(dateTime);
             },
             checkToShowTitle: (double minValue, double maxValue, SideTitles sideTitles, double appliedInterval, double value){
               if (value == minValue || value == maxValue){
-                return false;
+                return true;
               } else {
                 return true;
               }
