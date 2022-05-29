@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:admin/constants.dart';
+import 'package:admin/common.dart';
 import 'package:admin/controllers/menucontroller.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/responsive.dart';
@@ -18,7 +18,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'components/side_menu.dart';
+import '../components/side_menu.dart';
 
 class ScreenData {
   String name;

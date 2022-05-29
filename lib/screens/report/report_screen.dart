@@ -3,12 +3,7 @@ import 'package:admin/models/msblistsample.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-
-import 'dart:html' as html;
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
-
+import '../../common.dart';
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen({ Key? key }) : super(key: key);
@@ -114,6 +109,7 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
+  
   @override
   Widget build(BuildContext context) {
 
@@ -136,9 +132,8 @@ class _ReportScreenState extends State<ReportScreen> {
               SizedBox(width: defaultHalfPadding,),
               dateTimeButton(),
             ]
-          ),
+          ), 
           SizedBox(height: defaultPadding),
-          
           Expanded(
             child: Container()
           )

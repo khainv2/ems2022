@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants.dart';
+import '../../common.dart';
 import 'package:badges/badges.dart';
 
+/// Mô tả tiêu đề phía trên của app / web
 class Header extends StatelessWidget {
   final String title;
   final Function() notificationClicked;
@@ -21,7 +22,6 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       children: [
         if (!Responsive.isDesktop(context))
@@ -45,9 +45,6 @@ class Header extends StatelessWidget {
               fontSize: 18,
               color: primaryColor
             ),
-            // style:Theme.of(context).textTheme.headline6!.copyWith(
-            //   color: primaryColor
-            // )
           ),
         SizedBox(width: defaultPadding),
         if (!Responsive.isMobile(context))

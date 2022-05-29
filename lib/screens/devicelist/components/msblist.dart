@@ -4,7 +4,7 @@ import 'package:admin/models/sampleVal.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../common.dart';
 
 class MsbList extends StatelessWidget {
   final Function(int) requestChangeCurrentMsb;

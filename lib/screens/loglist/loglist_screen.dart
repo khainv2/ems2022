@@ -8,7 +8,7 @@ import 'package:admin/models/sampleVal.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import '../../common.dart';
 
 
 class LogListScreen extends StatefulWidget {

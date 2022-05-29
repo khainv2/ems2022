@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:admin/api/alarmruleapi.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/common.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/alarmrule.dart';
 import 'package:admin/models/device.dart';
@@ -195,6 +195,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
                   );
                 },
               );
+              return;
             }
             final currentRule = alarmRules[alarmRuleSelectionIndexes.first];
             showDialog(
@@ -261,87 +262,85 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
     );
   }
 
-  Widget ruleTable(){
-    return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column (
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Danh sách cấu hình cảnh báo",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-          SizedBox(height: defaultPadding,),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              primary: false,
-              child: Container(
-                width: double.infinity,
-                child: DataTable(
-                  headingRowColor: defaultHeaderBackground,
-                  border: defaultTableBorder,
-                  columnSpacing: defaultPadding,
-                  showCheckboxColumn: false,
-                  columns: [
-                    'Chọn', 'Tên', 'Thiết bị', 'Tham số', 'Điều kiện', 
-                    'Giá trị ngưỡng', 'Mức độ', 'Kích hoạt', 'Thời điểm tạo'
-                  ].map((e) => DataColumn( label: Text(e, style: defaultTableHeaderStyle))).toList(),
-                  rows: List.generate(
-                    alarmRules.length,
-                    (index){
-                      final rule = alarmRules[index];
-                      // String 
-                      return DataRow(
-                        cells: [
-                          DataCell(
-                            Checkbox(
-                              value: alarmRuleSelectionIndexes.contains(index), 
-                              onChanged: (checked){
-                                if (checked == null)
-                                  return;
-                                setState(() {
-                                  if (checked)
-                                    alarmRuleSelectionIndexes.add(index);
-                                  else 
-                                    alarmRuleSelectionIndexes.remove(index);
-                                });
-                              },
-                            )
-                          ),
-                          DataCell(
-                            Container(
-                              width: 200, 
-                              child: Text(rule.ruleName)
-                            )
-                          ),
-                          DataCell(Text(Device.getNameFromSerial(rule.serial))),
-                          DataCell(Text(rule.paramName)),
-                          DataCell(Text(rule.condition == RuleCondition.GreaterThanOrEquals ? '>=' : '<')),
-                          DataCell(Text(rule.limitValue.toString())),
-                          DataCell(Text(rule.paramLevelString())),
-                          DataCell(Text(rule.active? 'Bật' : 'Tắt')),
-                          DataCell(Text(rule.dateString()))
-                        ],
-                      );
-                    },
-                  ),
+  Widget ruleTable() => Container(
+    padding: EdgeInsets.all(defaultPadding),
+    decoration: BoxDecoration(
+      color: secondaryColor,
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
+    ),
+    child: Column (
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Danh sách cấu hình cảnh báo",
+          style: Theme.of(context).textTheme.subtitle1,
+        ),
+        SizedBox(height: defaultPadding,),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            primary: false,
+            child: Container(
+              width: double.infinity,
+              child: DataTable(
+                headingRowColor: defaultHeaderBackground,
+                border: defaultTableBorder,
+                columnSpacing: defaultPadding,
+                showCheckboxColumn: false,
+                columns: [
+                  'Chọn', 'Tên', 'Thiết bị', 'Tham số', 'Điều kiện', 
+                  'Giá trị ngưỡng', 'Mức độ', 'Kích hoạt', 'Thời điểm tạo'
+                ].map((e) => DataColumn( label: Text(e, style: defaultTableHeaderStyle))).toList(),
+                rows: List.generate(
+                  alarmRules.length,
+                  (index){
+                    final rule = alarmRules[index];
+                    // String 
+                    return DataRow(
+                      cells: [
+                        DataCell(
+                          Checkbox(
+                            value: alarmRuleSelectionIndexes.contains(index), 
+                            onChanged: (checked){
+                              if (checked == null)
+                                return;
+                              setState(() {
+                                if (checked)
+                                  alarmRuleSelectionIndexes.add(index);
+                                else 
+                                  alarmRuleSelectionIndexes.remove(index);
+                              });
+                            },
+                          )
+                        ),
+                        DataCell(
+                          Container(
+                            width: 200, 
+                            child: Text(rule.ruleName)
+                          )
+                        ),
+                        DataCell(Text(Device.getNameFromSerial(rule.serial))),
+                        DataCell(Text(rule.paramName)),
+                        DataCell(Text(rule.condition == RuleCondition.GreaterThanOrEquals ? '>=' : '<')),
+                        DataCell(Text(rule.limitValue.toString())),
+                        DataCell(Text(rule.paramLevelString())),
+                        DataCell(Text(rule.active? 'Bật' : 'Tắt')),
+                        DataCell(Text(rule.dateString()))
+                      ],
+                    );
+                  },
                 ),
-              )
+              ),
             )
-          ),
-          SizedBox(height: defaultPadding,),
-          Row(
-            children: createPageButton()
           )
-        ]
-      )
-    );
-  }
+        ),
+        SizedBox(height: defaultPadding,),
+        Row(
+          children: createPageButton()
+        )
+      ]
+    )
+  );
 
   @override
   Widget build(BuildContext context) {

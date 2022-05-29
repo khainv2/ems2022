@@ -1,4 +1,4 @@
-import 'package:admin/constants.dart';
+import 'package:admin/common.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:admin/api/energy_trend.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/common.dart';
 import 'package:admin/models/energyinfo.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:fl_chart/fl_chart.dart';

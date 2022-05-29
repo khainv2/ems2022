@@ -3,7 +3,7 @@ import 'package:admin/models/sampleVal.dart';
 import 'package:admin/screens/devicelist/components/devicelist.dart';
 import 'package:admin/screens/devicelist/components/msblist.dart';
 import 'package:flutter/material.dart';
-import '../../constants.dart';
+import '../../common.dart';
 
 class DeviceListScreen extends StatefulWidget {
   const DeviceListScreen({ Key? key }) : super(key: key);

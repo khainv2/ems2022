@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:admin/api/systemalarm.dart';
+import 'package:admin/common.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/event.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
-import '../../constants.dart';
 
 
 class EventListScreen extends StatefulWidget {
@@ -128,7 +128,7 @@ class _EventListScreenState extends State<EventListScreen> {
                       return DataRow(
                         cells: [
                           DataCell(
-                            Container(width: 10, child: Text(event.num.toString()))
+                            Container(width: 30, child: Text(event.num.toString()))
                           ),
                           DataCell(Text(
                             levelToString(event.level),

@@ -1,6 +1,6 @@
 
 
-import 'package:admin/constants.dart';
+import 'package:admin/common.dart';
 import 'package:admin/models/alarmrule.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msblistsample.dart';

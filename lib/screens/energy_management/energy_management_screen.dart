@@ -1,5 +1,5 @@
 import 'package:admin/api/energy_trend.dart';
-import 'package:admin/constants.dart';
+import 'package:admin/common.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msblistsample.dart';
@@ -24,7 +24,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
   void getEnergyTrendAndUpdate(){
     if (_deviceSerial.isEmpty)
       return;
-    getEnergyTrendTotal(_deviceSerial, DateTime(2022, 05, 20)).then((value){
+    getEnergyTrendTotal(_deviceSerial, DateTime.now()).then((value){
       print('Get energy trend total result ${value.success}');
       setState(() {
         _energyTrend = value;
