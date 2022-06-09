@@ -45,6 +45,7 @@ Future<DeviceTable> getRealtimeAllDevice() async {
         outparamlist[pname] = outparam;
       }
 
+
       if (mtserial.startsWith('ACB')){
         final device = Device(
           type: DeviceType.ACB,
@@ -66,7 +67,8 @@ Future<DeviceTable> getRealtimeAllDevice() async {
       }
       
     }
-    print('Realtime result ${acbList.length}, ${multimeterList.length}');
+    // print('Realtime result ${acbList.length}, ${multimeterList.length}');
+    // print('Realtime result $ret');
     return DeviceTable(acbList, multimeterList);
   } else {
     print(response.reasonPhrase);

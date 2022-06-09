@@ -19,6 +19,12 @@ enum DeviceState {
   None, Online, Offline, Alarm, Inactive, Error
 }
 
+const int ACBStatusInactive = 0;
+const int ACBStatusOpen = 1;
+const int ACBStatusClose = 2;
+const int ACBStatusTrip = 3;
+
+
 const Map<String,DeviceParam> defaultRealtimeParam = {};
   
   /// Mô tả một thiết bị cùng trạng thái đi kèm

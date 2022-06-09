@@ -12,7 +12,7 @@ final msb12 = MSBDiagram(
   hNodes: [
     HNode(
       acbDevice: ACBDevice( name: "Q1.3" ),
-      pos: 100,
+      pos: 102,
     ),
   ],
   vNodes: [
@@ -44,11 +44,12 @@ final msb12 = MSBDiagram(
     ),
     VNode(
       name: "PHÒNG MÁY IN PHỦ\nTĐ-ĐL1\n2190KW", pos: 79, 
-      devices: { NodeDeviceType.NormalLoad, NodeDeviceType.ACB },
+      devices: { NodeDeviceType.NormalLoad, NodeDeviceType.ACB, NodeDeviceType.Multimeter  },
+      multimeter: MultimeterDevice( params: testParams, name: "MFM 31" ),
       acb: ACBDevice( name: "Q1.4", state: ACBDeviceState.On )
     ),
     VNode(
-      name: "FROM MV PANEL", pos: 90, 
+      name: "FROM MV PANEL", pos: 88, 
       devices: { NodeDeviceType.Transformer, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 01" ),
       acb: ACBDevice( name: "Q1.1" )
@@ -61,7 +62,8 @@ final msb12 = MSBDiagram(
     ),
     VNode(
       name: "PHÒNG MÁY IN PHỦ\nTĐ-ĐL2\n3270KW", pos: 120, 
-      devices: { NodeDeviceType.NormalLoad, NodeDeviceType.ACB },
+      devices: { NodeDeviceType.NormalLoad, NodeDeviceType.ACB, NodeDeviceType.Multimeter },
+      multimeter: MultimeterDevice( params: testParams, name: "MFM 32" ),
       acb: ACBDevice( name: "Q2.3" )
     ),
     VNode(
@@ -167,7 +169,7 @@ final msb4 = MSBDiagram(
   type: MSBDiagramType.MSB4,
   numPos: 130,
   hNodes: [
-    HNode(acbDevice: ACBDevice(name: "Q4.3"), pos: 40),
+    HNode(acbDevice: ACBDevice(name: "Q4.3"), pos: 42),
     HNode(acbDevice: ACBDevice(name: "Q4.4"), pos: 60),
   ],
   vNodes: [

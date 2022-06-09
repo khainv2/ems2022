@@ -117,12 +117,14 @@ class _DeviceListState extends State<DeviceList> {
     }
     return DataRow(
       onSelectChanged: (v){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context){
-            return DeviceDetail(device: device);
-          }),
-        );
+        if (device.type == DeviceType.Multimeter){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context){
+              return DeviceDetail(device: device);
+            }),
+          );
+        }
       },
       cells: [
         DataCell(Text(device.name)),

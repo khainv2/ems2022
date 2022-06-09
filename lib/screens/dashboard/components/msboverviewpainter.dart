@@ -90,18 +90,43 @@ class MsbOverviewPainter extends CustomPainter {
     }
   }
 
-  void drawHorizontalACBList(Canvas canvas, Size size){
-    final numPos = diagram.numPos.toDouble();
-    double width = size.width, height = size.height;
-    double vmed = height / 2;
-    final textStyle = TextStyle(color: textColor, fontSize: 12);
+  void drawHorizontalACB(Canvas canvas, Offset offset, String name){
+
+    int status = ACBStatusInactive;
+    String temp = '0 oC';
+    String operCount = '0';
+
+    if (deviceTable.acbDevices.containsKey(name)){
+      final deviceInfo = deviceTable.acbDevices[name]!;
+      final params = deviceInfo.realtimeParam;
+      if (params.containsKey('Status'))
+        status = params['Status']!.value.toInt();
+      if (params.containsKey('Temp'))
+        temp = params['Temp']!.getFullValue();
+      if (params.containsKey('OperCount'))
+        operCount = params['OperCount']!.getFullValue();
+    }
+    temp = temp.replaceAll('o', '°');
     
-    final paint = Paint();
-    final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    for (final hnode in diagram.hNodes){
-      final hx = hnode.pos * width / numPos;
-      final p1 = Offset(hx - (acbWidth / 2), vmed);
-      final p2 = Offset(hx + (acbWidth / 2), vmed);
+    Color acbColor = Colors.white30;
+    bool isOpen = true;
+    if (status == ACBStatusOpen){
+      acbColor = Colors.red;
+      isOpen = true;
+    } else if (status == ACBStatusClose){
+      acbColor = Colors.green;
+      isOpen = false;
+    } else if (status == ACBStatusTrip){
+      acbColor = Colors.yellow;
+      isOpen = true;
+    }
+
+    if (isOpen){
+      final textPainter = TextPainter(textDirection: TextDirection.ltr);
+      final textStyle = TextStyle(color: textColor, fontSize: 12);
+      final p1 = offset - Offset(acbWidth / 2, 0);
+      final p2 = offset + Offset(acbWidth / 2 - 5, -20);
+      final paint = Paint();
       paint.color = Colors.white;
       paint.strokeWidth = 2;
       paint.style = PaintingStyle.stroke;
@@ -119,56 +144,102 @@ class MsbOverviewPainter extends CustomPainter {
 
       canvas.drawCircle(mid - Offset(0, 32), 8, paint);
       paint.style = PaintingStyle.fill;
-      paint.color = Colors.green;
+      paint.color = acbColor;
       canvas.drawCircle(mid - Offset(0, 32), 8, paint);
 
-      paint.style = PaintingStyle.fill;
+      paint.style = PaintingStyle.fill; 
       paint.color = secondaryColor;
       canvas.drawCircle(p1, 4, paint);
       canvas.drawCircle(p2, 4, paint);
 
-      textPainter.text = TextSpan(text: hnode.acbDevice.name, style: textStyle);
-      textPainter.layout(minWidth: 0, maxWidth: size.width, );
-      textPainter.paint(canvas, mid + Offset(-textPainter.width / 2, 10));
-    }
-  }
-
-  void drawVerticalACB(Canvas canvas, Offset offset, String name, ACBDeviceState state){
-    // Vẽ ACB
-    final paint = Paint();
-    final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final textStyle = TextStyle(color: textColor, fontSize: 12);
-
-
-    if (state == ACBDeviceState.Off){
-      final p1 = offset + Offset(0, acbHeight / 2);
-      final p2 = offset - Offset(0, acbHeight / 2);
-
-      final mid = (p1 + p2) / 2;
-      final mid1 = mid - Offset(0, 3);
-      final mid2 = mid + Offset(0, 3);
+      textPainter.text = TextSpan(text: '$name\nTemp: $temp\nOpCount: $operCount', style: textStyle);
+      textPainter.layout(minWidth: 0, maxWidth: 500 );
+      textPainter.paint(canvas, mid + Offset(-textPainter.width / 2, 24));
+    } else {
+      final textPainter = TextPainter(textDirection: TextDirection.ltr);
+      final textStyle = TextStyle(color: textColor, fontSize: 12);
+      final p1 = offset - Offset(acbWidth / 2, 0);
+      final p2 = offset + Offset(acbWidth / 2, 0);
+      final paint = Paint();
+      paint.color = Colors.white;
       paint.strokeWidth = 2;
       paint.style = PaintingStyle.stroke;
-      paint.color = Colors.white;
       canvas.drawCircle(p1, 4, paint);
       canvas.drawCircle(p2, 4, paint);
       paint.strokeWidth = 2;
       canvas.drawLine(p2, p1, paint);
 
       paint.strokeWidth = 1;
-      canvas.drawLine(mid1, mid1 - Offset(24, 0), paint);
-      canvas.drawLine(mid2, mid2 - Offset(24, 0), paint);
+      final mid = (p1 + p2) / 2;
+      final mid1 = mid - Offset(3, 0);
+      final mid2 = mid + Offset(3, 0);
+      canvas.drawLine(mid1, mid1 - Offset(0, 24), paint);
+      canvas.drawLine(mid2, mid2 - Offset(0, 24), paint);
 
-      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+      canvas.drawCircle(mid - Offset(0, 32), 8, paint);
       paint.style = PaintingStyle.fill;
-      paint.color = Colors.green;
-      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+      paint.color = acbColor;
+      canvas.drawCircle(mid - Offset(0, 32), 8, paint);
 
-      paint.style = PaintingStyle.fill;
+      paint.style = PaintingStyle.fill; 
       paint.color = secondaryColor;
       canvas.drawCircle(p1, 4, paint);
       canvas.drawCircle(p2, 4, paint);
-    } else {
+
+      textPainter.text = TextSpan(text: '$name\nTemp: $temp\nOpCount: $operCount', style: textStyle);
+      textPainter.layout(minWidth: 0, maxWidth: 500 );
+      textPainter.paint(canvas, mid + Offset(-textPainter.width / 2, 10));
+    }
+    
+  }
+
+  void drawHorizontalACBList(Canvas canvas, Size size){
+    final numPos = diagram.numPos.toDouble();
+    double width = size.width, height = size.height;
+    double vmed = height / 2;
+    for (final hnode in diagram.hNodes){
+      final hx = hnode.pos * width / numPos;
+      drawHorizontalACB(canvas, Offset(hx, vmed), hnode.acbDevice.name);
+    }
+  }
+
+  void drawVerticalACB(Canvas canvas, Offset offset, String name){
+    // Vẽ ACB
+    final paint = Paint();
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
+    final textStyle = TextStyle(color: textColor, fontSize: 11);
+
+    int status = ACBStatusInactive;
+    String temp = '0 oC';
+    String operCount = '0';
+
+    if (deviceTable.acbDevices.containsKey(name)){
+      final deviceInfo = deviceTable.acbDevices[name]!;
+      final params = deviceInfo.realtimeParam;
+      if (params.containsKey('Status'))
+        status = params['Status']!.value.toInt();
+      if (params.containsKey('Temp'))
+        temp = params['Temp']!.getFullValue();
+      if (params.containsKey('OperCount'))
+        operCount = params['OperCount']!.getFullValue();
+    }
+    temp = temp.replaceAll('o', '°');
+    
+    Color acbColor = Colors.white30;
+    bool isOpen = true;
+    if (status == ACBStatusOpen){
+      acbColor = Colors.red;
+      isOpen = true;
+    } else if (status == ACBStatusClose){
+      acbColor = Colors.green;
+      isOpen = false;
+    } else if (status == ACBStatusTrip){
+      acbColor = Colors.yellow;
+      isOpen = true;
+    }
+
+    // if (deviceTable.acbDevices.containsKey(key))
+    if (isOpen){
       final p1 = offset + Offset(-20, acbHeight / 2 - 5);
       final p2 = offset - Offset(0, acbHeight / 2);
 
@@ -189,20 +260,49 @@ class MsbOverviewPainter extends CustomPainter {
 
       canvas.drawCircle(mid - Offset(32, 0), 8, paint);
       paint.style = PaintingStyle.fill;
-      paint.color = Colors.red;
+      paint.color = acbColor;
       canvas.drawCircle(mid - Offset(32, 0), 8, paint);
 
       paint.style = PaintingStyle.fill;
       paint.color = secondaryColor;
       canvas.drawCircle(p1, 4, paint);
       canvas.drawCircle(p2, 4, paint);
+    } else {
+      final p1 = offset + Offset(0, acbHeight / 2);
+      final p2 = offset - Offset(0, acbHeight / 2);
+
+      final mid = (p1 + p2) / 2;
+      final mid1 = mid - Offset(0, 3);
+      final mid2 = mid + Offset(0, 3);
+      paint.strokeWidth = 2;
+      paint.style = PaintingStyle.stroke;
+      paint.color = Colors.white;
+      canvas.drawCircle(p1, 4, paint);
+      canvas.drawCircle(p2, 4, paint);
+      paint.strokeWidth = 2;
+      canvas.drawLine(p2, p1, paint);
+
+      paint.strokeWidth = 1;
+      canvas.drawLine(mid1, mid1 - Offset(24, 0), paint);
+      canvas.drawLine(mid2, mid2 - Offset(24, 0), paint);
+
+      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+      paint.style = PaintingStyle.fill;
+      paint.color = acbColor;
+      canvas.drawCircle(mid - Offset(32, 0), 8, paint);
+
+      paint.style = PaintingStyle.fill;
+      paint.color = secondaryColor;
+      canvas.drawCircle(p1, 4, paint);
+      canvas.drawCircle(p2, 4, paint);
+
     }
     
     final p1 = offset + Offset(0, acbHeight / 2);
     final p2 = offset - Offset(0, acbHeight / 2);
 
     final mid = (p1 + p2) / 2;
-    textPainter.text = TextSpan(text: name, style: textStyle);
+    textPainter.text = TextSpan(text: '$name\nTemp: $temp\nOpCount: $operCount', style: textStyle);
     textPainter.layout(minWidth: 0, maxWidth: 500, );
     textPainter.paint(canvas, mid + Offset(10, - textPainter.height / 2));
   }
@@ -217,12 +317,12 @@ class MsbOverviewPainter extends CustomPainter {
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
         if (vnode.devices.contains(NodeDeviceType.ACB)){
           // Vẽ các ACB ở phía trên
-          drawVerticalACB(canvas, Offset(hx, vmed - acbVPos), vnode.acb!.name, vnode.acb!.state);
+          drawVerticalACB(canvas, Offset(hx, vmed - acbVPos), vnode.acb!.name);
         }
       } else if (vnode.devices.contains(NodeDeviceType.GNode) || vnode.devices.contains(NodeDeviceType.Transformer)){
         if (vnode.devices.contains(NodeDeviceType.ACB)){
           // Vẽ các ACB ở phía dưới
-          drawVerticalACB(canvas, Offset(hx, height - paddingBottom - acbVPos), vnode.acb!.name, vnode.acb!.state);
+          drawVerticalACB(canvas, Offset(hx, height - paddingBottom - acbVPos), vnode.acb!.name);
         }
       }
     }

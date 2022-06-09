@@ -119,6 +119,20 @@ var listMsbSample = [
         state: DeviceState.Offline,
         note: "Giám sát điện năng cho tủ điện TĐ-ĐL2 (Phòng máy in phủ)"
       ),
+      Device(
+        name: "Multimeter 31",
+        type: DeviceType.Multimeter,
+        address: "192.168.1.103",
+        state: DeviceState.Offline,
+        note: "Từ tủ điện TĐ-ĐL1 (giám sát điện năng cho Q1.4 tủ MSB1)"
+      ),
+      Device(
+        name: "Multimeter 32",
+        type: DeviceType.Multimeter,
+        address: "192.168.1.104",
+        state: DeviceState.Offline,
+        note: "Từ tủ điện TĐ-ĐL2 (giám sát điện năng cho Q2.3 tủ MSB2)"
+      ),
     ]
   ),
   Msb(

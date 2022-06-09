@@ -290,7 +290,7 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
                 columns: [
                   'Chọn', 'Tên', 'Thiết bị', 'Tham số', 'Điều kiện', 
                   'Giá trị ngưỡng', 'Mức độ', 'Kích hoạt', 'Thời điểm tạo'
-                ].map((e) => DataColumn( label: Text(e, style: defaultTableHeaderStyle))).toList(),
+                ].map((e) => DataColumn( label: Text(e, style: defaultTableHeaderStyle))).toList(), 
                 rows: List.generate(
                   alarmRules.length,
                   (index){
