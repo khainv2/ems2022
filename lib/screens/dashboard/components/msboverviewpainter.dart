@@ -589,6 +589,8 @@ class MsbOverviewPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     lastSize = Size(size.width, size.height);
 
+    // print('Size canvas $size');
+
     drawHorizontalWireList(canvas, size);
     drawVerticalWireList(canvas, size);
 

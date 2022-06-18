@@ -27,7 +27,7 @@ final msb12 = MSBDiagram(
       multimeter: MultimeterDevice( params: testParams, name: "MFM 06" )
     ),
     VNode(
-      name: "P.RỬA, DUNG MÔI\nTĐ-DM\n50KW", pos: 40, 
+      name: "P.RỬA, DUNG MÔI\nTĐ-DM\n75KW", pos: 40, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 04" )
     ),
@@ -104,7 +104,7 @@ final msb3 = MSBDiagram(
       multimeter: MultimeterDevice( params: testParams, name: "MFM 20" )
     ),
     VNode(
-      name: "TĐ-AHU1~3\n183KW", pos: 53, 
+      name: "TĐ-AHU1~3\n20.5KW", pos: 53, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 19" )
     ),
@@ -196,7 +196,7 @@ final msb4 = MSBDiagram(
       multimeter: MultimeterDevice( params: testParams, name: "MFM 27")
     ),
     VNode(
-      name: "PHÒNG MÁY IN PHỦ\nTĐ-DCT\n900KW", pos: 85, 
+      name: "PHÒNG MÁY IN PHỦ\nTĐ-DCT\n1197KW", pos: 85, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 28"),
       // acb: ACBDevice(name: "Q4.6")

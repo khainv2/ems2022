@@ -82,7 +82,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
   AppBar appBar(BuildContext context){
     return AppBar(
-      title: Text("${widget.device.name} [${widget.device.address}]"),
+      title: Text("${widget.device.name} [${widget.device.address}] ${widget.device.note}"),
       backgroundColor: primaryColor,
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
