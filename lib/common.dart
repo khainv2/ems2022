@@ -35,3 +35,11 @@ const defaultTableHeaderStyle = TextStyle(
 );
 
 final defaultHeaderBackground = MaterialStateColor.resolveWith((states) => primaryColor.withAlpha(80));
+
+enum ReportTimeMode {
+  Daily, Monthly, Yearly
+}
+
+enum ReportSheetMode {
+  Input, Load
+}
