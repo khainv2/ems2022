@@ -305,7 +305,7 @@ class _ReportScreenState extends State<ReportScreen> {
           for (final row in myrows){
             sheet.appendRow(row);
           }
-          var bytes = excel.save(fileName: "$filename.xlsx");
+          excel.save(fileName: "$filename.xlsx");
         }, 
         child: Text('Tải về (*.xlsx)')
       ),
@@ -412,38 +412,70 @@ class _ReportScreenState extends State<ReportScreen> {
 
     myheaders = headers;
     myrows = rows;
-    
-    return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          width: double.infinity,
-          child: DataTable(
-            border: defaultTableBorder,
-            headingRowColor: defaultHeaderBackground,
-            columnSpacing: defaultPadding,
-            showCheckboxColumn: false,
-            columns: headers.map((title) => DataColumn(
-                label: Expanded(
-                  child: Text(title, style: defaultTableHeaderStyle)
+          
+
+    // if (sheetMode == ReportSheetMode.Input){
+      return Expanded(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          primary: false,
+          child: Container(
+            width: double.infinity,
+            child: DataTable(
+              border: defaultTableBorder,
+              headingRowColor: defaultHeaderBackground,
+              columnSpacing: defaultPadding,
+              showCheckboxColumn: false,
+              columns: headers.map((title) => DataColumn(
+                  label: Expanded(
+                    child: Text(title, style: defaultTableHeaderStyle)
+                  )
                 )
-              )
-            ).toList(),
-            rows: rows.map((e){
-              final cells = e.map((f) => DataCell(Text(f))).toList();
-              return DataRow(cells: cells);
-            }).toList()
-          ),
+              ).toList(),
+              rows: rows.map((e){
+                final cells = e.map((f) => DataCell(Text(f))).toList();
+                return DataRow(cells: cells);
+              }).toList()
+            ),
+          )
         )
-      // )
-      )
-      
-    );
+      );
+    // } else {
+    //   return  Expanded(
+    //     child: SingleChildScrollView(
+    //       scrollDirection: Axis.horizontal,
+    //       primary: false,
+    //       child: SingleChildScrollView(
+    //         scrollDirection: Axis.vertical,
+    //         primary: false,
+    //         child: Container(
+    //           // width: 2800,
+    //           child: DataTable(
+    //             border: defaultTableBorder,
+    //             headingRowColor: defaultHeaderBackground,
+    //             columnSpacing: defaultPadding,
+    //             showCheckboxColumn: false,
+    //             columns: headers.map((title) => DataColumn(
+    //                 label: Expanded(
+    //                   child: Text(title, style: defaultTableHeaderStyle)
+    //                 )
+    //               )
+    //             ).toList(),
+    //             rows: rows.map((e){
+    //               final cells = e.map((f) => DataCell(Text(f))).toList();
+    //               return DataRow(cells: cells);
+    //             }).toList()
+    //           ),
+    //         )
+    //       )
+    //     )
+    //   );
+    // }
+    
   }
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context){
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(

@@ -46,7 +46,10 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
   Widget deviceListDropDown(){
     final multimeters = getDeviceListByType(DeviceType.Multimeter);
     final items = multimeters.map((e) => DropdownMenuItem(
-      child: Text(e.name),
+      child: Text(e.name + ' - ' + e.note
+                                    .replaceAll('Giám sát điện năng cho', '')
+                                    .replaceAll('Giám sát điện năng', '')
+                                    .replaceAll('giám sát điện năng cho', '')),
       value: e.getSerial()
     )).toList();
     if (_deviceSerial.isEmpty && items.isNotEmpty){
@@ -57,7 +60,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
         SizedBox(width: 150, child: Text('Chọn thiết bị')),
         SizedBox(width: defaultPadding,),
         Container(
-          width: 250,
+          // width: 250,
           decoration: ShapeDecoration(
             shape: RoundedRectangleBorder(
               side: BorderSide(
@@ -73,7 +76,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
               alignedDropdown: true,
               child: DropdownButton<String>(
                 elevation: 62,
-                style: const TextStyle(color: primaryColor),
+                style: const TextStyle(color: Colors.white),
                 underline: Container(
                   height: 2,
                   color: primaryColor,

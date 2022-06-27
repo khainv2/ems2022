@@ -10,12 +10,12 @@ class MsbOverviewPainter extends CustomPainter {
   int mouseX = 0, mouseY = 0;
   DeviceTable deviceTable;
 
-  static final paddingTop = 85.0;
-  static final paddingBottom = 85.0;
+  static final paddingTop = 75.0;
+  static final paddingBottom = 80.0;
   static final acbWidth = 45.0;
   static final acbHeight = 45.0;
   static final switchHeight = 30.0;
-  static final acbVPos = 70.0;
+  static final acbVPadding = 70.0;
   static final switchVPos = 70.0;
   static final loaderWidth = 20;
   static final loaderHeight = 30;
@@ -61,6 +61,7 @@ class MsbOverviewPainter extends CustomPainter {
     final numPos = diagram.numPos.toDouble();
     double w = size.width, h = size.height;
     double vmed = h / 2;
+    double acbVPos = acbVPadding * h / 800;
     for (final vnode in diagram.vNodes){
       final hx = vnode.pos * w / numPos;
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
@@ -311,6 +312,7 @@ class MsbOverviewPainter extends CustomPainter {
     final numPos = diagram.numPos.toDouble();
     double width = size.width, height = size.height;
     double vmed = height / 2;
+    double acbVPos = acbVPadding * height / 800;
 
     for (final vnode in diagram.vNodes){
       final hx = vnode.pos * width / numPos;
@@ -459,7 +461,7 @@ class MsbOverviewPainter extends CustomPainter {
       if (vnode.devices.contains(NodeDeviceType.NormalLoad)){
         // Vẽ multimeter và các tham số 
         if (vnode.devices.contains(NodeDeviceType.Multimeter)){
-          drawMultimeter(canvas, Offset(hx + 8, paddingTop + 30), vnode.multimeter!.name);
+          drawMultimeter(canvas, Offset(hx + 8, (paddingTop + 30) * height / 800), vnode.multimeter!.name);
         }
       } else if (vnode.devices.contains(NodeDeviceType.GNode) || vnode.devices.contains(NodeDeviceType.Transformer)){
         if (vnode.devices.contains(NodeDeviceType.Multimeter)){
