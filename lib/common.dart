@@ -14,7 +14,7 @@ const borderColor = Colors.white12;
 const defaultPadding = 16.0;
 const defaultHalfPadding = 8.0;
 // Tên server kết nối
-const hostname = 'http://test.thanhnt.com:8080';
+const hostname = 'http://14.177.235.18:8082';
 
 final fullDateFormatter = DateFormat('dd/MM/yyyy');
 

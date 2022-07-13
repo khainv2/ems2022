@@ -414,7 +414,7 @@ class _ReportScreenState extends State<ReportScreen> {
     myrows = rows;
           
 
-    // if (sheetMode == ReportSheetMode.Input){
+    if (sheetMode == ReportSheetMode.Input){
       return Expanded(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -440,37 +440,44 @@ class _ReportScreenState extends State<ReportScreen> {
           )
         )
       );
-    // } else {
-    //   return  Expanded(
-    //     child: SingleChildScrollView(
-    //       scrollDirection: Axis.horizontal,
-    //       primary: false,
-    //       child: SingleChildScrollView(
-    //         scrollDirection: Axis.vertical,
-    //         primary: false,
-    //         child: Container(
-    //           // width: 2800,
-    //           child: DataTable(
-    //             border: defaultTableBorder,
-    //             headingRowColor: defaultHeaderBackground,
-    //             columnSpacing: defaultPadding,
-    //             showCheckboxColumn: false,
-    //             columns: headers.map((title) => DataColumn(
-    //                 label: Expanded(
-    //                   child: Text(title, style: defaultTableHeaderStyle)
-    //                 )
-    //               )
-    //             ).toList(),
-    //             rows: rows.map((e){
-    //               final cells = e.map((f) => DataCell(Text(f))).toList();
-    //               return DataRow(cells: cells);
-    //             }).toList()
-    //           ),
-    //         )
-    //       )
-    //     )
-    //   );
-    // }
+    } else {
+      return Expanded(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          primary: false,
+          child: Container(
+            width: double.infinity,
+            child: DataTable(
+              border: defaultTableBorder,
+              headingRowColor: defaultHeaderBackground,
+              columnSpacing: defaultPadding,
+              showCheckboxColumn: false,
+              columns: headers.map((title) => DataColumn(
+                  label: Expanded(
+                    child: Text(
+                      title, 
+                      style: TextStyle(
+                        fontSize: 11,
+                      )
+                    )
+                  )
+                )
+              ).toList(),
+              rows: rows.map((e){
+                final cells = e.map((f) => DataCell(Text(
+                    f,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    )
+                  ))).toList();
+                return DataRow(cells: cells);
+              }).toList()
+            ),
+          )
+        )
+      );
+    }
     
   }
 
