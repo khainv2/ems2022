@@ -14,6 +14,7 @@ import 'package:admin/screens/loglist/loglist_screen.dart';
 import 'package:admin/screens/report/report_screen.dart';
 import 'package:admin/screens/setting/setting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -82,6 +83,9 @@ final screenList = [
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+    ]);
     return MaterialApp(
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate
@@ -157,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
             Expanded(
               flex: 5, 
               child: Container(
-                padding: EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultHalfPadding),
                 child: Column(
                   children: [
                     Header(
@@ -166,7 +170,7 @@ class _MainScreenState extends State<MainScreen> {
                         setStackIndex(eventListIndex);
                       },
                     ),
-                    SizedBox(height: defaultPadding),
+                    SizedBox(height: defaultHalfPadding),
                     Expanded(
                       flex: 5,
                       child: IndexedStack(

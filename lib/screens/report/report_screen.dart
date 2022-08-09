@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msblistsample.dart';
 import 'package:admin/models/sampleVal.dart';
+import 'package:admin/responsive.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget reportTimeModeDropdown(){
     return Container(
-      width: 200,
+      width: 120,
       height: 40,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
@@ -91,7 +92,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget reportSheetModeDropdown(){
     return Container(
-      width: 200,
+      width: 170,
       height: 40,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
@@ -143,7 +144,7 @@ class _ReportScreenState extends State<ReportScreen> {
       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ];
     return Container(
-      width: 200,
+      width: 120,
       height: 40,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
@@ -186,7 +187,7 @@ class _ReportScreenState extends State<ReportScreen> {
       yearList.add(i);
     }
     return Container(
-      width: 200,
+      width: 120,
       height: 40,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
@@ -229,7 +230,7 @@ class _ReportScreenState extends State<ReportScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           monthSelectionDropdown(),
-          SizedBox(width: defaultPadding),
+          SizedBox(width: defaultHalfPadding),
           yearSelectionDropdown(),
         ],
       )
@@ -248,7 +249,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget dateTimeButton(){
     return Container(
-      width: 200,
+      width: 130,
       height: 40,
       child: OutlinedButton(
         child: Row(
@@ -284,7 +285,7 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget downloadButton(){
     return SizedBox(
-      width: 150, height: 36,
+      width: 120, height: 36,
       child: ElevatedButton(
         onPressed: (){
           String sheetModeName = sheetMode == ReportSheetMode.Input ? 'DIEN NANG DAU VAO' : 'CHI TIET PHU TAI';
@@ -307,14 +308,14 @@ class _ReportScreenState extends State<ReportScreen> {
           }
           excel.save(fileName: "$filename.xlsx");
         }, 
-        child: Text('Tải về (*.xlsx)')
+        child: Text('Tải về')
       ),
     );
   }
 
   List<String> myheaders = [];
   List<List<String>> myrows = [];
-  Widget sheet(){
+  Widget sheet(BuildContext context){
     List<String> headers = [];
     List<List<String>> rows = [];
 
@@ -411,9 +412,7 @@ class _ReportScreenState extends State<ReportScreen> {
     }
 
     myheaders = headers;
-    myrows = rows;
-          
-
+    myrows = rows;     
     if (sheetMode == ReportSheetMode.Input){
       return Expanded(
         child: SingleChildScrollView(
@@ -422,6 +421,9 @@ class _ReportScreenState extends State<ReportScreen> {
           child: Container(
             width: double.infinity,
             child: DataTable(
+              
+              headingRowHeight: Responsive.isMobile(context) ? 36 : 48,
+              dataRowHeight: Responsive.isMobile(context) ? 36 : 48,
               border: defaultTableBorder,
               headingRowColor: defaultHeaderBackground,
               columnSpacing: defaultPadding,
@@ -448,6 +450,8 @@ class _ReportScreenState extends State<ReportScreen> {
           child: Container(
             width: double.infinity,
             child: DataTable(
+              headingRowHeight: Responsive.isMobile(context) ? 36 : 48,
+              dataRowHeight: Responsive.isMobile(context) ? 36 : 48,
               border: defaultTableBorder,
               headingRowColor: defaultHeaderBackground,
               columnSpacing: defaultPadding,
@@ -484,7 +488,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context){
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
+      padding: EdgeInsets.all(defaultHalfPadding),
       decoration: BoxDecoration(
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -494,15 +498,11 @@ class _ReportScreenState extends State<ReportScreen> {
         children: [
           Row (
             children: [
-              Text('Mẫu'),
-              SizedBox(width: defaultPadding,),
-              Text('Dạng báo cáo'),
-              SizedBox(width: defaultPadding,),
+              Text('Dạng'),
+              SizedBox(width: defaultHalfPadding,),
               reportTimeModeDropdown(),
-              SizedBox(width: defaultPadding,),
+              SizedBox(width: defaultHalfPadding,),
               reportSheetModeDropdown(),
-              SizedBox(width: defaultPadding,),
-              Text('Chọn thời gian'),
               SizedBox(width: defaultHalfPadding,),
               if (timeMode == ReportTimeMode.Daily)
                 dateTimeButton(),
@@ -516,7 +516,7 @@ class _ReportScreenState extends State<ReportScreen> {
             ]
           ), 
           SizedBox(height: defaultPadding),
-          sheet()
+          sheet(context)
         ],
       ),
     );

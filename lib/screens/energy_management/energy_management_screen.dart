@@ -3,6 +3,7 @@ import 'package:admin/common.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msblistsample.dart';
+import 'package:admin/responsive.dart';
 import 'package:admin/screens/energy_management/components/chain_analysis.dart';
 import 'package:admin/screens/energy_management/components/daily_average_load.dart';
 import 'package:admin/screens/energy_management/components/load_trend.dart';
@@ -75,7 +76,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
             child: ButtonTheme(
               alignedDropdown: true,
               child: DropdownButton<String>(
-                elevation: 62,
+                elevation: 42,
                 style: const TextStyle(color: Colors.white),
                 underline: Container(
                   height: 2,
@@ -101,18 +102,40 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = Responsive.isMobile(context);
+
+    if (isMobile){
+      return Expanded(
+        child:  InteractiveViewer(
+          constrained: false,
+          scaleEnabled: true,
+          minScale: 0.1,
+          maxScale: 5,
+          // panEnabled: false,
+          child: Container(
+            width: 1000,
+            height: 1500,
+            child: Column(
+              children: [
+                deviceListDropDown(),
+                SizedBox(height: defaultHalfPadding),
+                SizedBox(width: 1000, height: 300, child: DailyAverageLoad(energyTrendTotal: _energyTrend)),
+                SizedBox(width: 1000, height: 300, child: PeakConsumption()),
+                SizedBox(width: 1000, height: 300, child: ChainAnalysis()),
+                SizedBox(width: 1000, height: 300, child: LoadTrend())
+                
+
+              ],
+            )
+          )
+        )
+      );
+    } else 
     return SafeArea(
       child: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(defaultPadding),
-            decoration: BoxDecoration(
-              color: secondaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: deviceListDropDown(),
-          ),
-          SizedBox(height: defaultPadding),
+          deviceListDropDown(),
+          SizedBox(height: defaultHalfPadding),
           Expanded(
             flex: 3,
             child: Row(
@@ -131,7 +154,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
               ],
             )
           ),
-          SizedBox(height: defaultPadding),
+          SizedBox(height: defaultHalfPadding),
           Expanded(
             flex: 4,
             child: Row(

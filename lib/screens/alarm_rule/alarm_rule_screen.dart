@@ -290,7 +290,9 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
                 columns: [
                   'Chọn', 'Tên', 'Thiết bị', 'Tham số', 'Điều kiện', 
                   'Giá trị ngưỡng', 'Mức độ', 'Kích hoạt', 'Thời điểm tạo'
-                ].map((e) => DataColumn( label: Text(e, style: defaultTableHeaderStyle))).toList(), 
+                ].map((e) => DataColumn( label: Text(e, style: TextStyle(
+                        fontSize: 11,
+                      )))).toList(), 
                 rows: List.generate(
                   alarmRules.length,
                   (index){
@@ -316,16 +318,16 @@ class _AlarmRuleScreenState extends State<AlarmRuleScreen> {
                         DataCell(
                           Container(
                             width: 200, 
-                            child: Text(rule.ruleName)
+                            child: Text(rule.ruleName, style: TextStyle( fontSize: 11, ))
                           )
                         ),
-                        DataCell(Text(Device.getNameFromSerial(rule.serial))),
-                        DataCell(Text(rule.paramName)),
-                        DataCell(Text(rule.condition == RuleCondition.GreaterThanOrEquals ? '>=' : '<')),
-                        DataCell(Text(rule.limitValue.toString())),
-                        DataCell(Text(rule.paramLevelString())),
-                        DataCell(Text(rule.active? 'Bật' : 'Tắt')),
-                        DataCell(Text(rule.dateString()))
+                        DataCell(Text(Device.getNameFromSerial(rule.serial), style: TextStyle( fontSize: 11, ))),
+                        DataCell(Text(rule.paramName, style: TextStyle( fontSize: 11, ))),
+                        DataCell(Text(rule.condition == RuleCondition.GreaterThanOrEquals ? '>=' : '<', style: TextStyle( fontSize: 11, ))),
+                        DataCell(Text(rule.limitValue.toString(), style: TextStyle( fontSize: 11, ))),
+                        DataCell(Text(rule.paramLevelString(), style: TextStyle( fontSize: 11, ))),
+                        DataCell(Text(rule.active? 'Bật' : 'Tắt', style: TextStyle( fontSize: 11, ))),
+                        DataCell(Text(rule.dateString(), style: TextStyle( fontSize: 11, )))
                       ],
                     );
                   },

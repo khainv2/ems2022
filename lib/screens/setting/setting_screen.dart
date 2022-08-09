@@ -34,17 +34,13 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             children: [
               Text("Mật khẩu cũ"),
-              SizedBox(height: defaultPadding,),
+              SizedBox(height: defaultHalfPadding,),
               textFieldPass(),
-              SizedBox(height: defaultPadding,),
+              SizedBox(height: defaultHalfPadding,),
               Text("Mật khẩu mới"),
-              SizedBox(height: defaultPadding,),
+              SizedBox(height: defaultHalfPadding,),
               textFieldPass(),
-              SizedBox(height: defaultPadding,),
-              Text("Nhập lại mật khẩu"),
-              SizedBox(height: defaultPadding,),
-              textFieldPass(),
-              SizedBox(height: defaultPadding,),
+              SizedBox(height: defaultHalfPadding,),
               ElevatedButton(onPressed: (){}, child: Text("Đổi mật khẩu"))
             ],
           )

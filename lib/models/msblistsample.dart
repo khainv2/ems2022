@@ -370,7 +370,8 @@ List<Device> getDeviceListByType(DeviceType type){
       }
     }
   }
-  output.sort((a, b) => int.parse(a.name.split(' ').last).compareTo(int.parse(b.name.split(' ').last)));
+  if (type == DeviceType.Multimeter)
+    output.sort((a, b) => int.parse(a.name.split(' ').last).compareTo(int.parse(b.name.split(' ').last)));
   return output;
 }
 

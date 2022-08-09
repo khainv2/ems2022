@@ -29,6 +29,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Timer? timerQueryData;
 
+  final viewTransformationController = TransformationController();
+
   void getDataFromServer(){
     final userControl = UserControl();
     if (userControl.currentStackIndex == 0){
@@ -45,6 +47,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     const oneSec = Duration(seconds: 3);
     timerQueryData = Timer.periodic(oneSec, (Timer t) => getDataFromServer());   
+
+    final zoomFactor = 0.5;
+    viewTransformationController.value.setEntry(0, 0, zoomFactor);
+    viewTransformationController.value.setEntry(1, 1, zoomFactor);
+    viewTransformationController.value.setEntry(2, 2, zoomFactor);
   }
 
   @override
@@ -118,11 +125,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+
   Widget createScrollArea(Widget widget){
     final screenSize = MediaQuery.of(context).size;
     if (screenSize.width < 1300 || screenSize.height < 750){
       return Container(
-        padding: EdgeInsets.all(defaultPadding),
+        padding: EdgeInsets.all(defaultHalfPadding),
         decoration: BoxDecoration(
           color: secondaryColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -130,11 +138,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         child: InteractiveViewer(
           constrained: false,
-          scaleEnabled: false,
-          // panEnabled: false,
+          minScale: 0.1,
+          maxScale: 5,
+          transformationController: viewTransformationController,
           child: Container(
             width: 1400,
-            height: 750,
+            height: 600,
             child: widget
           )
         )
@@ -194,6 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SizedBox(width: defaultPadding),
             Container(
               width: 140,
+              height: 28,
               child: ElevatedButton(
                 onPressed: (){
                   setState(() {
@@ -207,6 +217,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SizedBox(width: defaultPadding),
             Container(
               width: 140,
+              height: 28,
               child: ElevatedButton(
                 onPressed: (){
                   setState(() {
@@ -220,6 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SizedBox(width: defaultPadding),
             Container(
               width: 140, 
+              height: 28,
               child: ElevatedButton(
                 onPressed: (){
                   setState(() {

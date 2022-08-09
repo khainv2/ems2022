@@ -31,7 +31,7 @@ class _DeviceListScreenState extends State<DeviceListScreen> {
               },
             )
           ),
-          SizedBox(width: defaultPadding),
+          SizedBox(width: defaultHalfPadding),
           Expanded(
             flex: 3,
             child: DeviceList(msb: listMsbSample[_currentMsbSelection],)

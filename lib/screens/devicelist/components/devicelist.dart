@@ -5,6 +5,7 @@ import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/sampleVal.dart';
+import 'package:admin/responsive.dart';
 import 'package:admin/screens/devicelist/devicedetail.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -52,7 +53,7 @@ class _DeviceListState extends State<DeviceList> {
   Widget build(BuildContext context) {
     final deviceList = widget.msb.deviceList ?? [];
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
+      padding: EdgeInsets.all(defaultHalfPadding),
       decoration: BoxDecoration(
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -65,13 +66,15 @@ class _DeviceListState extends State<DeviceList> {
             "Danh sách thiết bị",
             style: Theme.of(context).textTheme.headline6,
           ),
-          SizedBox(height: defaultPadding),
+          SizedBox(height: defaultHalfPadding),
           Expanded(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
                   width: double.infinity,
                   child: DataTable(
+                    headingRowHeight: Responsive.isMobile(context) ? 36 : 48,
+                    dataRowHeight: Responsive.isMobile(context) ? 36 : 48,
                     border: defaultTableBorder,
                     headingRowColor: defaultHeaderBackground,
                     columnSpacing: defaultPadding,

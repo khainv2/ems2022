@@ -4,6 +4,7 @@ import 'package:admin/api/systemalarm.dart';
 import 'package:admin/common.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/event.dart';
+import 'package:admin/responsive.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
@@ -115,6 +116,8 @@ class _EventListScreenState extends State<EventListScreen> {
               child: Container(
                 width: double.infinity,
                 child: DataTable(
+                  headingRowHeight: Responsive.isMobile(context) ? 36 : 48,
+                  dataRowHeight: Responsive.isMobile(context) ? 36 : 48,
                   columnSpacing: defaultPadding,
                   border: defaultTableBorder,
                   headingRowColor: defaultHeaderBackground,

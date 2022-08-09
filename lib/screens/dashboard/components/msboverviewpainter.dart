@@ -355,7 +355,7 @@ class MsbOverviewPainter extends CustomPainter {
           final line = lines[i];
           textPainter.text = TextSpan(text: line, style: textStyle);
           textPainter.layout(minWidth: 0, maxWidth: size.width, );
-          textPainter.paint(canvas, rect.topCenter - Offset(textPainter.width / 2, textPainter.height * (lines.length - i - 1)  + 20));
+          textPainter.paint(canvas, rect.topCenter - Offset(textPainter.width / 2, textPainter.height * (lines.length - i - 1)  + 15));
         }
       }
     }

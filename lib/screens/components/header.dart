@@ -33,16 +33,17 @@ class Header extends StatelessWidget {
         if (!Responsive.isMobile(context))
           Image.asset(
             "assets/images/logo3.png", 
-            width: 50,
-            height: 50,
+            width: 42,
+            height: 42,
             fit: BoxFit.fitWidth,
           ),
         SizedBox(width: defaultPadding),
-        if (!Responsive.isMobile(context))
+
+        if (MediaQuery.of(context).size.width > 1200)
           Text(
             "HỆ THỐNG GIÁM SÁT NĂNG LƯỢNG NHÀ MÁY VẬT LIỆU POLYMER CÔNG NGHỆ CAO", 
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 17,
               color: primaryColor
             ),
           ),
@@ -50,8 +51,8 @@ class Header extends StatelessWidget {
         if (!Responsive.isMobile(context))
           Image.asset(
             "assets/images/logo4.png", 
-            width: 100,
-            height: 50,
+            width: 80,
+            height: 42,
             // color: primaryColor,
             // colorBlendMode: BlendMode.darken,
             fit: BoxFit.fitWidth,
@@ -77,7 +78,7 @@ class ProfileCard extends StatelessWidget {
       margin: EdgeInsets.only(left: defaultPadding),
       padding: EdgeInsets.symmetric(
         horizontal: defaultPadding,
-        vertical: defaultPadding / 2,
+        vertical: 0,
       ),
       decoration: BoxDecoration(
         color: secondaryColor,
@@ -88,7 +89,7 @@ class ProfileCard extends StatelessWidget {
         children: [
           Image.asset(
             "assets/images/ic_account.png",
-            height: 32,
+            height: 28,
           ),
           if (!Responsive.isMobile(context))
             Padding(
@@ -96,7 +97,6 @@ class ProfileCard extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
               child: Text(UserControl().name),
             ),
-          // Icon(Icons.keyboard_arrow_down),
           PopupMenuButton(
             icon: Icon(Icons.keyboard_arrow_down),
             onSelected: (value) {

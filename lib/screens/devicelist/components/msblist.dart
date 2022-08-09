@@ -1,6 +1,7 @@
 import 'package:admin/models/msb.dart';
 import 'package:admin/models/msblistsample.dart';
 import 'package:admin/models/sampleVal.dart';
+import 'package:admin/responsive.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class MsbList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(defaultPadding),
+      padding: EdgeInsets.all(defaultHalfPadding),
       decoration: BoxDecoration(
         color: secondaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -29,13 +30,15 @@ class MsbList extends StatelessWidget {
         children: [
           Text(
             "Tủ điện",
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.headline6,
           ),
-          SizedBox( height: defaultPadding ),
+          SizedBox( height: defaultHalfPadding ),
           SizedBox(
             width: double.infinity,
             child: DataTable(
               headingRowColor: defaultHeaderBackground,
+              headingRowHeight: Responsive.isMobile(context) ? 36 : 48,
+              dataRowHeight: Responsive.isMobile(context) ? 36 : 48,
               border: defaultTableBorder,
               columnSpacing: defaultPadding,
               showCheckboxColumn: false,
