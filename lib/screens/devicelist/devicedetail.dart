@@ -140,6 +140,7 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
   Widget listParam(BuildContext context){
     var sampleValue = widget.device.name.contains("ACB") ? acbSampleValue : multimeterSampleValue;
+
     if (deviceInfo != null){
       sampleValue.clear();
       for (final k in deviceInfo!.realtimeParam.keys){
@@ -152,12 +153,16 @@ class _DeviceDetailState extends State<DeviceDetail> {
 
     List<Widget> paramColumns = [];
     for (int i = 0; i < keys.length; i+=3){
-      final k1 = keys[i];
-      final v1 = sampleValue[k1]!;
-      final k2 = i + 1 >= keys.length ? "" : keys[i + 1];
-      final v2 = i + 1 >= keys.length ? "" : sampleValue[k2]!;
-      final k3 = i + 2 >= keys.length ? "" : keys[i + 2];
-      final v3 = i + 2 >= keys.length ? "" :sampleValue[k3]!;
+      var k1 = keys[i];
+      var v1 = sampleValue[k1]!;
+      var k2 = i + 1 >= keys.length ? "" : keys[i + 1];
+      var v2 = i + 1 >= keys.length ? "" : sampleValue[k2]!;
+      var k3 = i + 2 >= keys.length ? "" : keys[i + 2];
+      var v3 = i + 2 >= keys.length ? "" : sampleValue[k3]!;
+      if (k1 == 'E') { k1 = ""; v1 = ""; }
+      if (k2 == 'E') { k2 = ""; v2 = ""; }
+      if (k3 == 'E') { k3 = ""; v3 = ""; }
+      
       if (deviceInfo == null)
         paramColumns.add(paramColumn(k1, '0 ${getMultimeterUnit(k1)}', k2, '0 ${getMultimeterUnit(k2)}', k3, '0 ${getMultimeterUnit(k3)}'));
       else 
@@ -165,6 +170,45 @@ class _DeviceDetailState extends State<DeviceDetail> {
       paramColumns.add(SizedBox(width: defaultHalfPadding));
     }
 
+    if (keys.contains('E')){
+      paramColumns.add(Expanded(child: Container(),));
+      paramColumns.add(
+        Container(
+          width: 200,
+          padding: EdgeInsets.only(
+            left: defaultPadding,
+            right: defaultPadding,
+            top: defaultHalfPadding,
+            bottom: defaultHalfPadding,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(width: 2, color: primaryColor.withOpacity(0.15)),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(defaultHalfPadding),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'E',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(
+                sampleValue['E']!,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: accentColor
+                )
+              )
+            ],
+          ),
+        )
+      );
+    }
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),

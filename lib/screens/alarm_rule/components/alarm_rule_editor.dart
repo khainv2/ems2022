@@ -429,7 +429,11 @@ class _AlarmRuleEditorWidgetState extends State<AlarmRuleEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Container(
+      width: 700,
+      height: height - 200,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,7 +459,7 @@ class _AlarmRuleEditorWidgetState extends State<AlarmRuleEditorWidget> {
           level(),
           SizedBox(height: defaultHalfPadding),
           active(),
-          SizedBox(height: defaultHalfPadding),
+          Expanded(child: Container()), 
           buttonPanel()
         ],
       ),

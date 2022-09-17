@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:admin/api/report.dart';
+import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/models/device.dart';
 import 'package:admin/models/msblistsample.dart';
 import 'package:admin/models/sampleVal.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 
@@ -27,14 +30,28 @@ class _ReportScreenState extends State<ReportScreen> {
     DateTime.now().month,
     DateTime.now().day,
   );
+
+  List<String> myheaders = ['Đang cập nhật'];
+  List<List<String>> myrows = [];
   
   @override 
   void initState(){
     super.initState();
+    final userControl = UserControl();
+    userControl.addStackIndexChangeListener((index){
+      if (index == reportIndex){
+        downloadSheetAndUpdate();
+      }
+    });
   }
 
   void downloadSheetAndUpdate(){
-
+    getReport(timeMode, sheetMode, timeSearch).then((value){
+      setState(() {
+        myheaders = value.headers;
+        myrows = value.rows;
+      });
+    });
   }
 
   Widget reportTimeModeDropdown(){
@@ -166,12 +183,13 @@ class _ReportScreenState extends State<ReportScreen> {
               height: 2,
               color: primaryColor,
             ),
-            value: 1,
+            value: timeSearch.month,
             items: monthList.map((e) => DropdownMenuItem<int>( child: Text('Tháng $e'), value: e)).toList(),
             onChanged: (val){
               setState(() {
                 if (val == null) 
                   return;
+                timeSearch = DateTime(timeSearch.year, val, timeSearch.day);
               });
               downloadSheetAndUpdate();
             },
@@ -209,12 +227,13 @@ class _ReportScreenState extends State<ReportScreen> {
               height: 2,
               color: primaryColor,
             ),
-            value: 2022,
+            value: timeSearch.year,
             items: yearList.map((e) => DropdownMenuItem<int>( child: Text('Năm $e'), value: e)).toList(),
             onChanged: (val){
               setState(() {
                 if (val == null) 
                   return;
+                timeSearch = DateTime(val, timeSearch.month, timeSearch.day);
               });
               downloadSheetAndUpdate();
             },
@@ -269,12 +288,16 @@ class _ReportScreenState extends State<ReportScreen> {
             currentDate: timeSearch,
             locale: Locale('vi', 'VN')
           ).then((value){
+            print('pick time');
             if (value != null){
-              timeSearch = DateTime(
-                value.year,
-                value.month,
-                value.day,
-              );
+              setState(() {
+                timeSearch = DateTime(
+                  value.year,
+                  value.month,
+                  value.day,
+                );
+                downloadSheetAndUpdate();
+              });
               // getHistoryData();
             }
           });
@@ -313,106 +336,108 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
-  List<String> myheaders = [];
-  List<List<String>> myrows = [];
   Widget sheet(BuildContext context){
-    List<String> headers = [];
-    List<List<String>> rows = [];
+    // List<String> headers = [];
+    // List<List<String>> rows = [];
 
-    if (sheetMode == ReportSheetMode.Input){
-      if (timeMode == ReportTimeMode.Daily){
-        headers = [
-          "Thời gian (Giờ)",	"MBA 01",	"Lộ G1",	"MBA 02",	"Lộ G2",	"MBA 03",	"Lộ G3",	"MBA 04",	"Lộ G4",	"NĂNG LƯỢNG ĐẦU VÀO"
-        ];
-        for (int i = 0; i < 24; i++){
-          List<String> cells = [ '$i'];
-          for (int j = 0; j < headers.length - 1; j++){
-            cells.add('0.0');
-          }
-          rows.add(cells);
-        }
-      } else if (timeMode == ReportTimeMode.Monthly){
-        headers = [
-          "Thời gian (Ngày)",	"MBA 01",	"Lộ G1",	"MBA 02",	"Lộ G2",	"MBA 03",	"Lộ G3",	"MBA 04",	"Lộ G4",	"NĂNG LƯỢNG ĐẦU VÀO"
-        ];
-        for (int i = 1; i <= 31; i++){
-          List<String> cells = [ '$i'];
-          for (int j = 0; j < headers.length - 1; j++){
-            cells.add('0.0');
-          }
-          rows.add(cells);
-        }
-      } else {
-        headers = [
-          "Thời gian (Tháng)",	"MBA 01",	"Lộ G1",	"MBA 02",	"Lộ G2",	"MBA 03",	"Lộ G3",	"MBA 04",	"Lộ G4",	"NĂNG LƯỢNG ĐẦU VÀO"
-        ];
-        for (int i = 1; i <= 12; i++){
-          List<String> cells = [ '$i'];
-          for (int j = 0; j < headers.length - 1; j++){
-            cells.add('0.0');
-          }
-          rows.add(cells);
-        }
-      }
-    } else {
-      if (timeMode == ReportTimeMode.Daily){
-        headers = [
-          "Thời gian (Giờ)",	"TĐ-PAL",	"TĐ-DM",	"TĐ-CHILLER 4",	"TĐ-ĐL4",	"MÁY NÉN",	"TĐ-2",
-          "TĐ-1",	"TĐ-ĐL3",	"TĐT-VP",	"TĐ-BƠM-AHU",	"TĐ-TG-T2",	"TĐ-TG-T1",	"TĐ-AHU 1~3",	"TĐ-CHILLER 1",	
-          "TĐ-CHILLER 2",	"TĐ-CHILLER 3",	"TĐ-CK",	"TĐ-X.MỰC 1",	"TĐ-ĐG",	"TĐ-DCT",	"TĐ-AHU 4~7",	"HVAC-VP",	"TĐ-ĐL1",	"TĐ-ĐL2"
-        ];
-        for (int i = 0; i < 24; i++){
-          List<String> cells = [ '$i'];
-          for (int j = 0; j < headers.length - 1; j++){
-            cells.add('0.0');
-          }
-          rows.add(cells);
-        }
-      } else if (timeMode == ReportTimeMode.Monthly){
-        headers = [
-          "Thời gian (Ngày)",	"TĐ-PAL",	"TĐ-DM",	"TĐ-CHILLER 4",	"TĐ-ĐL4",	"MÁY NÉN",	"TĐ-2",
-          "TĐ-1",	"TĐ-ĐL3",	"TĐT-VP",	"TĐ-BƠM-AHU",	"TĐ-TG-T2",	"TĐ-TG-T1",	"TĐ-AHU 1~3",	"TĐ-CHILLER 1",	
-          "TĐ-CHILLER 2",	"TĐ-CHILLER 3",	"TĐ-CK",	"TĐ-X.MỰC 1",	"TĐ-ĐG",	"TĐ-DCT",	"TĐ-AHU 4~7",	"HVAC-VP",	"TĐ-ĐL1",	"TĐ-ĐL2"
-        ];
-        for (int i = 1; i <= 31; i++){
-          List<String> cells = [ '$i'];
-          for (int j = 0; j < headers.length - 1; j++){
-            cells.add('0.0');
-          }
-          rows.add(cells);
-        }
-      } else {
-        headers = [
-          "Thời gian (Tháng)",	"TĐ-PAL",	"TĐ-DM",	"TĐ-CHILLER 4",	"TĐ-ĐL4",	"MÁY NÉN",	"TĐ-2",
-          "TĐ-1",	"TĐ-ĐL3",	"TĐT-VP",	"TĐ-BƠM-AHU",	"TĐ-TG-T2",	"TĐ-TG-T1",	"TĐ-AHU 1~3",	"TĐ-CHILLER 1",	
-          "TĐ-CHILLER 2",	"TĐ-CHILLER 3",	"TĐ-CK",	"TĐ-X.MỰC 1",	"TĐ-ĐG",	"TĐ-DCT",	"TĐ-AHU 4~7",	"HVAC-VP",	"TĐ-ĐL1",	"TĐ-ĐL2"
-        ];
-        for (int i = 1; i <= 12; i++){
-          List<String> cells = [ '$i'];
-          for (int j = 0; j < headers.length - 1; j++){
-            cells.add('0.0');
-          }
-          rows.add(cells);
-        }
-      }
-    }
+    // if (sheetMode == ReportSheetMode.Input){
+    //   if (timeMode == ReportTimeMode.Daily){
+    //     headers = [
+    //       "Thời gian (Giờ)",	"MBA 01",	"Lộ G1",	"MBA 02",	"Lộ G2",	"MBA 03",	"Lộ G3",	"MBA 04",	"Lộ G4",	"NĂNG LƯỢNG ĐẦU VÀO"
+    //     ];
+    //     for (int i = 0; i < 24; i++){
+    //       List<String> cells = [ '$i'];
+    //       for (int j = 0; j < headers.length - 1; j++){
+    //         cells.add('0.0');
+    //       }
+    //       rows.add(cells);
+    //     }
+    //   } else if (timeMode == ReportTimeMode.Monthly){
+    //     headers = [
+    //       "Thời gian (Ngày)",	"MBA 01",	"Lộ G1",	"MBA 02",	"Lộ G2",	"MBA 03",	"Lộ G3",	"MBA 04",	"Lộ G4",	"NĂNG LƯỢNG ĐẦU VÀO"
+    //     ];
+    //     for (int i = 1; i <= 31; i++){
+    //       List<String> cells = [ '$i'];
+    //       for (int j = 0; j < headers.length - 1; j++){
+    //         cells.add('0.0');
+    //       }
+    //       rows.add(cells);
+    //     }
+    //   } else {
+    //     headers = [
+    //       "Thời gian (Tháng)",	"MBA 01",	"Lộ G1",	"MBA 02",	"Lộ G2",	"MBA 03",	"Lộ G3",	"MBA 04",	"Lộ G4",	"NĂNG LƯỢNG ĐẦU VÀO"
+    //     ];
+    //     for (int i = 1; i <= 12; i++){
+    //       List<String> cells = [ '$i'];
+    //       for (int j = 0; j < headers.length - 1; j++){
+    //         cells.add('0.0');
+    //       }
+    //       rows.add(cells);
+    //     }
+    //   }
+    // } else {
+    //   if (timeMode == ReportTimeMode.Daily){
+    //     headers = [
+    //       "Thời gian (Giờ)",	"TĐ-PAL",	"TĐ-DM",	"TĐ-CHILLER 4",	"TĐ-ĐL4",	"MÁY NÉN",	"TĐ-2",
+    //       "TĐ-1",	"TĐ-ĐL3",	"TĐT-VP",	"TĐ-BƠM-AHU",	"TĐ-TG-T2",	"TĐ-TG-T1",	"TĐ-AHU 1~3",	"TĐ-CHILLER 2",	
+    //       "TĐ-CK",	"TĐ-CHILLER 3",	"TĐ-CHILLER 1",	"TĐ-X.MỰC 1",	"TĐ-ĐG",	"TĐ-DCT",	"TĐ-AHU 4~7",	"HVAC-VP",	"TĐ-ĐL1",	"TĐ-ĐL2"
+    //     ];
+    //     for (int i = 0; i < 24; i++){
+    //       List<String> cells = [ '$i'];
+    //       for (int j = 0; j < headers.length - 1; j++){
+    //         cells.add('0.0');
+    //       }
+    //       rows.add(cells);
+    //     }
+    //   } else if (timeMode == ReportTimeMode.Monthly){
+    //     headers = [
+    //       "Thời gian (Ngày)",	"TĐ-PAL",	"TĐ-DM",	"TĐ-CHILLER 4",	"TĐ-ĐL4",	"MÁY NÉN",	"TĐ-2",
+    //       "TĐ-1",	"TĐ-ĐL3",	"TĐT-VP",	"TĐ-BƠM-AHU",	"TĐ-TG-T2",	"TĐ-TG-T1",	"TĐ-AHU 1~3",	"TĐ-CHILLER 2",	
+    //       "TĐ-CK",	"TĐ-CHILLER 3",	"TĐ-CHILLER 1",	"TĐ-X.MỰC 1",	"TĐ-ĐG",	"TĐ-DCT",	"TĐ-AHU 4~7",	"HVAC-VP",	"TĐ-ĐL1",	"TĐ-ĐL2"
+    //     ];
+    //     for (int i = 1; i <= 31; i++){
+    //       List<String> cells = [ '$i'];
+    //       for (int j = 0; j < headers.length - 1; j++){
+    //         cells.add('0.0');
+    //       }
+    //       rows.add(cells);
+    //     }
+    //   } else {
+    //     headers = [
+    //       "Thời gian (Tháng)",	"TĐ-PAL",	"TĐ-DM",	"TĐ-CHILLER 4",	"TĐ-ĐL4",	"MÁY NÉN",	"TĐ-2",
+    //       "TĐ-1",	"TĐ-ĐL3",	"TĐT-VP",	"TĐ-BƠM-AHU",	"TĐ-TG-T2",	"TĐ-TG-T1",	"TĐ-AHU 1~3",	"TĐ-CHILLER 2",	
+    //       "TĐ-CK",	"TĐ-CHILLER 3",	"TĐ-CHILLER 1",	"TĐ-X.MỰC 1",	"TĐ-ĐG",	"TĐ-DCT",	"TĐ-AHU 4~7",	"HVAC-VP",	"TĐ-ĐL1",	"TĐ-ĐL2"
+    //     ];
+    //     for (int i = 1; i <= 12; i++){
+    //       List<String> cells = [ '$i'];
+    //       for (int j = 0; j < headers.length - 1; j++){
+    //         cells.add('0.0');
+    //       }
+    //       rows.add(cells);
+    //     }
+    //   }
+    // }
 
-    for (int i = 0; i < 4; i++){
-      String title = '';
-      if (i == 0) title = 'Tổng';
-      if (i == 1) title = 'Min';
-      if (i == 2) title = 'Max';
-      if (i == 3) title = 'Trung bình';
+    // for (int i = 0; i < 4; i++){
+    //   String title = '';
+    //   if (i == 0) title = 'Tổng';
+    //   if (i == 1) title = 'Min';
+    //   if (i == 2) title = 'Max';
+    //   if (i == 3) title = 'Trung bình';
       
-      List<String> cells = [ title];
-      for (int j = 0; j < headers.length - 1; j++){
-        cells.add('0.0');
-      }
-      rows.add(cells);
-    }
+    //   List<String> cells = [ title];
+    //   for (int j = 0; j < headers.length - 1; j++){
+    //     cells.add('0.0');
+    //   }
+    //   rows.add(cells);
+    // }
 
-    myheaders = headers;
-    myrows = rows;     
+    // myheaders = headers;
+    // myrows = rows;  
+
+    final headers = myheaders;
+    final rows = myrows;   
+
     if (sheetMode == ReportSheetMode.Input){
       return Expanded(
         child: SingleChildScrollView(
@@ -434,7 +459,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   )
                 )
               ).toList(),
-              rows: rows.map((e){
+              rows: myrows.map((e){
                 final cells = e.map((f) => DataCell(Text(f))).toList();
                 return DataRow(cells: cells);
               }).toList()

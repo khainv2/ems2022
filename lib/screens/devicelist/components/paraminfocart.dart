@@ -40,7 +40,7 @@ class ParamInfoCart extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 15,
               color: accentColor
             )
           )

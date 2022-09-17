@@ -7,7 +7,13 @@ class DeviceParam {
   double value;
   String unit;
   DeviceParam(this.name, this.value, this.unit);
-  String getFullValue(){ return "$value $unit"; }
+  String getFullValue(){ 
+    if ((name == 'Q' || name == 'P' || name == 'S' || name == 'E') && value.abs() >= 1000){
+      final kVal = value / 1000;
+      return '${kVal.toStringAsFixed(2)} k$unit';
+    }
+    return "$value $unit"; 
+  }
 }
 
 // Mô tả 2 loại device khác nhau

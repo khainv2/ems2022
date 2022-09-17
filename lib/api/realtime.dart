@@ -114,12 +114,26 @@ Future<Device?> getRealtime(String serial) async {
       outparamlist[pname] = outparam;
     }
 
+    
+    var keys = outparamlist.keys.toList();
+    if (keys.contains('P') && keys.contains('Pf') && !mtserial.startsWith('ACB')){
+      final idxP = keys.indexOf('P');
+      final idxPf = keys.indexOf('Pf');
+      final temp = keys[idxP];
+      keys[idxP] = keys[idxPf];
+      keys[idxPf] = temp;
+    }
+    Map<String, DeviceParam> outparamlist2 = {};
+    for (final key in keys){
+      outparamlist2[key] = outparamlist[key]!;
+    }
+
     return Device(
       type: mtserial.startsWith('ACB') ? DeviceType.ACB : DeviceType.Multimeter,
       name: mtname,
       address: mtcfg_addr,
       state: DeviceState.values[rt_status],
-      realtimeParam: outparamlist
+      realtimeParam: outparamlist2
     );
     
   } else {

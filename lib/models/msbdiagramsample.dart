@@ -84,7 +84,7 @@ final msb3 = MSBDiagram(
   ],
   vNodes: [
     VNode(
-      name: "P.CƠ KHÍ\nTĐ-CK\n120KW", pos: 5, 
+      name: "TĐ-CHILLER1\n120KW", pos: 5, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 23" )
     ),
@@ -94,12 +94,12 @@ final msb3 = MSBDiagram(
       multimeter: MultimeterDevice( params: testParams, name: "MFM 22" )
     ),
     VNode(
-      name: "TĐ-CHILLER2\n183KW", pos: 29, 
+      name: "P.CƠ KHÍ\nTĐ-CK\n183KW", pos: 29, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 21" )
     ),
     VNode(
-      name: "TĐ-CHILLER1\n183KW", pos: 41, 
+      name: "TĐ-CHILLER2\n183KW", pos: 41, 
       devices: { NodeDeviceType.NormalLoad, NodeDeviceType.Switch, NodeDeviceType.Multimeter },
       multimeter: MultimeterDevice( params: testParams, name: "MFM 20" )
     ),

@@ -250,14 +250,14 @@ var listMsbSample = [
         type: DeviceType.Multimeter,
         address: "192.168.1.162",
         state: DeviceState.Offline,
-        note: "Giám sát điện năng cho tủ điện TĐ-CHILLER 1"
+        note: "Giám sát điện năng cho tủ điện TĐ-CHILLER 2"
       ),
       Device(
         name: "Multimeter 21",
         type: DeviceType.Multimeter,
         address: "192.168.1.163",
         state: DeviceState.Offline,
-        note: "Giám sát điện năng cho tủ điện TĐ-CHILLER 2"
+        note: "Giám sát điện năng cho tủ điện TĐ-CK (Phòng Cơ khí)"
       ),
       Device(
         name: "Multimeter 22",
@@ -271,7 +271,7 @@ var listMsbSample = [
         type: DeviceType.Multimeter,
         address: "192.168.1.165",
         state: DeviceState.Offline,
-        note: "Giám sát điện năng cho tủ điện TĐ-CK (Phòng Cơ khí)"
+        note: "Giám sát điện năng cho tủ điện TĐ-CHILLER 1"
       ),
     ]
   ),
@@ -346,14 +346,14 @@ var listMsbSample = [
       Device(
         name: "Multimeter 29",
         type: DeviceType.Multimeter,
-        address: "192.168.1.207",
+        address: "192.168.1.206",
         state: DeviceState.Offline,
         note: "Giám sát điện năng cho tủ điện TĐ-AHU 4~7"
       ),
       Device(
         name: "Multimeter 30",
         type: DeviceType.Multimeter,
-        address: "192.168.1.208",
+        address: "192.168.1.207",
         state: DeviceState.Offline,
         note: "Giám sát điện năng cho tủ điện HVAC-VP (Nhà văn phòng)"
       ),
