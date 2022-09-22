@@ -102,7 +102,7 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   DataRow getDataRow(Device device, int index){
-    String state = 'Tắt';
+    String state = 'Offline';
     Color colorState = Color(0xFFcc0000);
     Device? dev;
     if (device.type == DeviceType.ACB){

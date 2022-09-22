@@ -1,3 +1,4 @@
+import 'package:admin/api/energy_trend.dart';
 import 'package:admin/common.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,9 @@ class EnergyCart extends StatelessWidget {
 }
 
 class ChainAnalysis extends StatefulWidget {
-  const ChainAnalysis({ Key? key }) : super(key: key);
+  
+  final EnergyTrendTotal energyTrendTotal;
+  const ChainAnalysis({ Key? key, required this.energyTrendTotal }) : super(key: key);
 
   @override
   State<ChainAnalysis> createState() => _ChainAnalysisState();
@@ -62,6 +65,29 @@ class ChainAnalysis extends StatefulWidget {
 class _ChainAnalysisState extends State<ChainAnalysis> {
   @override
   Widget build(BuildContext context) {
+    double dBefore = 0;
+    double dCurrent = 0;
+    double dTrend = 0;
+    double mBefore = 0;
+    double mCurrent = 0;
+    double mTrend = 0;
+    double yBefore = 0;
+    double yCurrent = 0;
+    double yTrend = 0;
+
+    if (widget.energyTrendTotal.success && widget.energyTrendTotal.day != null && widget.energyTrendTotal.day!.success){
+      dCurrent = widget.energyTrendTotal.day!.sumCurrent;
+      dBefore = widget.energyTrendTotal.day!.sumBefore;
+      dTrend = widget.energyTrendTotal.day!.sumTrend;
+      mCurrent = widget.energyTrendTotal.month!.sumCurrent;
+      mBefore = widget.energyTrendTotal.month!.sumBefore;
+      mTrend = widget.energyTrendTotal.month!.sumTrend;
+      yCurrent = widget.energyTrendTotal.year!.sumCurrent;
+      yBefore = widget.energyTrendTotal.year!.sumBefore;
+      yTrend = widget.energyTrendTotal.year!.sumTrend;
+      
+    }
+
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -73,15 +99,15 @@ class _ChainAnalysisState extends State<ChainAnalysis> {
           Row(
             children: [
               Expanded(
-                child: EnergyCart(title: "Hôm nay", value: "0 kWh", valueColor: primaryColor,),
+                child: EnergyCart(title: "Hôm nay", value: "${(dCurrent / 1000).toStringAsFixed(2)} kWh", valueColor: primaryColor,),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Hôm qua", value: "0 kWh", valueColor: accentColor,),
+                child: EnergyCart(title: "Hôm qua", value: "${(dBefore / 1000).toStringAsFixed(2)} kWh", valueColor: accentColor,),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Xu hướng", value: "0 kWh", valueColor: diffColor,),
+                child: EnergyCart(title: "Xu hướng", value: "${(dTrend / 1000).toStringAsFixed(2)} kWh", valueColor: diffColor,),
               ),
             ],
           ),
@@ -89,15 +115,15 @@ class _ChainAnalysisState extends State<ChainAnalysis> {
           Row(
             children: [
               Expanded(
-                child: EnergyCart(title: "Tháng này", value: "0 kWh", valueColor: primaryColor),
+                child: EnergyCart(title: "Tháng này", value: "${(mCurrent / 1000).toStringAsFixed(2)} kWh", valueColor: primaryColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Tháng trước", value: "0 kWh", valueColor: accentColor),
+                child: EnergyCart(title: "Tháng trước", value: "${(mBefore / 1000).toStringAsFixed(2)} kWh", valueColor: accentColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Xu hướng", value: "0 kWh", valueColor: diffColor),
+                child: EnergyCart(title: "Xu hướng", value: "${(mTrend / 1000).toStringAsFixed(2)} kWh", valueColor: diffColor),
               ),
             ],
           ),
@@ -105,15 +131,15 @@ class _ChainAnalysisState extends State<ChainAnalysis> {
           Row(
             children: [
               Expanded(
-                child: EnergyCart(title: "Năm này", value: "0 kWh", valueColor: primaryColor),
+                child: EnergyCart(title: "Năm này", value: "${(yCurrent / 1000).toStringAsFixed(2)} kWh", valueColor: primaryColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Năm trước", value: "0 kWh", valueColor: accentColor),
+                child: EnergyCart(title: "Năm trước", value: "${(yBefore / 1000).toStringAsFixed(2)} kWh", valueColor: accentColor),
               ),
               SizedBox(width: defaultPadding),
               Expanded(
-                child: EnergyCart(title: "Xu hướng", value: "0 kWh", valueColor: diffColor),
+                child: EnergyCart(title: "Xu hướng", value: "${(yTrend / 1000).toStringAsFixed(2)} kWh", valueColor: diffColor),
               ),
             ],
           ),

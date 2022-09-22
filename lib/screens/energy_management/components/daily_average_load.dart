@@ -56,7 +56,23 @@ class _DailyAverageLoadChartState extends State<DailyAverageLoadChart> {
           )
         ),
         groupsSpace: 6,
-        barGroups: barDataList
+        barGroups: barDataList,
+        titlesData: FlTitlesData(
+          leftTitles: SideTitles(
+            showTitles: false,
+            checkToShowTitle: (double minValue, double maxValue, SideTitles sideTitles, double appliedInterval, double value){
+              if (value == minValue || value == maxValue){
+                return false;
+              } else {
+                return true;
+              }
+            },
+          ),
+          topTitles: SideTitles(
+            showTitles: false,
+          )
+          
+        )
       )
     );
   

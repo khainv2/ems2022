@@ -1,3 +1,4 @@
+import 'package:admin/api/energy_trend.dart';
 import 'package:admin/common.dart';
 import 'package:flutter/material.dart';
 
@@ -52,10 +53,17 @@ class DayInfoCart extends StatelessWidget {
 }
 
 class PeakConsumption extends StatelessWidget {
-  const PeakConsumption({ Key? key }) : super(key: key);
+  final EnergyTrendTotal energyTrendTotal;
+  const PeakConsumption({ Key? key, required this.energyTrendTotal }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double today = 0;
+    double yesterday = 0;
+    if (energyTrendTotal.success && energyTrendTotal.day != null && energyTrendTotal.day!.success){
+      today = energyTrendTotal.day!.sumCurrent;
+      yesterday = energyTrendTotal.day!.sumBefore;
+    }
     return Container(
       padding: EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -66,11 +74,11 @@ class PeakConsumption extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: DayInfoCart(title: "Hôm qua", value: "0W", valueColor: accentColor,),
+            child: DayInfoCart(title: "Hôm qua", value: "${yesterday}W", valueColor: accentColor,),
           ),
           SizedBox(height: defaultPadding),
           Expanded(
-            child: DayInfoCart(title: "Hôm nay", value: "0W", valueColor: primaryColor,),
+            child: DayInfoCart(title: "Hôm nay", value: "${today}W", valueColor: primaryColor,),
           )
           
         ],

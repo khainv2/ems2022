@@ -15,9 +15,9 @@ enum EnergyTrendMode {
 }
 
 int energyModeToVal(EnergyTrendMode mode){
-  if (mode == EnergyTrendMode.Day) return 1;
-  else if (mode == EnergyTrendMode.Month) return 2;
-  else return 3;
+  if (mode == EnergyTrendMode.Day) return 2;
+  else if (mode == EnergyTrendMode.Month) return 3;
+  else return 4;
 }
 
 DateFormat dateFormatByMode(EnergyTrendMode mode){
@@ -56,6 +56,9 @@ class EnergyTrendHistory {
   bool success = false;
   List<TrendParam> beforeList = [];
   List<TrendParam> currentList = [];
+  double sumBefore = 0;
+  double sumCurrent = 0;
+  double sumTrend = 0;
 
   List<TrendDualParam> getListDual(){
     Map<int, TrendDualParam> map = {};
@@ -104,6 +107,7 @@ Future<EnergyTrendHistory> getEnergyTrend(String serial, EnergyTrendMode mode, D
   });
   request.headers.addAll(headers);
   print(headers);
+  print(request.body);
   http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
@@ -139,10 +143,17 @@ Future<EnergyTrendHistory> getEnergyTrend(String serial, EnergyTrendMode mode, D
       }
       currentParams.add(TrendParam(time, e['value']));
     }
+    final sum = retJson['data']['trend'];
+    double sumBefore = sum['before'];
+    double sumCurrent = sum['current'];
+    double sumTrend = sum['trend'];
     return EnergyTrendHistory()
     ..success = true
     ..beforeList = beforeParams
-    ..currentList = currentParams;
+    ..currentList = currentParams
+    ..sumBefore = sumBefore
+    ..sumCurrent = sumCurrent
+    ..sumTrend = sumTrend;
   } else {
     print(response.reasonPhrase);
     return EnergyTrendHistory();

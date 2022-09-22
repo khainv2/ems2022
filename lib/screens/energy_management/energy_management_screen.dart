@@ -120,11 +120,9 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
                 deviceListDropDown(),
                 SizedBox(height: defaultHalfPadding),
                 SizedBox(width: 1000, height: 300, child: DailyAverageLoad(energyTrendTotal: _energyTrend)),
-                SizedBox(width: 1000, height: 300, child: PeakConsumption()),
-                SizedBox(width: 1000, height: 300, child: ChainAnalysis()),
-                SizedBox(width: 1000, height: 300, child: LoadTrend())
-                
-
+                SizedBox(width: 1000, height: 300, child: PeakConsumption(energyTrendTotal: _energyTrend,)),
+                SizedBox(width: 1000, height: 300, child: ChainAnalysis(energyTrendTotal: _energyTrend)),
+                SizedBox(width: 1000, height: 300, child: LoadTrend(energyTrendTotal: _energyTrend))
               ],
             )
           )
@@ -149,7 +147,7 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
                 SizedBox(width: defaultPadding),
                 Expanded(
                   flex: 2, 
-                  child: PeakConsumption()
+                  child: PeakConsumption(energyTrendTotal: _energyTrend,)
                 )
               ],
             )
@@ -161,12 +159,12 @@ class _EnergyManagementScreenState extends State<EnergyManagementScreen> {
               children: [
                 Expanded(
                   flex: 3,
-                  child: ChainAnalysis()
+                  child: ChainAnalysis(energyTrendTotal: _energyTrend)
                 ),
                 SizedBox(width: defaultPadding),
                 Expanded(
                   flex: 5, 
-                  child: LoadTrend()
+                  child: LoadTrend(energyTrendTotal: _energyTrend)
                 )
               ],
             )

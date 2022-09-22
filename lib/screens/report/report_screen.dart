@@ -324,7 +324,7 @@ class _ReportScreenState extends State<ReportScreen> {
           var sheet = excel['Sheet1'];
           sheet.appendRow(['NHÀ MÁY VẬT LIỆU POLYMER CÔNG NGHỆ CAO']);
           sheet.appendRow(['CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM']);
-          sheet.appendRow(['BÁO CÁO ĐIỆN NĂNG']);
+          sheet.appendRow(['BÁO CÁO ĐIỆN NĂNG', '', '', 'ĐƠN VỊ WH']);
           sheet.appendRow(myheaders);
           for (final row in myrows){
             sheet.appendRow(row);

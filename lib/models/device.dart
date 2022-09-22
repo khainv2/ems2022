@@ -54,8 +54,8 @@ class Device {
 
   String stateStr(){
     switch (state){
-      case DeviceState.Online: return "Bật";
-      case DeviceState.Offline: return "Tắt";
+      case DeviceState.Online: return "Online";
+      case DeviceState.Offline: return "Offline";
       case DeviceState.Alarm: return 'Cảnh báo';
       case DeviceState.Inactive: return 'Không hoạt động';
       case DeviceState.Error: return 'Lỗi';
