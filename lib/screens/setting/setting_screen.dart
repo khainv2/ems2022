@@ -1,4 +1,5 @@
 import 'package:admin/common.dart';
+import 'package:admin/screens/admin/adminpage.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -23,7 +24,6 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       )
     );
-      
   }
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,15 @@ class _SettingScreenState extends State<SettingScreen> {
               SizedBox(height: defaultHalfPadding,),
               textFieldPass(),
               SizedBox(height: defaultHalfPadding,),
-              ElevatedButton(onPressed: (){}, child: Text("Đổi mật khẩu"))
+              ElevatedButton(onPressed: (){}, child: Text("Đổi mật khẩu")),
+              ElevatedButton(onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context){
+                    return AdminPage();
+                  }),
+                );
+              }, child: Text("Quản trị người dùng"))
             ],
           )
         ),

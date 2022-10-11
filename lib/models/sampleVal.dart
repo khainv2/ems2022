@@ -16,15 +16,20 @@ final multimeterParamList = [
   "THD-In",
 ];
 
+// final acbParamList = {
+//   "I1", "I2", "I3",
+//   "U1", "U2", "U3",
+//   "P", "Q", "S", "Pf", "F",
+//   "Temperature", "Operation count",
+//   "Trip count", "Time last operation",
+//   "Time max temperature", "Operation time", "Trip"
+// };
 final acbParamList = {
-  "I1", "I2", "I3",
-  "U1", "U2", "U3",
-  "P", "Q", "S", "Pf", "F",
-  "Temperature", "Operation count",
-  "Trip count", "Time last operation",
-  "Time max temperature", "Operation time", "Trip"
+  "Status", "Temp", "OperCount",
+  // "Temperature", "Operation count",
+  // "Trip count", "Time last operation",
+  // "Time max temperature", "Operation time", "Trip"
 };
-
 
 final multimeterSampleValue = {
   "U12": "23.289V",

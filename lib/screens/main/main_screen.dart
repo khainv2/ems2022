@@ -4,6 +4,7 @@ import 'package:admin/common.dart';
 import 'package:admin/controllers/menucontroller.dart';
 import 'package:admin/controllers/usercontrol.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/admin/adminpage.dart';
 import 'package:admin/screens/alarm_rule/alarm_rule_screen.dart';
 import 'package:admin/screens/components/header.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
@@ -37,7 +38,7 @@ int get reportIndex => 5;
 int get energyManagementIndex => 6;
 int get settingIndex => 7;
 
-final screenList = [
+var screenList = [
   ScreenData(
     name: "Tổng quan",
     image: "assets/icons/menu_dashbord.svg",
@@ -74,9 +75,9 @@ final screenList = [
     screen: EnergyManagementScreen(),
   ),
   ScreenData(
-    name: "Thiết lập",
+    name: "Tài khoản",
     image: "assets/icons/menu_setting.svg",
-    screen: SettingScreen(),
+    screen: AdminPage(),
   ),
 ];
 
@@ -124,16 +125,28 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _stackIndex = 0;
   void setStackIndex(int index){
+    final userControl = UserControl();
+    if (userControl.role != "Administrator" && index == settingIndex){
+        context.read<MenuController>().closeMenu();
+        final snackBar = SnackBar(
+          content: Text(
+            'Chỉ Quản trị viên mới có quyền truy cập quản lý tài khoản'
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return;
+    }
     setState(() {
       _stackIndex = index;
     });
-    final userControl = UserControl();
     userControl.setCurrentStackIndex(index);
   }
 
   @override
   void initState(){
     super.initState();
+    final userControl = UserControl();
+    
     // Timer(Duration(seconds: 1), (){
     //   setStackIndex(reportIndex );
     // });

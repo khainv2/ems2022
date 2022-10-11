@@ -51,7 +51,6 @@ class TrendDualParam {
   TrendDualParam(this.time, this.beforeValue, this.currentValue);
 }
 
-
 class EnergyTrendHistory {
   bool success = false;
   List<TrendParam> beforeList = [];

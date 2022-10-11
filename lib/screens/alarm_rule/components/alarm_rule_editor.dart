@@ -149,6 +149,9 @@ class _AlarmRuleEditorWidgetState extends State<AlarmRuleEditorWidget> {
   Widget paramSelection(){
     final type = Device.getTypeFromSerial(_serial);
     final paramList = type == DeviceType.ACB ? acbParamList : multimeterParamList;
+    if (!paramList.contains(_param)){
+      _param = paramList.first;
+    }
     final items = paramList.map(
       (t) => DropdownMenuItem<String>(
         child: Text(t), 
